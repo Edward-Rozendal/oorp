@@ -1,8 +1,6 @@
 == Welcome!
 This site is a migrated version of the freely available book http://scg.unibe.ch/oorp/[Object-Oriented Reengineering Patterns] from Serge Demeyer, Stéphane Ducasse and Oscar Nierstrasz; currently maintained by contributors on https://github.com/oorp/oorp[GitHub]. Feel free to submit your suggestions and enhancements!
 
-
-
 === Current Version
 This site is not finished yet. It's an early prototype. Currently I'm fixing layout and formatting issues. -- https://github.com/feststelltaste[feststelltaste]
 
@@ -13,8 +11,8 @@ updated since August 2022. Even two pull requests from May 2024 aren't merged.
 
 Copyright © 2003 by Elsevier Science (USA). Copyright © 2008, 2009 by Serge Demeyer, Stéphane Ducasse and Oscar Nierstrasz. The contents of this site are protected under http://creativecommons.org/licenses/by-sa/3.0[Creative Commons Attribution-ShareAlike 3.0 Unported] license.
 
+[introduction]
 == Introduction
-
 The documentation is missing or obsolete, and the original developers
  have departed. Your team has limited understanding of the system, and 
 unit tests are missing for many, if not all, of the components. When you
@@ -44,17 +42,13 @@ these kinds of books out there, when reengineering is such a common
 event. But I'm at least glad to see that while there aren't many books 
 in this vein, this book is an example of how good they are. -- From the foreword by Martin Fowler_
 
-
 [[a-fairy-tale]]
 === A Fairy Tale
-
-
 [quote]
 ____
 
 Once upon a time there was a Good Software Engineer whose Customers knew exactly what they wanted. The Good Software Engineer worked very hard to design the Perfect System that would solve all the Customers’ problems now and for decades. When the Perfect System was designed, implemented and finally deployed, the Customers were very happy indeed. The Maintainer of the System had very little to do to keep the Perfect System up and running, and the Customers and the Maintainer lived happily every after.
 ____
-
 
 Why isn’t real life more like this fairy tale?
 
@@ -106,5 +100,3 @@ This book is addressed mainly to practitioners who need to reengineer object-ori
 We believe that most of the patterns in this book will be familiar to anyone with a bit of experience in object-oriented software development.
 
 The purpose of the book is to document the details.
-
-[[acknowledgments]]
