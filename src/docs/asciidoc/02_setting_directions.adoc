@@ -11,17 +11,12 @@ When you start a reengineering project, you will be pulled in many different dir
 * The legacy system will pull you towards a certain architecture that may not be the best for the future of the system.
 * You will detect many problems with the legacy software, and it will be hard to set priorities.
 * It is easy to get seduced by focussing on the technical problems that interest you the most, rather than what is best for the project.
-* It can be difficult to decide whether to wrap, refactor or rewrite a problematic component of a legacy system. Each of these options will address different risks, and will have different consequences for
+* It can be difficult to decide whether to wrap, refactor or rewrite a problematic component of a legacy system. Each of these options will address different risks, and will have different consequences for the effort required, the speed with which results can be evaluated, and the kinds of changes that can be accommodated in the future.
+* When you are reengineering the system, you may be tempted to over-engineer the new solution to deal with every possible eventuality.
 
 image:media/image4.jpg[image,width=432,height=209]
 
 Figure 2.1: Principles and guidelines to set and maintain direction in reengineering project.
-
-
-the effort required, the speed with which results can be evaluated, and the kinds of changes that can be accommodated in the future.
-
-
-* When you are reengineering the system, you may be tempted to over-engineer the new solution to deal with every possible eventuality.
 
 [[overview]]
 === Overview
