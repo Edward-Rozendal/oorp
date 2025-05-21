@@ -28,12 +28,11 @@ Typically, your new colleagues will fall into three categories. The first catego
 === Overview
 
 Wasting time is the largest risk when you have your first contact with a system, therefore these patterns should be applied during a short time span, say one week. After this week you should grasp the main issues and
+based on that knowledge plan further activities, or — when necessary — cancel the project.
 
 image:media/image5.jpg[image,width=432,height=243]
 
 Figure 3.1: Assess the _feasibility_ of the project during your First Contact with the system.
-
-based on that knowledge plan further activities, or — when necessary — cancel the project.
 
 The patterns Chat with the Maintainers and Interview During Demo will help you get acquainted with the people involved. As a rule of the thumb, spend four days to gather information and use the last day of the week to compile all this information into a first project plan. There is no strict order in which to apply the patterns, although the order as suggested by the sequence in the book is kind of typical. Nevertheless, we have often find ourselves combining fragments of these patterns because of the necessity to double-check. For instance, during a second meeting with the maintainers we usually start with an Interview During Demo but ask questions about what we have learned from Read all the Code in One Hour and Skim the Documentation. Also, after an interview we quickly check the source code and documentation to confirm what has been said.
 
