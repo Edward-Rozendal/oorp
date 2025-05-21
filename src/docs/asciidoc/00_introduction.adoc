@@ -2,9 +2,7 @@
 This site is a migrated version of the freely available book http://scg.unibe.ch/oorp/[Object-Oriented Reengineering Patterns] from Serge Demeyer, Stéphane Ducasse and Oscar Nierstrasz; currently maintained by contributors on https://github.com/oorp/oorp[GitHub]. Feel free to submit your suggestions and enhancements!
 
 === Current Version
-This site is not finished yet. It's an early prototype. Currently I'm fixing layout and formatting issues. -- https://github.com/feststelltaste[feststelltaste]
-
-Actually, this version is generated from a fork as the original hasn't been
+Actually, this site is generated from a fork as the original hasn't been
 updated since August 2022. Even two pull requests from May 2024 aren't merged.
 
 === Copyright / License
