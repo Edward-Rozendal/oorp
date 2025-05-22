@@ -302,7 +302,8 @@ Develop a prototype of the new concept and evaluate it with respect to the new, 
 ** adequate performance — or performance gains — with new technology or platform (for example, demonstrating that a certain transaction throughput can be achieved)
 * Decide whether to implement an exploratory (_i.e._, throwaway) prototype that will service purely to evaluate the feasibility of a technical option, or rather an evolutionary prototype that will eventually evolve into the new target system.
 ** An exploratory prototype must be designed to answer very precise questions. These may be purely technical questions, such as whether the new platform can meet performance constraints set by the legacy system, or they may be usability questions which require participation of and evaluation by the users. The exploratory prototype does not need to be designed to address any other issues or questions, and will not be part of the migrated system (although the answers it provides will influence the new system).
-** An evolutionary prototype, on the other hand, is intended to eventually replace a legacy component, and must therefore reflect the target architecture. The new architecture most not only adequately support the legacy services, but also overcome the obstacles that limit the legacy solution’s usefulness. The prototype must be design to answer these risks first.
+** An evolutionary prototype, on the other hand, is intended to eventually replace a legacy component, and must therefore reflect the target architecture. The new architecture must not only adequately support the legacy services, but also overcome the obstacles that limit the legacy solution’s usefulness. The prototype must be design to answer these risks first.
+
 [[tradeoffs-22]]
 ==== Tradeoffs
 
