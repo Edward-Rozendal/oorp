@@ -257,11 +257,11 @@ From a previous code review, you learned that the design is reasonably good, so 
 
 a.  Initial hypothesis where the open questions are inserted as Notes
 
-image:media/image8.jpg[image,width=432,height=145]
+image:media/image8.jpg[image,width=648,height=217]
 
 a.  Refined hypothesis after verification against the source code; the modificationsare shown as Notes
 
-image:media/image9.jpg[image,width=432,height=159]
+image:media/image9.jpg[image,width=648,height=238]
 
 Figure 4.4: Refining the hypotheses concerning the Euro representation. (a) subclasses for the different currencies; (b) flyweight approach for the currencies
 
