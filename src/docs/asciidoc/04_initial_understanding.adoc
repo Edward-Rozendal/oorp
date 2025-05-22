@@ -298,7 +298,7 @@ Follow-up actions:
 
 The naive approach to design extraction is bottom-up: first build a complete class diagram from source code and afterwards condense it by removing the noise. Unfortunately, the bottom-up approach does not work for large scale systems, because one typically gets a lot of white noise to start from (see for example Figure 4.5, showing an inheritance hierarchy with associations for a medium-sized system). Moreover, such a bottomup approach does not improve your understanding very much, because it forces you to focus on the irrelevant noise instead of the important concepts.
 
-image:media/image10.png[image,width=426,height=204]
+image:media/image10.png[image,width=639,height=306]
 
 Figure 4.5: White-noise obtained by a bottom-up design extraction approach. 
 
