@@ -46,11 +46,12 @@ These patterns share common forces that concern various elements of risk for the
 
 As shown in Figure 6.1, Write Tests to Enable Evolution is the root of this cluster. It explains why systematic tests are critical to reengineering projects and what kinds of tests are necessary. It is based on Grow Your Test Base Incrementally which advocates strategies for introducing new tests as you need them.
 
-In order to effectively manage incremental introduction of tests, it is important to Use a Testing Framework to structure and organize suites
+image:media/image18.jpg[image,width=648,height=519]
 
-image:media/image18.jpg[image,width=432,height=346]
+Figure 6.1: When, why, how and what to test.
 
-Figure 6.1: When, why, how and what to test. of tests. The testing framework should support you in designing certain styles of tests. In particular, if you Test the Interface, Not the Implementation of components, by using black-box testing strategies, then your tests will tend to be more useful in the face of system changes. Furthermore, if you can Record Business Rules as Tests, then you will have an effective way to keep the business rules explicitly represented and continuously synchronized with the running system even in the presence of radical changes.
+In order to effectively manage incremental introduction of tests, it is important to Use a Testing Framework to structure and organize suites of tests.
+The testing framework should support you in designing certain styles of tests. In particular, if you Test the Interface, Not the Implementation of components, by using black-box testing strategies, then your tests will tend to be more useful in the face of system changes. Furthermore, if you can Record Business Rules as Tests, then you will have an effective way to keep the business rules explicitly represented and continuously synchronized with the running system even in the presence of radical changes.
 
 Tests may be introduced at various times for various reasons. Write Tests to Understand advocates investing testing effort in those parts of the system that you need to understand in order to implement changes. More specifically, it is a good idea to Test Fuzzy Features, to Test Old Bugs, and especially to Retest Persistent Problems.
 
