@@ -136,30 +136,25 @@ Well-designed tests exhibit the following properties:
 
 The following code illustrates a unit test written using JUnit in Java[BG98]. The test checks that the add operation defined on a class Money works as expected, namely that 12 CHF + 14 CHF = 26 CHF.
 
-[cols="",]
 [source,java]
 ----
-public class MoneyTest extends TestCase { public void testSimpleAdd() {
-
-   Money m12CHF= new Money(12, "CHF"); // (1)
-   Money m14CHF= new Money(14, "CHF");
-   Money expected= new Money(26, "CHF");
-   Money result= m12CHF.add(m14CHF); // (2)
-   
-   assert(result.currency().equals(expected.currency()) && 
-          result.amount() == expected.amount()); // (3)
-
+public class MoneyTest extends TestCase {
+   public void testSimpleAdd() {
+      Money m12CHF= new Money(12, "CHF");                  // (1)
+      Money m14CHF= new Money(14, "CHF");
+      Money expected= new Money(26, "CHF");
+      Money result= m12CHF.add(m14CHF);                    // (2)
+      assert(result.currency().equals(expected.currency())
+          && result.amount() == expected.amount());        // (3)
+   }
 }
-
-}
-
-
 ----
+
 This satisfies the properties that a test should have:
 
 * This test is automated: It returns boolean value true if the action is the right one and false otherwise.
 * It is stored: it is a method of a test class. So it can be versioned like any other code.
-* It is repeatable: its initialization part ()1) produces the context in which the test can be run and rerun indefinitely.
+* It is repeatable: its initialization part (1) produces the context in which the test can be run and rerun indefinitely.
 * It is independent of the other tests.
 
 Using tests having these properties helps you to build a test suite for the long term. Every time you write a test, either after a bug fix or adding a new feature, or to test an already existing aspect of the system, you are adding _reproducible_ and _verifiable_ information about your system into your test suite. Especially in the context of reengineering a system this fact is important, because this reproducible and verifiable information can be checked after any change to see if aspects of a system are compromised.
