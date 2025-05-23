@@ -166,7 +166,7 @@ Tests represent confidence in a system, because they specify how parts of the sy
 
 _“... testing simply exposes the presence of flaws in a program; it cannot be used to verify the absence of flaws. It can increase your confidence that a program is correct”_
 
-//FIXME figure missing
+image:media/figure6-2.png[image,width=690,height=182]
 
 Figure 6.2: Automated tests are the _foundation_ for reengineering. They establish your confidence in the system, reduce risks, and improve confidence in your ability to change the system.
 
