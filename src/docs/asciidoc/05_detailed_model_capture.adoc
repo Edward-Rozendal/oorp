@@ -24,7 +24,7 @@ Figure 5.1 suggests some possible relationships between the patterns. Tie Code a
 
 Refactor to Understand helps you to expose the design of cryptic code.
 
-image:media/image16.jpg[image,width=432,height=360]
+image:media/image16.jpg[image,width=648,height=540]
 
 Figure 5.1: The patterns of Detailed Model Capture help you to expose the design of the software system and keep track of your understanding.
 
