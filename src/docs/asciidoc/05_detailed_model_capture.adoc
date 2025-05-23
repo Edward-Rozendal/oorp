@@ -143,25 +143,22 @@ _Method-based annotations._ The Squeak development team [IKM^+^97] used this tec
 [source, smalltalk]
 ----
 Object>>flag: aSymbol
-
 "Send this message, with a relevant symbol as argument, to flag a message for subsequent retrieval. For example, you might put the following line in a number of messages:
-
 self flag: #returnHereUrgently
-
 Then, to retrieve all such messages, browse all senders of #returnHereUrgently."
-
 ----
 
 Figure 5.2 shows on the top pane all the senders of the flag: message in the Squeak2.7 environment. The bottom pane then shows the code of the method removeEmptyRows that contains a call to the method flag: highlighted. The flag: message is sent with argument #noteToJohn. The actual content of the annotation follows as a comment.
+
+image:media/image17.jpg[image,width=424,height=273]
+
+Figure 5.2: Finding all senders of a message in Squeak.
 
 [[related-patterns-2]]
 ==== Related Patterns
 
 Tie Code and Questions works well in tandem with Refactor to Understand. Questions in the code may often be resolved by refactoring it. Conversely, as you Refactor to Understand, new questions will be raised and can be entered as annotations.
 
-image:media/image17.jpg[image,width=424,height=273]
-
-Figure 5.2: Finding all senders of a message in Squeak.
 [[refactor-to-understand]]
 === 5.2 Refactor to Understand
 
