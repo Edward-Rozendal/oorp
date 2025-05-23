@@ -435,7 +435,7 @@ To study this correlation relationship one might divide the two measurements. fo
 
 Figure 4.9 shows a correlation graph where the horizontal axis (left to right) represents the number of messages sent and the vertical axis (top to bottom) the number of lines of code. You observe a big cluster in the top left corner where most nodes are superimposed on each other. 
 
-image:media/image15.png[image,width=170,height=261]
+image:media/image15.png[image,width=255,height=391]
 
 Figure 4.9: Correlation graph, with x-position showing the number of messages sent and y-position showing the lines of code.
 
