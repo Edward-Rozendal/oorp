@@ -24,7 +24,7 @@ Figure 5.1 suggests some possible relationships between the patterns. Tie Code a
 
 Refactor to Understand helps you to expose the design of cryptic code.
 
-image:media/image16.jpg[image,width=648,height=540]
+image:media/figure5-1.png[image,width=720,height=599]
 
 Figure 5.1: The patterns of Detailed Model Capture help you to expose the design of the software system and keep track of your understanding.
 
@@ -150,7 +150,7 @@ Then, to retrieve all such messages, browse all senders of #returnHereUrgently."
 
 Figure 5.2 shows on the top pane all the senders of the flag: message in the Squeak2.7 environment. The bottom pane then shows the code of the method removeEmptyRows that contains a call to the method flag: highlighted. The flag: message is sent with argument #noteToJohn. The actual content of the annotation follows as a comment.
 
-image:media/image17.jpg[image,width=424,height=273]
+image:media/figure5-2.png[image,width=725,height=476]
 
 Figure 5.2: Finding all senders of a message in Squeak.
 

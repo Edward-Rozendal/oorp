@@ -34,7 +34,7 @@ The amount of time you should devote to each of these patterns depends largely o
 
 Therefore, these patterns must be applied on a case-by-case basis.
 
-image:media/image7.jpg[image,width=432,height=269]
+image:media/figure4-1.png[image,width=736,height=457]
 
 Figure 4.1: Obtain an Initial Understanding of a software system and cast it into a higher-level representation.
 
@@ -85,7 +85,7 @@ _Preparation._ To derive a class diagram from a relational database schema, firs
 3.  For each table, determine candidate keys. Some of them may be read directly from the database schema, but usually a more detailed analysis is required. Certainly check all (unique) indexes as they often suggest candidate keys. Naming conventions (names including ID or #) may also indicate candidate keys. In case of doubt, collect data samples and verify whether the candidate key is indeed unique within the database population.
 4.  Collect all foreign keys relationships between tables and create an association between the corresponding classes. Foreign key relationships may not be maintained explicitly in the database schema and then you must infer these from column types and naming conventions. Careful analysis is required here, as homonyms (= identical column name and type, yet different semantics) and synonyms (= different column name or type, yet identical semantics) may exist. To cope with such difficulties, at least verify the indexes and view declarations as these point to frequent traversal paths. If possible, verify the join clauses in the SQL statements executed against the database. Finally, confirm or refute certain foreign key relationships by inspecting data samples.
 
-image:media/figure4-2.png[image,width=624,height=429]
+image:media/figure4-2.png[image,width=731,height=502]
 
 Figure 4.2: Mapping a series of relational tables onto an inheritance hierarchy. (a) one to one; (b) rolled down; (c) rolled up
 
@@ -139,7 +139,7 @@ While taking over _XDoctor_, your company has promised to continue to support th
 You start by browsing all table names looking for a table named Patient, but unfortunately you don’t find one. However, there is a close match in a table named Person, where column names like insuranceID suggest that at least some patient information is stored. Nevertheless, many column names are optional, so you suspect a rolled up representation where
 patient information is mixed with information from other kinds of persons. Therefore, you check the source-code and look for all embedded SQL statements querying the table Person (_i.e._,grep "SELECT * Person"). Indeed, there are two classes where such a query is used, namely Patient and Salesman and from the subsets of columns queried in each class, you infer the inheritance hierarchy depicted in Figure 4.2.
 
-image:media/figure4-3.png[image,width=626,height=190]
+image:media/figure4-3.png[image,width=731,height=12260]
 
 Figure 4.3: Identify a qualified association via a key consisting of a foreign key (patientID) and two extra columns (date, nr).
 
@@ -257,11 +257,11 @@ From a previous code review, you learned that the design is reasonably good, so 
 
 a.  Initial hypothesis where the open questions are inserted as Notes
 
-image:media/image8.jpg[image,width=648,height=217]
+image:media/figure4-4a.png[image,width=729,height=243]
 
 a.  Refined hypothesis after verification against the source code; the modificationsare shown as Notes
 
-image:media/image9.jpg[image,width=648,height=238]
+image:media/figure4-4b.png[image,width=727,height=265]
 
 Figure 4.4: Refining the hypotheses concerning the Euro representation. (a) subclasses for the different currencies; (b) flyweight approach for the currencies
 
@@ -298,7 +298,7 @@ Follow-up actions:
 
 The naive approach to design extraction is bottom-up: first build a complete class diagram from source code and afterwards condense it by removing the noise. Unfortunately, the bottom-up approach does not work for large scale systems, because one typically gets a lot of white noise to start from (see for example Figure 4.5, showing an inheritance hierarchy with associations for a medium-sized system). Moreover, such a bottomup approach does not improve your understanding very much, because it forces you to focus on the irrelevant noise instead of the important concepts.
 
-image:media/image10.png[image,width=639,height=306]
+image:media/figure4-5.png[image,width=729,height=357]
 
 Figure 4.5: White-noise obtained by a bottom-up design extraction approach. 
 
@@ -397,7 +397,7 @@ However, formulas that combine different measurements in a single number should 
 * _Data is tedious to interpret._ To measure the quality of a piece of code, you must collect several measurements. Interpreting and comparing such multi-valued tuples is quite tedious especially when dealing with large software systems. Therefore, use visualizations which allow you to analyze different measurements simultaneously.
 * _Requires expertise._ The interpretation of measurement data is difficult and requires a lot of expertise. Fortunately, part of this expertise is documented in the form of design heuristics (see among others [Rie96] [LK94]) and the rest can be acquired on the job.
 
-image:media/image12.png[image,width=385,height=198]
+image:media/figure4-6.png[image,width=443,height=229]
 
 Figure 4.6: Class size overview with node size showing the lines of code and gray value showing the number of instance variables.
 
@@ -413,7 +413,7 @@ Figure 4.6 shows the checker graph for _XDoctor_. The picture reveals that the c
 _Class Inheritance._ Next, you get a feeling for the way inheritance is used by studying the various subtrees in the inheritance hierarchy. Therefore, you measure the classes in terms of hierarchy nesting level (HNL) and number of descendant classes (NDC). You include size measurements as well to assess the magnitude of the classes within the inheritance tree. Therefore, you collect the number of methods (NOM), number of instance variables (NIV) and number of lines of code (LOC) as well. 
 You use an _inheritance tree_ to visualize the various subtrees and the proportion of class sizes inside each of them. All nodes in such a tree have a rectangular shape where the height, width and gray value of each node show three measurements.
 
-image:media/image13.png[image,width=642,height=235]
+image:media/figure4-7.png[image,width=729,height=258]
 
 Figure 4.7: Inheritance tree focussing on class size. The node width shows the number of instance variables, the node height shows the number of methods and the gray value shows the number of code lines.
 
@@ -423,7 +423,7 @@ _Method Inheritance._ To analyze particular inheritance trees in further detail,
 
 Figure 4.8 shows the A, G and F subtrees identified earlier, but now the height, width and gray value of each node represent NMO, NMA and NME. The root classes are displayed as narrow white rectangles, which is normal as root classes cannot override nor extend.
 
-image:media/image14.png[image,width=645,height=196]
+image:media/figure4-8.png[image,width=727,height=230]
 
 Figure 4.8: Inheritance tree focussing on method inheritance. The node width shows the number of methods added, the node height shows the number of methods overridden and the gray value shows the number of methods extended.
 
@@ -435,7 +435,7 @@ To study this correlation relationship one might divide the two measurements. fo
 
 Figure 4.9 shows a correlation graph where the horizontal axis (left to right) represents the number of messages sent and the vertical axis (top to bottom) the number of lines of code. You observe a big cluster in the top left corner where most nodes are superimposed on each other. 
 
-image:media/image15.png[image,width=255,height=391]
+image:media/figure4-9.png[image,width=299,height=453]
 
 Figure 4.9: Correlation graph, with x-position showing the number of messages sent and y-position showing the lines of code.
 

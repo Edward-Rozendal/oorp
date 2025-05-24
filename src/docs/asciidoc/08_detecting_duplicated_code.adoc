@@ -19,7 +19,7 @@ Duplicated code arises for a variety of reasons:
 
 From a reengineering perspective, usually people know whether or not a system suffers from duplication. First, the development team, or the manager will tell you. Second, there are normally some clear signs that duplication has been practiced in a project: for example, two developers cannot develop four millions of line of code in less than eight months without copying and pasting existing code. While analyzing the system you will also identify duplicated code by accident. There is a major difference, however, between knowing that a system contains duplicated code, and knowing exactly which parts have been duplicated.
 
-image:media/image23.jpg[image,width=345,height=183]
+image:media/figure8-1.png[image,width=569,height=306]
 
 Figure 8.1: Two patterns to support Detecting Duplicated Code.
 
@@ -348,7 +348,7 @@ If you want to analyze two files A and B:
 
 To analyze the duplication inside a single file, plot the elements of that file on both axes.
 
-image:media/image24.png[image,width=425,height=135]
+image:media/figure8-2.png[image,width=729,height=240]
 
 Figure 8.2: Possible sequences of dot and their associated interpretations.
 
@@ -374,12 +374,7 @@ Some interesting configurations formed by the dots in the matrices are the follo
 * The approach works well when reverse engineering large amounts of unknown code, because the dotplots attract your eye to certain parts of the code to be studied more closely.
 * The idea is simple yet works surprisingly well.
 
-//FIXME figure
-Before After
-
-_image:media/image25.png[image,width=282,height=282]Before
-
-After
+_image:media/figure8-3.png[image,width=584,height=516]
 
 Figure 8.3: Code duplication before and after refactoring.
 
@@ -400,17 +395,16 @@ A simple version of the approach can be implemented by a good programmer using a
 
 In Figure 8.3 we see a dotplot of two versions of a piece of software, before and after the duplication has been removed. The first version is compared to itself in the top left square. The line down the diagonal simply shows us that every line of code is being compared to itself. What is more interesting is that several other diagonal lines occur in the dotplot, which means that code has been duplicated within this file. A second version of the same file is compared to itself in the lower right square. Here we see no significant duplication aside from the main diagonal, which reflects the fact that all the duplicated code has been successfully refactored.
 
-A B
+image:media/figure8-4.png[image,width=728,height=331]
 
-A image:media/image26.jpg[image,width=407,height=171]
 Figure 8.4: A Python file A being compared to itself and to a second file B.
 
-The bottom left and top right squares are mirror images of each other. They tell us how the before and after files have been reorganized. Since there is no strong diagonal, this tells us that significant reorganization has taken place. The diagonal stripes show us which parts of the old version have survived and where they appear in the new version. From the dot-
+The bottom left and top right squares are mirror images of each other. They tell us how the before and after files have been reorganized. Since there is no strong diagonal, this tells us that significant reorganization has taken place. The diagonal stripes show us which parts of the old version have survived and where they appear in the new version.
+From the dotplot alone, we can guess that about half of the code has survived, and another half of the code has been significantly rewritten.
 
-image:media/image27.jpg[image,width=317,height=317]
+image:media/figure8-5.png[image,width=545,height=546]
 
 Figure 8.5: Dotplots produced by four switch statements.
-plot alone, we can guess that about half of the code has survived, and another half of the code has been significantly rewritten.
 
 Dotplots are also useful to detect duplication across multiple files. Figure 8.4 shows a dotplot comparing two Python files. The comparison of A vs. A shows that there is essentially no internal duplication. Very likely there are some switch statements in the bottom have of the file, indicated by the matrix pattern.
 

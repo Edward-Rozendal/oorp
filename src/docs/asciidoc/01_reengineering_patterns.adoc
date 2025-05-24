@@ -97,7 +97,7 @@ If forward engineering is about moving from high-level views of requirements and
 
 Figure 1.1 illustrates this idea. _Forward engineering_ can be understood as being a process that moves from high-level and abstract models and artifacts to increasing concrete ones. _Reverse engineering_ reconstructs higher-level models and artifacts from code. _Reengineering_ is a process that transforms one low-level representation to another, _while recreating the higher-level artifacts along the way_.
 
-image:media/image1.png[image,width=427,height=251]
+image:media/figure1-1.png[image,width=730,height=439]
 
 Figure 1.1: Forward, reverse and reengineering
 
@@ -206,11 +206,11 @@ Each cluster of patterns is presented as a simple “pattern language” — a s
 
 Setting Direction contains several patterns to help you determine where to focus your reengineering efforts, and make sure you stay on track. First Contact consists of a set of patterns that may be useful when you encounter a legacy system for the first time. Initial Understanding helps you to develop a first simple model of a legacy system, mainly in the form of class diagrams. Detailed Model Capture helps you to develop a more detailed model of a particular component of the system.
 
-image:media/image2.jpg[image,width=432,height=534]
+image:media/figure1-2.png[image,width=725,height=898]
 
 Figure 1.2: The format of a typical reengineering pattern
 
-image:media/image3.jpg[image,width=432,height=271]
+image:media/figure1-3.png[image,width=735,height=453]
 
 Figure 1.3: A map of reengineering pattern clusters
 

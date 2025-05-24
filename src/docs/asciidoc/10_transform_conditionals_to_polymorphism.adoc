@@ -33,7 +33,7 @@ This pattern language consists of six patterns which address the most common pro
 
 Figure 10.1 summarizes the relationships and the differences between the patterns.
 
-image:media/image35.jpg[image,width=432,height=202]
+image:media/figure10-1.png[image,width=734,height=345]
 
 Figure 10.1: Relationships between the patterns constituting Transform Conditionals to Polymorphism.
 
@@ -90,6 +90,8 @@ In C++ it is fairly common to find classes with data members that are declared a
 
 * _Ada:_ Because Ada 83 did not support polymorphism (or subprogram access types), discriminated record types are often used to simulate
 
+image:media/figure10-2.png[image,width=724,height=357]
+
 Figure 10.2: Transformation of explicit type check into self polymorphic method calls.
 
 polymorphism. Typically an enumeration type provides the set of variants and the conversion to polymorphism is straightforward in Ada95.
@@ -124,6 +126,8 @@ polymorphism. Typically an enumeration type provides the set of variants and the
 * The larger number of classes makes the design more complex, and potentially harder to understand. If the original conditional statements are simple, it may not be worthwhile to perform this transformation.
 * Explicit type checks are not always a problem and we can sometimes tolerate them. Creating new classes increases the number of abstractions in the applications and can clutter namespaces. Hence, explicit type checks may be an alternative to the creation of new classes when:
 
+image:media/figure10-3.png[image,width=725,height=387]
+
 Figure 10.3: Combining simple delegation and Transform Self Type Checks when the class cannot be subclassed.
 
 * the set over which the method selection is fixed and will not evolve in the future, and
@@ -150,89 +154,21 @@ There are some situations in which explicit type-checks may nevertheless be the 
 
 We worked on a complex system that controls large, physical machines by sending them messages. These messages are represented by the class Message and can be of different types.
 
-[source]
-----
-class Message \{ public:
-
-_Message();
-
-set_value(char* text); set_value(int action); void send(Channel c); void receive(Channel c); ...
-private: void* data_; int type_;
-
-static const int TEXT = 1; static const int ACTION = 2;
-
-...
-}
-
- a|
-Message::send(Channel c) \{ switch (type_) \{ case TEXT:
-
-... case ACTION:
-
-...
-
-} } void Client1::doit() \{ ...
-
-Message * myMessage = new Message();
-
-myMessage->set_Value("...");
-
-...
-
-}
-
-|
-----
-
-//FIXME figures
-Figure 10.4: Initial design and source code.
-
 *Before.*
 
 A message class wraps two different kinds of messages (TEXT and ACTION) that must be serialized to be sent across a network connection as shown in the code and the figure. We would like to be able to send a new kind of message (say VOICE), but this will require changes to several methods of Message as shown in Figure 10.4.
 
-[cols=",",]
-|
-a|
-virtual void send(Channel c) = 0; virtual void receive(Channel c) = 0;
+image:media/figure10-4.png[image,width=657,height=407]
 
-...
-
-};
-
-class Text_Message: public Message
-
-\{ public:
-
-Text_Message(char* text); void send(Channel c); void receive(Channel c); private: char* text;
-
-...
-
-};
-
- a|
-public:
-
-Action_Message(int action); void send(Channel c); void receive(Channel c); private: int action;
-
-...
-
-};
-
-void Client1::doit() \{ ...
-
-Message * myMessage = new
-
-Text_Message("..."); ...
-}
-
-|
-
-Figure 10.5: Resulting hierarchy and source code.
+Figure 10.4: Initial design and source code.
 
 *After.*
 
 Since Message conceptually implements two different classes, Text_Message and Action_Message, we introduce these as subclasses of Message, as shown in Figure 10.5. We introduce constructors for the new classes, we modify the clients to construct instances of Text_Message and Action_Message rather than Message, and we remove the set_value() methods. Our regression tests should run at this point.
+
+image:media/figure10-5.png[image,width=657,height=592]
+
+Figure 10.5: Resulting hierarchy and source code.
 
 Now we find methods that switch on the type variable. In each case, we move the entire case statement to a separate, protected hook method, unless the switch already occupies the entire method. In the case of send(), this is already the case, so we do not have to introduce a hook method. Again, all our tests should still run.
 
@@ -311,7 +247,7 @@ x.getClass().getName().equals(y.getClass().getName())
 4.  When all methods have been moved, each case of the conditional consists of a call to the new method, so replace the entire conditional by a single call to the new method.
 5.  Consider making the method abstract in the provider’s root. Alternatively implement suitable default behavior here.
 
-image:media/image36.png[image,width=426,height=351]
+image:media/figure10-6.png[image,width=732,height=602]
 
 Figure 10.6: Transformation of explicit type check used to determine which methods of a client should be invoked into polymorphic method calls.
 
@@ -448,6 +384,8 @@ default: cerr << "Unrecognized Phonetype" << endl;
 
 |
 
+image:media/figure10-7.png[image,width=729,height=446]
+
 Figure 10.7: Transforming explicit type checks to polymorphic method invocations.
 
 [[after-1]]
@@ -572,6 +510,8 @@ As in Transform Self Type Checks, transform complex conditional code that tests 
 
 1.  Identify the interface of a state and the number of states.
 
+image:media/figure10-8.png[image,width=586,height=437]
+
 Figure 10.8: Transformation to go from a state pattern simulated using explicit state conditional to a situation where the state pattern has been applied.
 
 If you are lucky, each conditional will partition the state space in the same way, and the number of states will equal the number of cases in each conditional. In case the conditionals overlap, a finer partitioning will be required.
@@ -647,6 +587,8 @@ Apply the Strategy pattern, _i.e._, encapsulate the algorithmic dependent behavi
 3.  Create a new class subclass of Strategy for each identified algorithms.
 4.  Define methods of the interface identified in Step 1 in each of the strategy classes by copying the corresponding code of the test to the method.
 5.  Add a new instance variable in the Context class to refer to the current strategy.
+
+image:media/figure10-9.png[image,width=731,height=318]
 
 Figure 10.9: Transformation to go from a state pattern simulated using explicit state conditional to a situation where the state pattern has been applied.
 
@@ -731,7 +673,7 @@ Null tests may take different forms, depending on the programming language and t
 
 Fowler discusses in detail the necessary refactoring steps [FBB^+^99].
 
-image:media/image37.jpg[image,width=432,height=220]
+image:media/figure10-10.png[image,width=729,height=369]
 
 Figure 10.10: Transformation from a situation based on explicit test of null value to a situation where a Null Object is introduced.
 
@@ -840,7 +782,8 @@ Introduce a _registration mechanism_ to which each tool is responsible for regis
 
 1.  Define a class describing _plug-in objects_, _i.e._, an object encapsulating the information necessary for registering a tool. Although the internal structure of this class depends on the purpose of the registration, a plug-in should provide the necessary information so the tool manager can _identify_ it, _create_ instance of the represented tool and _invoke_ methods. To invoke a tool method, a method or a similar mechanism like a block closure or inner class should be stored in the plug-in object.
 
-//FIXME figure
+image:media/figure10-11.png[image,width=586,height=487]
+
 Figure 10.11: Transforming conditionals in tool users by introducing a registration mechanism.
 
 1.  Define a class representing the _plug-in manager_, _i.e._, that manages the plug-in objects and that will be queried by the tool clients to check the presence of the tools. This class will certainly be a singleton since the plug-ins representing the tools available should not be lost if a new instance of the plug-in manager is created.
