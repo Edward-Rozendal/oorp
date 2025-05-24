@@ -13,9 +13,6 @@ The following forces are at play:
 * As requirements change over time, classes in a software system will have to be adapted to handle new, special cases.
 * Adding new classes or subclasses to a system clutters the namespace.
 * The quickest way to adapt a working piece of software to handle a new requirement, is often to add a conditional test for the special case at some point in the code.
-
-245
-
 * Over time, a simple design tends to get cluttered with many conditional tests for special cases.
 * Case statements group all the variants into a single place instead of spreading the different cases across different classes. However, they lead to design that is less flexible if the case statement appears in more than one place.
 * In some programming languages, case statements are a more conventional idiom to implement varying behavior than polymorphism.
@@ -80,7 +77,10 @@ Most of the time, the type discrimination will jump in your face while you are w
 * Since methods containing case statements tend to be long, it may help to use a tool that sorts methods by lines of code or visualizes classes and methods according to their size. Alternatively, search for classes or methods with a large number of conditional statements.
 * For languages like C++ or Java where it is common to store the implementation of a class in a separate file, it is straightforward to search for and count the incidence of conditional keywords (if, else, case, _etc._). On a UNIX system, for example,
 
+[source,shell]
+----
 grep 'switch' `find . --name "*.cxx" --print`
+----
 
 enumerates all the files in a directory tree with extension .cxx that contain a switch. Other text processing tools like agrep offer possibilities to pose finer granularity queries. Text processing languages like Perl may be better suited for evaluating some kinds of queries, especially those that span multiple lines.
 
@@ -224,19 +224,23 @@ Introduce a new method to the provider hierarchy. Implement the new method in ea
 
 Apply essentially the same techniques described in Transform Self Type Checks to detect case statements, but look for conditions that test the type of a separate service provider which _already_ implements a hierarchy. You should also look for case statements occurring in different clients of the same provider hierarchy.
 
-* _C\++:_ Legacy C++ code is not likely to make use of run-time type information (RTTI). Instead, type information will likely be encoded
-
-in a data member that takes its value from some enumerated type representing the current class. Look for client code switching on such data members.
-
+* _{cpp}_: Legacy {cpp} code is not likely to make use of run-time type information (RTTI). Instead, type information will likely be encoded
+  in a data member that takes its value from some enumerated type representing the current class. Look for client code switching on such data members.
 * _Ada:_ Detecting type tests falls into two cases. If the hierarchy is implemented as a single discriminated record then you will find case statements over the discriminant. If the hierarchy is implemented with tagged types then you cannot write a case statement over the types (they are not discrete); instead an if-then-else structure will be used.
 * _Smalltalk:_ As in Transform Self Type Checks, look for applications of isMemberOf: and isKindOf:, and tests like self class = anotherClass.
 * _Java:_ Look for applications of the operator instanceof, which tests membership of an object in a specific, known class. Although classes in Java are not objects as in Smalltalk, each class that is loaded into the virtual machine is represented by a single instance of java.lang.Class. It is therefore possible to determine if two objects, x and y belong to the same class by performing the test:
 
+[source,java]
+----
 x.getClass() == y.getClass()
+----
 
 Alternatively, class membership may be tested by comparing class names:
 
+[source,java]
+----
 x.getClass().getName().equals(y.getClass().getName())
+----
 
 [[steps-18]]
 ===== Steps
@@ -296,93 +300,72 @@ Client type checks may nevertheless be the right solution when the provider inst
 
 The following C++ code illustrates misplaced responsibilities since the client must explicitly type check instances of Telephone to determine what action to perform. The code in bold highlights the difficulties with this approach.
 
-[cols="",]
-|
-a|
-class Telephone \{ public:
-
-enum PhoneType \{
-
-POTSPHONE, ISDNPHONE, OPERATORPHONE
-
-};
-
-Telephone() \{}
-
-PhoneType phoneType() \{ return myType; }
+[source,cpp]
+----
+class Telephone {
+public:
+   enum PhoneType {
+      POTSPHONE, ISDNPHONE, OPERATORPHONE
+      };
+   Telephone() {}
+   PhoneType phoneType() { return myType; }
 
 private:
-
-PhoneType myType; protected:
-
-void setPhoneType(PhoneType newType) \{ myType = newType; }
+   PhoneType myType;
+protected:
+   void setPhoneType(PhoneType newType) { myType = newType; }
 };
 
-class POTSPhone : public Telephone \{
-
+class POTSPhone : public Telephone {
 public:
-
-POTSPhone() \{ setPhoneType(POTSPHONE); } void tourneManivelle();
-
-void call();
+   POTSPhone() { setPhoneType(POTSPHONE); }
+   void tourneManivelle();
+   void call();
 };
-
 ...
 
-|
+class ISDNPhone: public Telephone {
+public:
+   ISDNPhone() { setPhoneType(ISDNPHONE); }
+   void initializeLine();
+   void connect();
+};
+...
 
-[cols="",]
-|
-a|
-class ISDNPhone: public Telephone \{ public:
-
-_ISDNPhone() \{ setPhoneType(ISDNPHONE);} void initializeLine();
-
-void connect();
-}; ...
-
-class OperatorPhone: public Telephone \{ public:
-
-OperatorPhone() \{ setPhoneType(OPERATORPHONE); }
-
-void operatorMode(bool onOffToggle); void call();
-
+class OperatorPhone: public Telephone {
+public:
+   OperatorPhone() { setPhoneType(OPERATORPHONE); }
+   void operatorMode(bool onOffToggle);
+   void call();
 };
 
-void initiateCalls(Telephone ** phoneArray, int numOfCalls) \{ for(int i = 0; i<numOfCalls ;i++ ) \{ Telephone * p = phoneArray[i];
+void initiateCalls(Telephone ** phoneArray, int numOfCalls) {
+   for(int i = 0; i<numOfCalls; i++ ) {
+      Telephone * p = phoneArray[i];
 
-switch(p-->phoneType()) \{ case Telephone::POTSPHONE: \{ POTSPhone *potsp = (POTSPhone *) p;
-
-potsp-->tourneManivelle();
-
-potsp-->call(); break;
-
+      switch(p-->phoneType()) {
+      case Telephone::POTSPHONE: {
+         POTSPhone *potsp = (POTSPhone *) p;
+         potsp-->tourneManivelle();
+         potsp-->call();
+         break;
+      }
+      case Telephone::ISDNPHONE: {
+         ISDNPhone *isdnp = (ISDNPhone *) p;
+         isdnp-->initializeLine(); isdnp-->connect();
+         break;
+      }
+      case Telephone::OPERATORPHONE: {
+         OperatorPhone *opp = (OperatorPhone *) p;
+         opp-->operatorMode(true);
+         opp-->call();
+         break;
+      }
+      default: cerr << "Unrecognized Phonetype" << endl;
+      };
+   }
 }
-
-case Telephone::ISDNPHONE: \{ ISDNPhone *isdnp = (ISDNPhone *) p;
-
-isdnp-->initializeLine(); isdnp-->connect(); break;
-
-}
-
-case Telephone::OPERATORPHONE: \{ OperatorPhone *opp = (OperatorPhone *) p;
-
-opp-->operatorMode(true);
-
-opp-->call();
-
-break;
-
-}
-default: cerr << "Unrecognized Phonetype" << endl;
-
-};
-
-}
-
-}
-
-|
+----
 
 image:media/figure10-7.png[image,width=729,height=446]
 
@@ -393,70 +376,59 @@ Figure 10.7: Transforming explicit type checks to polymorphic method invocations
 
 After applying the pattern the client code will look like the following. (See also Figure 10.7.)
 
-[cols="",options="header",]
-|
-a|
-class Telephone \{ public:
-
-Telephone() \{}
-
-virtual void makeCall() = 0;
-};
-
-Class POTSPhone : public Telephone \{ void tourneManivelle();
-
-void call();
-
+[source,cpp]
+----
+class Telephone {
 public:
-
-POTSPhone() \{} void makeCall();
+   Telephone() {}
+   virtual void makeCall() = 0;
 };
 
-void POTSPhone::makeCall() \{ this-->tourneManivelle();
-
-this-->call();
-
-}
-
-class ISDNPhone: public Telephone \{
-
-a|
-void initializeLine(); void connect();
-
+class POTSPhone : public Telephone {
+   void tourneManivelle();
+   void call();
 public:
-
-
-ISDNPhone() \{ } void makeCall();
-
-
+   POTSPhone() {}
+   void makeCall();
 };
 
-void ISDNPhone::makeCall() \{ this-->initializeLine();
-
-this-->connect();
-
+void POTSPhone::makeCall() {
+   this-->tourneManivelle();
+   this-->call();
 }
 
-class OperatorPhone: public Telephone \{ void operatorMode(bool onOffToggle); void call();
-
+class ISDNPhone: public Telephone {
+   void initializeLine();
+   void connect();
 public:
-
-_OperatorPhone() \{ }
-
-void makeCall();
+   ISDNPhone() {}
+   void makeCall();
 };
 
-void OperatorPhone::makeCall() \{ this-->operatorMode(true); this-->call();
-
+void ISDNPhone::makeCall() {
+   this-->initializeLine();
+   this-->connect();
 }
 
-void initiateCalls(Telephone ** phoneArray, int numOfCalls) \{ for(int i = 0; i<numOfCalls ;i++ ) \{ phoneArray[i]-->makeCall();
+class OperatorPhone: public Telephone {
+   void operatorMode(bool onOffToggle);
+   void call();
+public:
+   OperatorPhone() {}
+   void makeCall();
+};
 
+void OperatorPhone::makeCall() {
+   this-->operatorMode(true);
+   this-->call();
 }
 
+void initiateCalls(Telephone ** phoneArray, int numOfCalls) {
+   for(int i = 0; i<numOfCalls; i++ ) {
+      phoneArray[i]-->makeCall();
+   }
 }
-
-|
+----
 
 [[rationale-31]]
 ==== Rationale
@@ -716,41 +688,28 @@ The following Smalltalk code is taken from Woolf [Woo98]. Initially the code con
 
 [source,smalltalk]
 ----
-
-a|
 VisualPart>>objectWantedControl
-
-...
-
-↑ctrl isNil ifFalse:
-
-[ctrl isControlWanted ifTrue:[self] ifFalse:[nil]]
-
-|
+   ...
+   ↑ctrl isNil
+   ifFalse:
+      [ctrl isControlWanted
+         ifTrue:[self]
+         ifFalse:[nil]]
+----
 
 It is then transformed into :
 
-[cols="",]
-|
-a|
+[source,smalltalk]
+----
 VisualPart>>objectWantedControl
-
-...
-
-↑ctrl isControlWanted ifTrue:[self]
-
-ifFalse:[nil]
-
+   ...
+   ↑ctrl isControlWanted
+      ifTrue:[self]
+      ifFalse:[nil]
 Controller>>isControlWanted
-
-↑self viewHasCursor
-
+   ↑self viewHasCursor
 NoController>>isControlWanted
-
-↑false
-
-|
-
+   ↑false
 ----
 
 [[transform-conditionals-into-registration]]
@@ -803,85 +762,53 @@ In Squeak [IKM^+^97], the FileList is a tool that allows the loading of differen
 
 The FileList implementation creates different menu items representing the different possible actions depending on the suffix of the files. The dynamic part of the menu is defined in the method menusForFileEnding: which takes a file suffix as its argument and returns a menu item containing the label of the menu item and the name of the corresponding method that should be invoked on the FileList object.
 
-[cols="",options="header",]
-|
-a|
+[source,smalltalk]
+----
 FileList>>menusForFileEnding: suffix
 
-(suffix = 'jpg') ifTrue:
-
-[↑MenuItem label:'open image in a window'.
-
-selector: #openImageInWindow].
-
-(suffix = 'morph') ifTrue:
-
-[↑MenuItem label: 'load as morph'.
-
-selector: #openMorphFromFile].
-
-(suffix = 'mid') ifTrue:
-
-[↑MenuItem label: 'play midi file'.
-
-selector: #playMidiFile].
-
-(suffix = 'st') ifTrue:
-
-[↑MenuItem label: 'fileIn'.
-
-selector: #fileInSelection].
-
-(suffix = 'swf') ifTrue:
-
-[↑MenuItem label: 'open as Flash'.
-
-selector: #openAsFlash].
-
-(suffix = '3ds') ifTrue:
-
-[↑MenuItem label: 'Open 3DS file'.
-
-selector: #open3DSFile].
-
-(suffix = 'wrl') ifTrue:
-
-[↑MenuItem label: 'open in Wonderland'.
-
-selector: #openVRMLFile].
-
-(suffix = 'html') ifTrue:
-
-a|
-[↑MenuItem label: 'open in html browser'.
-
-selector: #openInBrowser].
-
-(suffix = '*') ifTrue:
-
-[↑MenuItem label: 'generate HTML'.
-
-selector:#renderFile].
-
-|
+   (suffix = 'jpg') ifTrue:
+      [↑MenuItem label:'open image in a window'.
+         selector: #openImageInWindow].
+   (suffix = 'morph') ifTrue:
+      [↑MenuItem label: 'load as morph'.
+         selector: #openMorphFromFile].
+   (suffix = 'mid') ifTrue:
+      [↑MenuItem label: 'play midi file'.
+         selector: #playMidiFile].
+   (suffix = 'st') ifTrue:
+      [↑MenuItem label: 'fileIn'.
+       selector: #fileInSelection].
+   (suffix = 'swf') ifTrue:
+      [↑MenuItem label: 'open as Flash'.
+         selector: #openAsFlash].
+   (suffix = '3ds') ifTrue:
+      [↑MenuItem label: 'Open 3DS file'.
+         selector: #open3DSFile].
+   (suffix = 'wrl') ifTrue:
+      [↑MenuItem label: 'open in Wonderland'.
+         selector: #openVRMLFile].
+   (suffix = 'html') ifTrue:
+      [↑MenuItem label: 'open in html browser'.
+         selector: #openInBrowser].
+   (suffix = '*') ifTrue:
+      [↑MenuItem label: 'generate HTML'.
+         selector:#renderFile].
+----
 
 The methods whose selectors are associated in the menu are implemented in the FileList class. We give two examples here. First the method checks if the tool it needs is available, if not it generates a beep, otherwise the corresponding tool is created and then used to handle the selected file.
 
-[cols="",]
-|
-a|
+[source,smalltalk]
+----
 FileList>>openInBrowser
+   Smalltalk at: #Scamper ifAbsent: [↑ self beep].
+   Scamper openOnUrl: (directory url , fileName encodeForHTTP)
 
-Smalltalk at: #Scamper ifAbsent: [↑ self beep].
-
-Scamper openOnUrl: (directory url , fileName encodeForHTTP)
 FileList>>openVRMLFile
-
-| scene |
-
-Smalltalk at: #Wonderland ifAbsent: [↑ self beep]. scene := Wonderland new. scene makeActorFromVRML: self fullName.
-
-|
+   | scene |
+   Smalltalk at: #Wonderland ifAbsent: [↑ self beep].
+   scene := Wonderland new.
+   scene makeActorFromVRML: self fullName.
+----
 
 [[after-2]]
 ===== After
@@ -890,29 +817,37 @@ The solution is to give each tool the responsibility to register itself and let 
 
 _Step1._ The solution is to first create the class ToolPlugin representing the registration of a given tool. Here we store the suffix files, the menu label and the action to be performed when the tools will be invoked.
 
-Object subclass: #ToolPlugin instanceVariableNames: 'fileSuffix menuLabelName blockToOpen '
+[source,smalltalk]
+----
+Object subclass: #ToolPlugin
+   instanceVariableNames: 'fileSuffix menuLabelName blockToOpen '
+----
 
 _Step 2._ Then the class PluginManager is defined. It defines a structure to hold the registered tools and defines behavior to add, remove and find registered tool.
 
-Object subclass: #PluginManager instanceVariableNames: 'plugins '
+[source,smalltalk]
+----
+Object subclass: #PluginManager
+   instanceVariableNames: 'plugins '
 
-PluginManager>>initialize plugins := OrderedCollection new.
+PluginManager>>initialize
+   plugins := OrderedCollection new.
 
-PluginManager>>addPlugin : aPlugin plugins add: aRegistree
+PluginManager>>addPlugin : aPlugin
+   plugins add: aRegistree
 
-[cols="",]
-|
-a|
 PluginManager>>removePlugin: aBlock
 
-_(plugins select: aBlock) copy do: [:each| plugins remove: each]
-PluginManager>>findToolFor: aSuffix
+   (plugins select: aBlock) copy
+      do: [:each| plugins remove: each]
 
-"return a registree of a tool being able to treat file of format aSuffix"
+   PluginManager>>findToolFor: aSuffix
+      "return a registree of a tool being able to treat file of format aSuffix"
 
-↑ plugins detect: [:each| each suffix = aSuffix] ifNone: [nil]
-
-|
+   ↑ plugins
+      detect: [:each| each suffix = aSuffix]
+      ifNone: [nil]
+----
 
 Note that the findToolFor: method could take a block to select which of the plug-in objects satisfying it and that it could return a list of plug-in representing all the tools currently able to treat a given file format.
 
@@ -920,71 +855,68 @@ _Step 3._ Then the tools should register themselves when they are loaded in memo
 
 In Squeak, when a class specifies a class (static) initialize method, this method is invoked once the class is loaded in memory. We then specialize the class methods initialize of the classes Scamper and Wonderland to invoke their class methods toolRegistration defined below:
 
-[cols="",options="header",]
-|
-a|
+[source,smalltalk]
+----
 Scamper class>>toolRegistration
 
-PluginManager uniqueInstance addPlugin:
+   PluginManager uniqueInstance
+      addPlugin:
+      (ToolPlugin
+         forFileSuffix: 'html'
+         openingBlock:
+            [:fileList |
+            self openOnUrl:
+               (fileList directory url ,
+                  fileList fileName encodeForHTTP)]
+         menuLabelName: 'open in html browser')
 
-(ToolPlugin forFileSuffix: 'html' openingBlock:
-
-[:fileList |
-
-self openOnUrl:
-
-(fileList directory url , fileList fileName encodeForHTTP)]
-
-menuLabelName: 'open in html browser')
 Wonderland class>>toolRegistration
 
-PluginManager uniqueInstance addPlugin: (ToolPlugin
-
-a|
-forFileSuffix: 'wrl' openingBlock:
-
-[:fileList |
-
-| scene | scene := self new.
-scene makeActorFromVRML: fileList fullName] menuLabelName: 'open in Wonderland')
-
-|
+   PluginManager uniqueInstance
+      addPlugin:
+      (ToolPlugin
+         forFileSuffix: 'wrl'
+         openingBlock:
+            [:fileList |
+            | scene |
+            scene := self new.
+            scene makeActorFromVRML: fileList fullName]
+         menuLabelName: 'open in Wonderland')
+----
 
 In Squeak, when a class is removed from the system, it receives the message removeFromSystem. Here we then specialize this method for every tool so that it can unregister itself.
 
-[cols="",]
-|
-a|
+[source,smalltalk]
+----
 Scamper class>>removeFromSystem
 
-super removeFromSystem.
-
-PluginManager uniqueInstance removePlugin: [:plugin| plugin forFileSuffix = 'html']
+   super removeFromSystem.
+   PluginManager uniqueInstance
+      removePlugin: [:plugin| plugin forFileSuffix = 'html']
 
 Wonderland class>>removeFromSystem
 
-super removeFromSystem.
-
-PluginManager uniqueInstance removePlugin: [:plugin| plugin forFileSuffix = 'wrl']
-
-|
+   super removeFromSystem.
+   PluginManager uniqueInstance
+   removePlugin: [:plugin| plugin forFileSuffix = 'wrl']
+----
 
 _Step 4._ The FileList object now has to use the ToolsManager to identify the right plug-in object depending on the suffix of the selected file. Then if a tool is available for the given suffix, it creates a menu item specifying that the FileList has to be passed as argument of the action block associated with the tool. In the case where there is no tool a special menu is created whose action is to do nothing.
 
-[cols="",]
-|
-a|
+[source,smalltalk]
+----
 FileList>>itemsForFileEnding: suffix
 
-| plugin |
-
-plugin := PluginManager uniqueInstance findToolFor: suffix ifAbsent: [nil].
-
-↑ plugins isNil ifFalse: [Menu label: (plugin menuLabelName) actionBlock: (plugin openingBlock) withParameter: self]
-
-ifTrue: [ErrorMenu new label: 'no tool available for the suffix ', suffix]
-
-|
+   | plugin |
+   plugin := PluginManager uniqueInstance
+            findToolFor: suffix ifAbsent: [nil].
+   ↑ plugins isNil
+      ifFalse: [Menu label: (plugin menuLabelName)
+                  actionBlock: (plugin openingBlock)
+                  withParameter: self]
+   ifTrue: [ErrorMenu new
+               label: 'no tool available for the suffix ', suffix]
+----
 
 [[tradeoffs-41]]
 ==== Tradeoffs
@@ -1028,24 +960,29 @@ This Perl script searches the methods in C++ files and lists the occurrences of 
 $/ = '::';
 # new record delim.,
 $elseIfPattern = 'else[\s\n]*{?[\s\n]*if';
-$linecount = 1; while (<>) { s/(//.*)//g; # remove C++ style comments $lc = (split /\n/) -- 1; # count lines
-if(/$elseIfPattern/) {
-# count # of lines until first
-# occurrence of "else if"
-$temp = join("",$`,$&);
-$l = $linecount + split(/\n/,$temp) -- 1;
-# count the occurrences of else--if pairs,
-# flag the positions for an eventual printout
-$swc = s/(else)([\s\n]*{?[\s\n]*if)
-	/$1\n	* HERE *$2/g;
-printf "\n%s: Statement with
-%2d else--if's, first at: %d",
-$ARGV, $swc, $l;
-}
-   $linecount += $lc; if(eof) {
-   close ARGV; $linecount = 0;
+$linecount = 1;
+while (<>) {
+   s/(//.*)//g; # remove C++ style comments
+   $lc = (split /\n/) - 1; # count lines
 
-   print "\n";
-}
+   if(/$elseIfPattern/) {
+      # count # of lines until first
+      # occurrence of "else if"
+      $temp = join("",$`,$&);
+      $l = $linecount + split(/\n/,$temp) - 1;
+      # count the occurrences of else-if pairs,
+      # flag the positions for an eventual printout
+      $swc = s/(else)([\s\n]*{?[\s\n]*if)
+	               /$1\n	* HERE *$2/g;
+
+      printf "\n%s: Statement with
+         %2d else--if's, first at: %d",
+         $ARGV, $swc, $l;
+   }
+   $linecount += $lc;
+   if(eof) {
+      close ARGV; $linecount = 0;
+      print "\n";
+   }
 }
 ----
