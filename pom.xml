@@ -37,7 +37,6 @@
                         </goals>
                         <configuration>
                             <backend>html5</backend>
-                            <sourceHighlighter>coderay</sourceHighlighter>
                             <attributes>
                                 <imagesdir>.</imagesdir>
                                 <toc>left</toc>
@@ -47,6 +46,7 @@
                                 <idprefix/>
                                 <idseparator>-</idseparator>
                                 <docinfo1>true</docinfo1>
+                                <!--source-highlighter>coderay</source-highlighter-->
                             </attributes>
                         </configuration>
                     </execution>
