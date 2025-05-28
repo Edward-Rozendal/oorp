@@ -338,14 +338,18 @@ In order to use the framework, we will typically define a new class, say TestHas
 
 [source,java]
 ----
-import junit.framework.*; import java.util.Hashtable; public class TestHashtable extends TestCase {
+import junit.framework.*;
+import java.util.Hashtable;
+
+public class TestHashtable extends TestCase { 
 ----
 
 The instance variables of the test class will hold the fixture - the actual test data:
 
 [source,java]
 ----
-private Hashtable boss; private String joe = "Joe";
+   private Hashtable boss;
+   private String joe = "Joe";
 ----
 
 image:media/figure6-5.png[image,width=728,height=375]
@@ -354,29 +358,27 @@ Figure 6.5: In JUnit, tests are actually run by an instance of TestResult, which
 
 [source,java]
 ----
-private String mary = "Mary"; 
-private String dave = "Dave"; 
-private String boris = "Boris";
+   private String mary = "Mary"; 
+   private String dave = "Dave"; 
+   private String boris = "Boris";
 ----
 
 There should be constructor that takes the name of a test case as its parameter. Its behavior is defined by its superclass:
 
 [source,java]
 ----
-public TestHashtable(String name) {
-
-super(name);
-
-}
+   public TestHashtable(String name) {
+      super(name);
+   }
 ----
 
 The setUp() hook method can be overridden to set up the fixture. If there is any cleanup activity to be performed, we should also override tearDown(). Their default implementations are empty.
 
 [source,java]
 ----
-protected void setUp() \{ boss = new Hashtable();
-
-}
+   protected void setUp() {
+      boss = new Hashtable();
+   }
 ----
 
 We can then define any number of test cases that make use of the fixture. Note that each test case is independent, and will have a fresh copy of the fixture. (In principle, we should design tests that not only exercise the entire interface, but the test data should cover both typical and boundary cases. The sample tests shown here are far from complete.)
@@ -385,25 +387,39 @@ Each test case should start with the characters “test":
 
 [source,java]
 ----
-public void testEmpty() \{ assert(boss.isEmpty()); assertEquals(boss.size(), 0); assert(!boss.contains(joe));
+   public void testEmpty() {
+      assert(boss.isEmpty());
+      assertEquals(boss.size(), 0);
+      assert(!boss.contains(joe));
+      assert(!boss.containsKey(joe));
+   }
 
-assert(!boss.containsKey(joe));
-}
-
-public void testBasics() \{ boss.put(joe, mary); boss.put(mary, dave); boss.put(boris, dave); assert(!boss.isEmpty()); assertEquals(boss.size(), 3); assert(boss.contains(mary)); assert(!boss.contains(joe)); assert(boss.containsKey(mary)); assert(!boss.containsKey(dave)); assertEquals(boss.get(joe), mary); assertEquals(boss.get(mary), dave); assertEquals(boss.get(dave), null);
-
-}
-
+   public void testBasics() {
+      boss.put(joe, mary);
+      boss.put(mary, dave);
+      boss.put(boris, dave);
+      assert(!boss.isEmpty());
+      assertEquals(boss.size(), 3);
+      assert(boss.contains(mary));
+      assert(!boss.contains(joe));
+      assert(boss.containsKey(mary));
+      assert(!boss.containsKey(dave));
+      assertEquals(boss.get(joe), mary);
+      assertEquals(boss.get(mary), dave);
+      assertEquals(boss.get(dave), null);
+   }
 ----
 
 You may provide a static method suite() which will build an instance of junit.framework.TestSuite from the test cases defined by this class:
 
 [source,java]
 ----
-public static TestSuite suite() { TestSuite suite = new TestSuite(); suite.addTest(new TestHashtable("testBasics")); suite.addTest(new TestHashtable("testEmpty")); return suite;
-
-}
-
+   public static TestSuite suite() {
+      TestSuite suite = new TestSuite();
+      suite.addTest(new TestHashtable("testBasics"));
+      suite.addTest(new TestHashtable("testEmpty"));
+      return suite;
+   }
 }
 ----
 
@@ -504,30 +520,17 @@ Let’s look back at the test presented in Write Tests to Enable Evolution. The 
 
 [source,java]
 ----
-public class MoneyTest extends TestCase \{
-
-// ...
-
-public void testSimpleAdd() \{
-
-Money m12CHF= new Money(12, "CHF");
-
- |// (1)
-a|
-Money m14CHF= new Money(14, "CHF");
-
-Money expected= new Money(26, "CHF");
-
-Money result= m12CHF.add(m14CHF); // (2)
-
-assert(result.currency().equals(expected.currency())
-
-&& result.amount() == expected.amount()); // (3)
-
+public class MoneyTest extends TestCase {
+   // ...
+      public void testSimpleAdd() {
+         Money m12CHF= new Money(12, "CHF");                   // (1)
+         Money m14CHF= new Money(14, "CHF");
+         Money expected= new Money(26, "CHF");
+         Money result= m12CHF.add(m14CHF);                     // (2)
+         assert(result.currency().equals(expected.currency())
+            && result.amount() == expected.amount());          // (3)
+      }
 }
-
-}
-
 ----
 
 However, if the class Money would override the default equals operation defined on Object (doing so would also require us to override hashCode), the last assert statement could be simplified and would become independent of the internal implementation.
@@ -535,17 +538,13 @@ However, if the class Money would override the default equals operation defined 
 [source,java]
 ----
 public class MoneyTest extends TestCase {
-
-// ...
-
-public void testSimpleAdd() {
-
-   Money m12CHF= new Money(12, "CHF"); // (1)
-   Money m14CHF= new Money(14, "CHF");
-   Money expected= new Money(26, "CHF");
-   Money result= m12CHF.add(m14CHF); // (2)
-   assert(expected.equals(result)); // (3)
-
+   // ...
+      public void testSimpleAdd() {
+      Money m12CHF= new Money(12, "CHF"); // (1)
+      Money m14CHF= new Money(14, "CHF");
+      Money expected= new Money(26, "CHF");
+      Money result= m12CHF.add(m14CHF); // (2)
+      assert(expected.equals(result)); // (3)
    }
 }
 ----
@@ -633,27 +632,25 @@ The following Smalltalk code shows a test that hardcodes the expected outcomes f
 [source, smalltalk]
 ----
 testMoneyGivenForKids
-
-| singlePerson80occupationWithOneKidOf5 couplePerson40occupationWithOneKidOf5 couplePerson100occupationWith2KsidOf5 couplePersonWithOneKidOf14 |
+   |  singlePerson80occupationWithOneKidOf5
+      couplePerson40occupationWithOneKidOf5
+      couplePerson100occupationWith2KsidOf5
+      couplePersonWithOneKidOf14 |
 
 "cases are extracted from a database after the system has performed the computation"
 
 singlePerson80WithOneKidOf5 := extract....
-
-couplePerson40occupationWithOneKidOf5 := extract.... couplePerson100occupationWithOneKidOf5 := extract....
-
-couplePersonWithOneKidOf14 := extract.... "tests"
+couplePerson40occupationWithOneKidOf5 := extract....
+couplePerson100occupationWithOneKidOf5 := extract....
+couplePersonWithOneKidOf14 := extract....
+"tests"
 
 "We test that the right amount of money is computed correctly"
 
-self assert: singlePerson80occupationWithOneKidOf5 moneyForKid = 150. self assert: couplePerson40occupationWithOneKidOf5 moneyForKid 
-
-150*4. self assert: couplePerson100occupationWith2KidsOf5 moneyForKid 
-
-150*2.
-
+self assert: singlePerson80occupationWithOneKidOf5 moneyForKid = 150.
+self assert: couplePerson40occupationWithOneKidOf5 moneyForKid = 150*4.
+self assert: couplePerson100occupationWith2KidsOf5 moneyForKid = 150*2.
 self assert: couplePersonWithOneKidOf14 moneyForKid = 180.
-
 ----
 
 [[rationale-13]]
