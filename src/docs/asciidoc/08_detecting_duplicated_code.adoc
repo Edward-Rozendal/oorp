@@ -10,8 +10,6 @@ It is important to identify duplicated code for the following reasons:
 * Duplicated code hampers the introduction of changes, since every implemented variant of a piece of functionality will have to be changed. Since it is easy to miss some variants, bugs are likely to pop up in other places.
 * Duplicated code replicates and scatters the logic of a system instead of grouping it into identifiable artifacts (classes, methods, packages). It leads to systems that are more difficult to understand and to change. Instead of just having to understand relationship between logical parts you will have first to identify them and then understand their relationships.
 
-201
-
 Duplicated code arises for a variety of reasons:
 
 * Whenever a programmer is implementing a piece of functionality that is remotely similar to something that has been done before, it is natural to use the existing code as a model for the new task. If it is a matter of recombining existing procedures, the task will be simple. But if the behavior is more complex, the easiest thing to do is to copy, paste and modify the old code to achieve the functionality. If both the old and new pieces of code belong to different applications, the harm is minimal. But if they are part of the same system, duplicated code has now been introduced.
@@ -91,222 +89,179 @@ Consider the case of a system written in C++ where you suspect duplicated code. 
 
 The normalization would change the following code
 
-[source]
+[source,cpp]
 ----
-
-|
-a|
 ...
-
-
-// assign same fastid as container fastid = NULL;
-
-const char* fidptr = getFastid(); if(fidptr != NULL) \{ int l = strlen(fidptr); fastid = new char[l+1]; char *tmp = (char*) fastid;
-
-for (int i =0;i<l;i++) tmp[i] = fidptr[i];
-
-tmp[l] = '\0';
-
+// assign same fastid as container
+fastid = NULL;
+const char* fidptr = getFastid();
+if(fidptr != NULL) {
+    int l = strlen(fidptr);
+    fastid = new char[l+1];
+    char *tmp = (char*) fastid;
+    for (int i =0;i<l;i++)
+        tmp[i] = fidptr[i];
+    tmp[l] = '\0';
 }
-
 ...
-
-|
+----
 
 into
 
-[cols="",]
-|
-a|
+[source,cpp]
+----
 ...
-
 fastid=NULL;
-
-constchar*fidptr=getFastid(); if(fidptr!=NULL)
-
-intl=strlen(fidptr); fastid=newchar[l+1]; char*tmp=(char*)fastid;
-
-for(inti=0;i<l;i++) tmp[i]=fidptr[i]; tmp[l]='\0';
-
+constchar*fidptr=getFastid();
+if(fidptr!=NULL)
+intl=strlen(fidptr);
+fastid=newchar[l+1];
+char*tmp=(char*)fastid;
+for(inti=0;i<l;i++)
+tmp[i]=fidptr[i];
+tmp[l]='\0';
 ...
-
-|
+----
 
 Afterwards, the line-by-line comparison of the code against itself produces a report telling which sequences of lines are duplicated.
 
-Lines:fastid=NULL;;constchar*fidptr=getFastid();;if(fidptr!=NULL); intl=strlen(fidptr);;fastid=newchar[l+1];; Locations:
-
+[source,cpp]
+----
+Lines:fastid=NULL;;constchar*fidptr=getFastid();;if(fidptr!=NULL);
+intl=strlen(fidptr);;fastid=newchar[l+1];;
+Locations:
 </typesystem/Parser.C>6178/6179/6180/6181/6182
-
 </typesystem/Parser.C>6198/6199/6200/6201/6202
+----
 
 Below is a sample of a perl script that will do the trick.
-#! /usr/bin/env perl --w
 
+[source,cpp]
+----
+#! /usr/bin/env perl --w
 # duplocForCPP.pl -- detect duplicated lines of code (algorithm only) 
 # Synopsis: duplocForCPP.pl filename ...
-
-# Takes code (or other) files and collects all line numbers of lines equal to each other within these files. The algorithm is linear (in space and time) to the number of lines in input.
+# Takes code (or other) files and collects all line numbers of lines
+# equal to each other within these files. The algorithm is linear
+# (in space and time) to the number of lines in input.
 
 # Output: Lists of numbers of equal lines.
-
-[cols="",]
-|
-a|
 # Author: Matthias Rieger
 
 $equivalenceClassMinimalSize = 1;
+$slidingWindowSize = 5;
+$removeKeywords = 0;
 
-$slidingWindowSize = 5; $removeKeywords = 0;
-
-@keywords = qw(if then else for \{
-
-}
-
+@keywords = qw(if
+    then
+    else
+    for
+    {
+    }
 );
 
 $keywordsRegExp = join '|', @keywords;
 
 @unwantedLines = qw( else
-
-return return; return result;
-
-}else\{
-
-#else
-
-#endif
-
-\{
-
-}
-
-;
-
-};
-
+    return
+    return;
+    return result;
+    }else{
+    #else
+    #endif
+    {
+    }
+    ;
+    };
 );
 
 push @unwantedLines, @keywords;
 
-@unwantedLines\{@unwantedLines} = (1) x @unwantedLines;
+@unwantedLines{@unwantedLines} = (1) x @unwantedLines;
 
 $totalLines = 0;
-
 $emptyLines = 0;
-
 $codeLines = 0;
-
 @currentLines = ();
-
 @currentLineNos = ();
-
 %eqLines = ();
-
 $inComment = 0;
 
 $start = (times)[0];
 
-while (<>) \{ chomp;
+while (<>) {
+    chomp;
+    $totalLines++;
 
-$totalLines++;
+    # remove comments of type /* */
+    my $codeOnly = ";
+    while(($inComment && m|\*/|) || (!$inComment && m|/\*|)) {
+        unless($inComment) { $codeOnly .= $` }
+        $inComment = !$inComment;
+        $_ = $';
+    }
+    $codeOnly .= $_ unless $inComment;
+    $_ = $codeOnly;
 
-# remove comments of type / /
+    s|//.*$||; # remove comments of type //
+    s/\s+//g; #remove white space
+    s/$keywordsRegExp//og if $removeKeywords; #remove keywords
 
-|
+    # remove empty and unwanted lines
+    if((!$_ && $emptyLines++)
+        || (defined $unwantedLines{$_} && $codeLines++)) { next }
 
-*
+    $codeLines++;
+    push @currentLines, $_;
+    push @currentLineNos, $.;
+    if($slidingWindowSize < @currentLines) {
+        shift @currentLines;
+        shift @currentLineNos;
+    }
 
-[cols="",options="header",]
-|
-a|
-my $codeOnly = ";
+    # print STDERR "Line $totalLines >$_<\n";
 
-while(($inComment && m|\*/|) || (!$inComment && m|/\*|)) \{ unless($inComment) \{ $codeOnly .= $` }
+    my $lineToBeCompared = join ", @currentLines;
+    my $lineNumbersCompared = "<$ARGV>"; # append the name of the file
+    $lineNumbersCompared .= join '/', @currentLineNos;
+    # print STDERR "$lineNumbersCompared\n";
+    if($bucketRef = $eqLines\{$lineToBeCompared}) {
+        push @$bucketRef, $lineNumbersCompared;
+    } else {
+        $eqLines\{$lineToBeCompared} = [ $lineNumbersCompared ];
+    }
 
-$inComment = !$inComment;
-
-$_ = $';
-
-}
-
-$codeOnly .= $_ unless $inComment;
-
-$_ = $codeOnly;
-
-s|//.*$||; # remove comments of type // s/\s+//g; #remove white space
-
-s/$keywordsRegExp//og if $removeKeywords; #remove keywords
-
-# remove empty and unwanted lines
-
-if((!$_ && $emptyLines++)
-
-|| (defined $unwantedLines\{$_} && $codeLines++)) \{ next }
-
-$codeLines++; push @currentLines, $_; push @currentLineNos, $.;
-
-if($slidingWindowSize < @currentLines) \{ shift @currentLines;
-
-shift @currentLineNos;
-
-}
-
-# print STDERR "Line $totalLines >$_<\n";
-
-my $lineToBeCompared = join ", @currentLines;
-
-my $lineNumbersCompared = "<$ARGV>"; # append the name of the file
-
-$lineNumbersCompared .= join '/', @currentLineNos; # print STDERR "$lineNumbersCompared\n"; if($bucketRef = $eqLines\{$lineToBeCompared}) \{ push @$bucketRef, $lineNumbersCompared;
-
-} else \{
-
-$eqLines\{$lineToBeCompared} = [ $lineNumbersCompared ];
-
-}
-
-if(eof) \{ close ARGV } # Reset linenumber--count for next file
-
+    if(eof) { close ARGV } # Reset linenumber--count for next file
 }
 
 $end = (times)[0];
+$processingTime = $end -- $start;
 
-$processingTime = $end -- $start; # print the equivalence classes
+# print the equivalence classes
 
 $numOfMarkedEquivClasses = 0;
-
-a|
 $numOfMarkedElements = 0;
-
-foreach $line (sort \{ length $a <=> length $b } keys %eqLines) \{ if(scalar @\{$eqLines\{$line}} > $equivalenceClassMinimalSize) \{
-
-$numOfMarkedEquivClasses++;
-
-$numOfMarkedElements += scalar @\{$eqLines\{$line}}; print "Lines: $line\n";
-
-print "Locations: @\{$eqLines\{$line}}\n\n";
-
-}
-
+foreach $line (sort { length $a <=> length $b } keys %eqLines) {
+    if(scalar @{$eqLines\{$line}} > $equivalenceClassMinimalSize) {
+        $numOfMarkedEquivClasses++;
+        $numOfMarkedElements += scalar @\{$eqLines\{$line}};
+        print "Lines: $line\n";
+        print "Locations: @{$eqLines{$line}}\n\n";
+    }
 }
 
 print "\n\n\n";
-
-print "Number of Lines processed: $totalLines\n"; print "Number of Empty Lines: $emptyLines\n"; print "Number of Code Lines: $codeLines\n"; print "Scanning time in seconds: $processingTime\n";
-
-print "Lines per second: @\{[$totalLines/$processingTime]}\n";
-
+print "Number of Lines processed: $totalLines\n";
+print "Number of Empty Lines: $emptyLines\n";
+print "Number of Code Lines: $codeLines\n";
+print "Scanning time in seconds: $processingTime\n";
+print "Lines per second: @{[$totalLines/$processingTime]}\n";
 print "----------------------------------------------------------------------------\n";
-
-print "Total Number of equivalence classes: @\{[scalar keys %eqLines]}\n
-
-";
-
-print "Size of Sliding window: $slidingWindowSize\n"; print "Lower bound of eqiv--class Size: $equivalenceClassMinimalSize\n"; print "Number of marked equivalence classes:
-
-$numOfMarkedEquivClasses\n"; print "Number of marked elements: $numOfMarkedElements\n";
-
+print "Total Number of equivalence classes: @\{[scalar keys %eqLines]}\n";
+print "Size of Sliding window: $slidingWindowSize\n";
+print "Lower bound of eqiv--class Size: $equivalenceClassMinimalSize\n";
+print "Number of marked equivalence classes: $numOfMarkedEquivClasses\n";
+print "Number of marked elements: $numOfMarkedElements\n";
 ----
 
 [[known-uses-18]]
