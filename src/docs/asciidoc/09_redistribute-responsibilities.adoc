@@ -165,53 +165,47 @@ As shown in Figure 9.4, both the Payroll and TelephoneGuide classes print labels
 
 The following code show how this would look like in Java.
 
-[cols="",options="header",]
-|
-a|
-public class Employee \{ public String[] telephoneNumbers = \{};
+[source,java]
+----
+public class Employee {
+    public String[] telephoneNumbers = {};
+    ...
+    public String name() {
+        return name;}
 
-...
-
-public String name() \{ return name;}
-
-public String address() \{ return address;}
-
+    public String address() {
+        return address;}
 }
 
-public class Payroll \{
+public class Payroll {
+    public static Employee currentEmployee;
 
-a|
-public static Employee currentEmployee;
-
-public static void printEmployeeLabel () \{
-
-System.out.println(currentEmployee.name()); System.out.println(currentEmployee.address());
-
-for (int i=0; i < currentEmployee.telephoneNumbers.length; i++) \{ System.out.print(currentEmployee.telephoneNumbers[i]); System.out.print(" ");}
-
-System.out.println("");}
-
+    public static void printEmployeeLabel () {
+        System.out.println(currentEmployee.name());
+        System.out.println(currentEmployee.address());
+        for (int i=0; i < currentEmployee.telephoneNumbers.length; i++) {
+            System.out.print(currentEmployee.telephoneNumbers[i]);
+            System.out.print(" ");
+        }
+        System.out.println("");
+    }
 ...
-
 }
 
-public class TelephoneGuide \{
-
-
-public static void printEmployeeTelephones (Employee emp) \{
-
-System.out.println(emp.name()); System.out.println(emp.address());
-
-for (int i=0; i < emp.telephoneNumbers.length -- 1; i++) \{
-
-System.out.print(emp.telephoneNumbers[i]); System.out.print(" ---- ");}
-
-System.out.print(emp.telephoneNumbers[ emp.telephoneNumbers.length -- 1]); System.out.println("");}
-
-
-... }
-
-|
+public class TelephoneGuide {
+    public static void printEmployeeTelephones (Employee emp) {
+        System.out.println(emp.name());
+        System.out.println(emp.address());
+        for (int i=0; i < emp.telephoneNumbers.length - 1; i++) {
+            System.out.print(emp.telephoneNumbers[i]);
+            System.out.print(" -- ");
+        }
+        System.out.print(emp.telephoneNumbers[ emp.telephoneNumbers.length - 1]);
+        System.out.println("");
+    }
+    ...
+}
+----
 
 Note that although both print methods implement essentially the same functionality, there are some slight differences. Among others, TelephoneGuide.printEmployeeTelephones uses a different separator while printing out the telephone numbers.
 
@@ -220,68 +214,52 @@ Note that although both print methods implement essentially the same functionali
 
 The different separators can easily be dealt with by defining a special parameter representing the separator to be used. Thus TelephoneGuide.printEmployeeTelephones gets rewritten as follows.
 
-[cols="",]
-|
-a|
-public static void printEmployeeTelephones (Employee emp, String separator) \{
-
-... for (int i=0; ...
-
-System.out.print(separator);}
-
-...} ...
-
-|
+[source,java]
+----
+public static void printEmployeeTelephones (Employee emp, String separator) {
+    ...
+    for (int i=0; ...
+        System.out.print(separator);
+    ...
+    }
+...
+----
 
 Next, move the printEmployeeTelephones method from TelephoneGuide to Employee. Thus, copy the code and replace all references to the emp parameter with a direct reference to the attributes and methods. Also, ensure that the new method has an intention revealing name, thus omit the Employee part from the method name, resulting in a method printLabel.
 
-[cols="",]
-|
-a|
-public class Employee \{
+[source,java]
+----
+public class Employee {
+    ...
+    public void printLabel (String separator) {
 
-...
-
-public void printLabel (String separator) \{
-
-System.out.println(name);
-
-System.out.println(address);
-
-for (int i=0; i < telephoneNumbers.length -- 1; i++) \{
-
-System.out.print(telephoneNumbers[i]);
-
-System.out.print(separator);
-
-}
-
-System.out.print(telephoneNumbers[telephoneNumbers.length -- 1]); System.out.println("");
-
-}
-|
+        System.out.println(name);
+        System.out.println(address);
+        for (int i=0; i < telephoneNumbers.length - 1; i++) {
+            System.out.print(telephoneNumbers[i]);
+            System.out.print(separator);
+        }
+        System.out.print(telephoneNumbers[telephoneNumbers.length - 1]);
+        System.out.println("");
+    }
+----
 
 Then replace the method bodies of Payroll.printEmployeeLabel and TelephoneGuide.printEmployeeTelephones with a simple invocation of the Employee.printLabel method.
 
-[cols="",]
-|
-a|
-public class Payroll \{
+[source,java]
+----
+public class Payroll {
+    ...
+    public static void printEmployeeLabel () {
+        currentEmployee.printLabel(" ");
+    ...}
 
-...
-
-public static void printEmployeeLabel () \{ currentEmployee.printLabel(" ");
-
-...}
-
-public class TelephoneGuide \{
-
-...
-
-public static void printEmployeeTelephones (Employee emp) \{ emp.printLabel(" ---- ");}
-
-...}
-|
+public class TelephoneGuide {
+    ...
+    public static void printEmployeeTelephones (Employee emp) {
+        emp.printLabel(" -- ");
+    ...}
+----
 
 Finally, verify which other methods refer to the name(), address() and telephoneNumbers. If no such methods exist, consider to declare those methods and attributes as private.
 
@@ -364,54 +342,61 @@ To deal with this case you can:
 
 The use of additional variables, can sometimes disguise navigation code, so reading the code is often necessary. For instance, the following Java code does not contain a chain of invocations.
 
-[cols="",]
-|
-a|
-Token token; token = parseTree.token(); if (token.identifier() != null) \{
-
-...
-
-|
+[source,java]
+----
+Token token;
+token = parseTree.token();
+if (token.identifier() != null) {
+    ...
+----
 
 However, it is equivalent to the following code, which does contain a chain of invocations
 
-[cols="",]
-|
-a|
-if (parseTree.token().identifier() != null) \{
-
-...
-
-|
+[source,java]
+----
+if (parseTree.token().identifier() != null) {
+    ...
+----
 
 _Smalltalk._ Simply searching for sequences of calls in Smalltalk code can create a lot of noise because Smalltalk does not have predefined control structures but uses messages even for implementing control structures. The above example with the disguised navigation code would read as follows in Smalltalk. (Note the messages isNil and ifFalse:[...])
 
-[cols="",]
-|
-a|
-| token | token := parseTree token.
-
+[source,smalltalk]
+----
+| token |
+token := parseTree token.
 token identifier isNil ifFalse:[...]
-
-|
+----
 
 The equivalent version with navigation code becomes.
 
+[source,smalltalk]
+----
 parseTree token identifier isNil ifFalse: [...]
+----
 
 The following code segments contain a sequence of invocations but do not pose any problems because the first deals with boolean testing and the second with conversion (abuse of conversion, in fact).
 
-(a isNode) & (a isAbstract) ifTrue: [...] aCol asSet asSortedCollection asOrderedCollection
+[source,smalltalk]
+----
+(a isNode) & (a isAbstract) ifTrue: [...]
+aCol asSet asSortedCollection asOrderedCollection
+----
 
 _Java._ For Java or C++, primitives data types and control structures are not implemented using objects, so simple pattern matching produces less noise. For example, a simple Unix command like:
 
-egrep '.*\(\).*\(\).*\(\).' *.java egrep '.*\..*\..*\..' *.java
+[source,shell]
+----
+egrep '.*\(\).*\(\).*\(\).' *.java
+egrep '.*\..*\..*\..' *.java
+----
 
 identifies lines of code like the following ones, which are examples of navigation code coupling between classes, and filters out the conversions mentioned above.
 
+[source,java]
+----
 a.getAbstraction().getIdentifier().traverse(this)
-
 a.abstraction.identifier.traverse(this)
+----
 
 More sophisticated matching expressions can reduce the noise produced by the parentheses of casts or other combinations.
 
@@ -475,22 +460,25 @@ The Java code below shows the situation before and after applying Eliminate Navi
 [[before-1]]
 ===== Before
 
-[cols="",]
-|
-a|
-public class Reports \{
-
+[source,java]
+----
+public class Reports {
 ...
+    public static void countHandledFiles(Department department) {
+        int nrHandled = 0, nrUnhandled = 0;
 
-public static void countHandledFiles(Department department) \{ int nrHandled = 0, nrUnhandled = 0;
-
-for (int i=0; i < department.employees.length; i++) \{ for (int j=0; j < department.employees[i].files.length; j++) \{ if (department.employees[i].files[j].handled()) \{ nrHandled++;}
-
-else \{ nrUnhandled++;}}}
-
+        for (int i=0; i < department.employees.length; i++) {
+            for (int j=0; j < department.employees[i].files.length; j++) {
+                if (department.employees[i].files[j].handled()) {
+                     nrHandled++;
+                }
+                else {
+                    nrUnhandled++;
+                }
+            }
+        }
 ...}
-
-|
+----
 
 The method countHandledFiles counts the number of handled files, by asking the current department its employees and for each of these files. The classes Department and Employee have to declare those attributes public. With this implementation, two problems occur:
 
@@ -507,59 +495,59 @@ First extract the outer for loop from Reports.countHandledFiles as a separate me
 [source, java]
 ----
 public class Department {
-
 ...
-
-public void countHandledFiles
-
-(Counter nrHandled, Counter nrUnhandled) { for (int i=0; i < this.employees.length; i++) \{ for (int j=0; j < this.employees[i].files.length; j++) { if (this.employees[i].files[j].handled()) { nrHandled.increment();}
-
-else { nrUnhandled.increment();}}}}
-...}
-
-public class Reports \{
-
+    public void countHandledFiles (Counter nrHandled, Counter nrUnhandled) {
+        for (int i=0; i < this.employees.length; i++) {
+            for (int j=0; j < this.employees[i].files.length; j++) {
+                if (this.employees[i].files[j].handled()) {
+                    nrHandled.increment();
+                }
+                else {
+                    nrUnhandled.increment();
+                }
+            }
+        }
+    }
 ...
+}
 
-private static void countHandledFiles(Department department) {
-
-Counter nrHandled = new Counter (0), nrUnhandled = new Counter
-
-(0);
-
-department.countHandledFiles(nrHandled, nrUnhandled);
-...}
-
+public class Reports {
+...
+    private static void countHandledFiles(Department department) {
+        Counter nrHandled = new Counter (0), nrUnhandled = new Counter (0);
+        department.countHandledFiles(nrHandled, nrUnhandled);
+...
+}
 ----
 
 Next, extract the inner for loop from Department.countHandledFiles (also named countHandledFiles) and move it to the class Employee.
 
 [source,java]
 ----
-public class Employee \{
-
+public class Employee {
 ...
-
-public void countHandledFiles
-
-(Counter nrHandled, Counter nrUnhandled) \{ for (int j=0; j < this.files.length; j++) \{ if (this.files[j].handled()) \{ nrHandled.increment();}
-
-else \{ nrUnhandled.increment();}}}
-
-...}
-
-public class Department \{
-
+    public void countHandledFiles(Counter nrHandled, Counter nrUnhandled) {
+        for (int j=0; j < this.files.length; j++) {
+            if (this.files[j].handled()) {
+                nrHandled.increment();
+            }
+            else {
+                nrUnhandled.increment();
+            }
+        }
+    }
 ...
+}
 
-public void countHandledFiles
-
-(Counter nrHandled, Counter nrUnhandled) \{ for (int i=0; i < this.employees.length; i++) \{
-a|
-this.employees[i].countHandledFiles(nrHandled, nrUnhandled);}}
-
-...}
-
+public class Department {
+...
+    public void countHandledFiles(Counter nrHandled, Counter nrUnhandled) {
+        for (int i=0; i < this.employees.length; i++) {
+            this.employees[i].countHandledFiles(nrHandled, nrUnhandled);
+        }
+    }
+...
+}
 ----
 
 If all direct accesses to the employees and files variables are removed, these attributes can be declared private.
