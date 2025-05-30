@@ -52,7 +52,7 @@ So how can you tell that your software is going to break very soon? Fortunately 
 
 *Duplicated code.* Duplicated code arises naturally as a system evolves, as shortcut to implementing nearly identical code, or merging different versions of a software systems. If the duplicated code is not eliminated by refactoring the common parts into suitable abstractions, maintenance quickly becomes a nightmare as the same code has to be fixed in many places.
 
-*Code Smells.* Duplicated code is an example of code that “smells bad” and should be changed. Long methods, big classes, long parameter lists, switch statements and data classes are few more examples that have been documented by Kent Beck and others [FBB^+^99]. Code smells are often a sign that a system has been repeatedly expanded and adapted without having been reengineered.
+*Code Smells.* Duplicated code is an example of code that “smells bad” and should be changed. Long methods, big classes, long parameter lists, switch statements and data classes are few more examples that have been documented by Kent Beck and others <<FBB99>>. Code smells are often a sign that a system has been repeatedly expanded and adapted without having been reengineered.
 
 *What’s special about Objects?*
 
@@ -66,7 +66,7 @@ One of the conclusions you should draw from this book is that, well, objects are
 
 First of all, anyone who has had to work with a non-trivial, existing object-oriented code base will have noticed: _it is hard to find the objects_. In a very real sense, the architecture of an object-oriented application is usually hidden. What you see is a bunch of classes and an inheritance hierarchy. But that doesn’t tell you which objects exist at run-time and how they collaborate to provide the desired behavior. Understanding an object-oriented system is a process of reverse engineering, and the techniques described in this book help to tackle this problem. Furthermore, by reengineering the code, you can arrive at a system whose architecture is more transparent, and easier to understand.
 
-Second, anyone who has tried to extend an existing object-oriented application will have realized: _reuse does not come for free_. It is actually very hard to reuse any piece of code unless a fair bit of effort was put into designing it so that it could be reused. Furthermore, it is essential that investment in reuse _requires management commitment_ to put the right organizational infrastructure in place, and should only be undertaken with clear, measurable goals in mind [GR95].
+Second, anyone who has tried to extend an existing object-oriented application will have realized: _reuse does not come for free_. It is actually very hard to reuse any piece of code unless a fair bit of effort was put into designing it so that it could be reused. Furthermore, it is essential that investment in reuse _requires management commitment_ to put the right organizational infrastructure in place, and should only be undertaken with clear, measurable goals in mind <<GR95>>.
 
 We are still not very good at managing object-oriented software projects in such a way that reuse is properly taken into account. Typically reuse comes too late. We use object-oriented modelling techniques to develop very rich and complex object models, and hope that when we implement the software we will be able to reuse something. But by then there is little chance that these rich models will map to any kind of standard library of components except with great effort. Several of the reengineering techniques we present address how to uncover these components after the fact.
 
@@ -77,7 +77,7 @@ _Any_ successful software system will suffer from the symptoms of legacy systems
 [[the-reengineering-lifecycle]]
 === 1.2 The Reengineering Lifecycle
 
-Reengineering and reverse engineering are often mentioned in the same context, and the terms are sometimes confused, so it is worthwhile to be clear about what we mean by them. Chikofsky and Cross [CI92] define the two terms as follows:
+Reengineering and reverse engineering are often mentioned in the same context, and the terms are sometimes confused, so it is worthwhile to be clear about what we mean by them. Chikofsky and Cross <<CI92>> define the two terms as follows:
 
 “_Reverse Engineering_ is the process of analyzing a subject system to identify the system’s components and their interrelationships and create representations of the system in another form or at a higher level of abstraction.”
 
@@ -91,7 +91,7 @@ The introduction of term “reverse engineering” was clearly an invitation to 
 
 “_Forward Engineering_ is the traditional _process of moving from_ high-level abstractions and logical, implementation-independent _designs to the physical implementation_ of a system.”
 
-How exactly this process of forward engineering can or should work is of course a matter of great debate, though most people accept that the process is iterative, and conforms to Barry Boehm’s so-called _spiral model_ of software development [Boe88]. In this model, successive versions of a software system are developed by repeatedly collecting requirements, assessing risks, engineering the new version, and evaluating the results. This general framework can accommodate many different kinds of more specific process models that are used in practice.
+How exactly this process of forward engineering can or should work is of course a matter of great debate, though most people accept that the process is iterative, and conforms to Barry Boehm’s so-called _spiral model_ of software development <<Boe88>>. In this model, successive versions of a software system are developed by repeatedly collecting requirements, assessing risks, engineering the new version, and evaluating the results. This general framework can accommodate many different kinds of more specific process models that are used in practice.
 
 If forward engineering is about moving from high-level views of requirements and models towards concrete realizations, then reverse engineering is about going backwards from some concrete realization to more abstract models, and reengineering is about transforming concrete implementations to other concrete implementations.
 
@@ -154,7 +154,7 @@ _Refactoring_ is restructuring within an object-oriented context. Martin Fowler 
 
 “_Refactoring_ is the process of changing a software system in such a way that it does not alter the external behavior of the code yet improves its internal structure.”
 
-— Martin Fowler, [FBB^+^99]
+— Martin Fowler, <<FBB99>>
 
 It may be hard to tell the difference between software “reengineering” and software “maintenance”. IEEE has made several attempts to define software maintenance, including this one:
 
@@ -165,7 +165,7 @@ Most people would probably consider that “maintenance” is routine whereas �
 
 Others, however, might argue that reengineering is just a way of life.
 
-You develop a little, reengineer a little, develop a little more, and so on [Bec00]. In fact, there is good evidence to support the notion that a culture of _continuous_ reengineering is necessary to obtain healthy, maintainable software systems.
+You develop a little, reengineer a little, develop a little more, and so on <<Bec00>>. In fact, there is good evidence to support the notion that a culture of _continuous_ reengineering is necessary to obtain healthy, maintainable software systems.
 
 Continuous reengineering, however, is not yet common practice, and for this reason we present the patterns in this book in the context of a major reengineering effort. Nevertheless, the reader should keep in mind that most of the techniques we present will apply just as well when you reengineer in small iterations.
 

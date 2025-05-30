@@ -136,12 +136,12 @@ After the discussion, you make a mental note to check the source code to assess 
 [[rationale]]
 ==== Rationale
 
-“The major problems of our work are not so much technological as sociological in nature.”— Tom De Marco, [DL99]
+“The major problems of our work are not so much technological as sociological in nature.”— Tom De Marco, <<DL99>>
 
 Accepting the premise that the sociological issues concerning a software project are far more important then the technological ones, any reengineering project must at least know the political context of the system under study.
 
 _“Organizations which design systems are constrained to produce designs which are copies of the communications structure of these organizations.”
-— Melvin Conway, [Con68]_
+— Melvin Conway, <<Con68>_
 
 Conway’s law is often paraphrased as: “If you have 4 groups working on a compiler; you’ll get a 4-pass compiler”
 
@@ -151,7 +151,7 @@ A second reason is that before formulating a plan for a reengineering project, y
 
 “Maintenance fact #1: In the late ‘60s and throughout the 70’s, production system support and maintenance were clearly treated as second-class work.
 Maintenance fact #2: In 1998, support and maintenance of production systems continues to be treated as second-class work.”
-— Rob Thomsett, [Tho98]
+— Rob Thomsett, <<Tho98>>
 
 While talking with the maintainers, you should be aware that software maintenance is often considered second-class work. If that’s the case for the maintenance team you are talking with, it may seriously disturb the discussion. Either because the maintenance team has changed frequently, in which case the maintainers themselves are unaware of the historical evolution. Or because the people you discuss with are very protective about their job, in which case they will not tell you what you need to know.
 
@@ -162,16 +162,16 @@ During our experience with reengineering projects we made it a habit to kick-off
 
 _“The RT-100 — was developed by a third-party software vendor in the late 1980s and acquired by Nortel in 1990. For the next three years Nortel enhanced and maintained it before outsourcing it to another vendor to be systematically rewritten. This effort failed and the system was returned to Nortel in mid 1994. By this time, the original design team has been disbanded and scattered, and the product’s six customers organizations were quite unhappy.
 _RT-100 was assigned to Nortel’s Atlanta Technology Park laboratory. No staff members there had any experience with ACD software, and, due to another project’s cancellation, staff morale was quite low.”
-— Spencer Rugaber and Jim White, [RW98]_
+— Spencer Rugaber and Jim White, <<RW98>>_
 
 The above quote is from a paper which describes the story of a reengineering project, and depicts very well the typical desperation a reengineering project had to start with. Yet — as described in the paper itself — this early assessment of the historical and political context made it possible for the project to succeed, because they knew very well which factors would make the stakeholders happy and consequently could motivate the new reengineering team.
 
-In one of the case-studies of the DESEL project (Designing for Ease of System Evolution), Stephen Cook reports that it is crucial to talk to the maintainers as they know best which aspects of the domain are likely to change and which ones are likely to remain stable [CHR01]. As such, the maintainers have submerged knowledge about how the system could have been built, knowledge which is seldom documented. Yet, during this discussion one must emphasize a “design for evolution” mind-set, to force the maintainers to detach themselves from the latest problems they have been solving.
+In one of the case-studies of the DESEL project (Designing for Ease of System Evolution), Stephen Cook reports that it is crucial to talk to the maintainers as they know best which aspects of the domain are likely to change and which ones are likely to remain stable <<CHR01>>. As such, the maintainers have submerged knowledge about how the system could have been built, knowledge which is seldom documented. Yet, during this discussion one must emphasize a “design for evolution” mind-set, to force the maintainers to detach themselves from the latest problems they have been solving.
 
 [[related-patterns]]
 ==== Related Patterns
 
-There are several pattern languages which explicitly deal with the way a software development team is organized [Cop95] [Har96] [Tay00] [BDS^+^00]. Although meant for a forward engineering situation, it is good to be aware of them while discussing with the maintainers, because it may help you assess the situation more quickly.
+There are several pattern languages which explicitly deal with the way a software development team is organized <<Cop95>> <<Har96>> <<Tay00>> <<BDS00>>. Although meant for a forward engineering situation, it is good to be aware of them while discussing with the maintainers, because it may help you assess the situation more quickly.
 
 [[what-next-1]]
 ==== What Next
@@ -209,7 +209,7 @@ After this reading session, produce a short report about your findings, includin
 
 * a general assessment of whether reengineering seems feasible and why (not);
 * entities which seem important (_i.e._, classes, packages, ···);
-* suspicious coding styles discovered (_i.e._, “code smells” [FBB^+^99]);
+* suspicious coding styles discovered (_i.e._, “code smells” <<FBB99>>);
 * parts which must be investigated further (_i.e._, tests).
 
 Keep this report short, and name the entities like they are mentioned in the source code.
@@ -221,7 +221,7 @@ The “time is scarce” principle demands some preparation. A checklist might h
 
 * The development team may have employed _code reviews_ as part of their quality assurance. If they did, make sure you incorporate the checklists used during the reviews. If they didn’t, try some generic checklists used to review the kind of code you are dealing with.
 * Some development teams applied _coding styles_ and if they did, it is good to be aware of them. Naming conventions especially are crucial to scan code quickly.
-* The programmers might have used _coding idioms_ (_i.e._, C++ [Cop92] [Mey98] [Mey96]; Smalltalk [Bec97]) which help you recognize typical language constructs.
+* The programmers might have used _coding idioms_ (_i.e._, {cpp}: <<Cop92>> <<Mey98>> <<Mey96>> Smalltalk; <<Bec97>>) which help you recognize typical language constructs.
 * You probably have some _questions_ that you would like an answer to.
 
 Below are some additional items you might add to your checklist because they provide good entry points for further examination.
@@ -285,18 +285,18 @@ After the reading session, you summarize your conclusions in the following note.
 [[rationale-1]]
 ==== Rationale
 
-Code reviews are widely acknowledged as being a very effective means to find problems in programs written by peers [GG93] [Gla97]. Two important prerequisites have to be met in order to make such reviews costeffective: (a) a _checklist_ must be prepared to help the reviewer focus on the relevant questions and (b) a review session must be kept _short_ because reviewers cannot concentrate for a very long time (2 hours at maximum).
+Code reviews are widely acknowledged as being a very effective means to find problems in programs written by peers <<GG93>> <<Gla97>>. Two important prerequisites have to be met in order to make such reviews costeffective: (a) a _checklist_ must be prepared to help the reviewer focus on the relevant questions and (b) a review session must be kept _short_ because reviewers cannot concentrate for a very long time (2 hours at maximum).
 
 I took a course in speed reading and read “War and Peace” in twenty minutes. It’s about Russia.— Woody Allen
 
-There is an important difference between traditional code reviews and the ones you perform during your first contact with a software system. The former is typically meant to detect errors, while the latter is meant to get a first impression. This difference implies that you need to care less about details and thus that you can read more code. Typical guidelines for code-reviews state that about 150 statements per hour can be reviewed [BP94]. However, during your first contact you don’t need such a detailed analysis and thus can increase the volume of code to be reviewed. We didn’t perform any serious empirical investigation, but from our experience 10,000 lines of code per hour seems reasonable.
+There is an important difference between traditional code reviews and the ones you perform during your first contact with a software system. The former is typically meant to detect errors, while the latter is meant to get a first impression. This difference implies that you need to care less about details and thus that you can read more code. Typical guidelines for code-reviews state that about 150 statements per hour can be reviewed <<BP94>>. However, during your first contact you don’t need such a detailed analysis and thus can increase the volume of code to be reviewed. We didn’t perform any serious empirical investigation, but from our experience 10,000 lines of code per hour seems reasonable.
 
 [[known-uses-1]]
 ==== Known Uses
 
-The original pattern was suggested by Kent Beck, who stated that it is one of the techniques he always applies when starting a consultant job on an existing system. Robson [RBCM91] reports code reading as “the crudest method of gaining knowledge about a system” and acknowledges that it is the method most commonly used to understand an existing program. Some case studies reports also mention that reading the source code is one of the ways to start a reengineering project [BH95] [JC00].
+The original pattern was suggested by Kent Beck, who stated that it is one of the techniques he always applies when starting a consultant job on an existing system. Robson <<RBCM91>> reports code reading as “the crudest method of gaining knowledge about a system” and acknowledges that it is the method most commonly used to understand an existing program. Some case studies reports also mention that reading the source code is one of the ways to start a reengineering project <<BH95>> <<JC00>>
 
-While writing this pattern, one of our team members applied it to reverse engineer the Refactoring Browser [RBJ97]. The person was not familiar with Smalltalk, yet was able to get a feel for the system structure by a mere inspection of class interfaces. Also, a special hierarchy browser did help to identify some of the main classes and the comments provided some useful hints to what parts of the code were supposed to do. Applying the pattern took a bit more than an hour, which seemed enough for a relatively small system and slow progress due to the unfamiliarity with Smalltalk.
+While writing this pattern, one of our team members applied it to reverse engineer the Refactoring Browser <<RBJ97>>. The person was not familiar with Smalltalk, yet was able to get a feel for the system structure by a mere inspection of class interfaces. Also, a special hierarchy browser did help to identify some of the main classes and the comments provided some useful hints to what parts of the code were supposed to do. Applying the pattern took a bit more than an hour, which seemed enough for a relatively small system and slow progress due to the unfamiliarity with Smalltalk.
 
 One particularly interesting occurrence of this pattern took place towards the end of the FAMOOS project. During the course of one week, a heterogeneous team of reverse engineers went for an on-site visit to participate in a kind of reverse engineering contest. The assignment was to invest four days and use the available reverse engineering tools to learn as much as possible about a particular C++ system. The fifth day was then used to report the findings to the original developers for verification. One of the team members finished his assignment too early, and took the opportunity to Read all the Code in One Hour. It turned out that this one person had a much better overview of the system: he could participate in all discussions and could even explain some of the comments of the developers.
 
@@ -404,27 +404,27 @@ You conclude the reading session with the following report:
 ==== Rationale
 
 “It is not unusual for a software development organization to spend as much as 20 or 30 percent of all software development effort on documentation.”
-— Roger Pressman, [Pre94]
+— Roger Pressman, <<Pre94>>
 
 Documentation, as opposed to source code, is intended to explain the software system at an abstraction level well suited for humans. Therefore, the documentation will certainly contain information “nuggets”; the only problem is how to find the relevant ones. Finding relevant information is made difficult because of two typical circumstances present in almost all reengineering projects.
 
 “All of the case-studies face the problem of non-existent, unsatisfactory or inconsistent documentation”
-— ESEC/FSE 1997 Workshop on Object-Oriented Re-engineering, [DG97]
+— ESEC/FSE 1997 Workshop on Object-Oriented Re-engineering, <<DG97>>
 
 First of all, the documentation is likely to be out of sync with respect to the actual situation. For the five case-studies we investigated during the FAMOOS project, “insufficient documentation” was the only problem all maintainers complained about. Nevertheless, even outdated information may be useful, because at least it tells you how the system was supposed to behave in the past. This is a good starting point to infer how it is used today.
 
 “The documentation that exists for these systems usually describes isolated parts but not the overall architecture. Moreover, the documentation is often scattered throughout the system and on different media”
-Kenny Wong, _et al._, [WTMS95]
+Kenny Wong, _et al._, <<WTMS95>>
 
 Second, documentation is normally produced in a forward engineering context, hence not intended for reengineering purposes. Generated design documentation (_e.g._, database schemas, Javadoc) for instance, is typically quite up-to date, yet too fine-grained to be useful during the initial phases of a reengineering project. User manuals are black box descriptions of the software system, and thus cannot serve as blueprints of what’s inside the boxes. Here as well you should see the documentation as a good starting point to infer what you’re really interested in.
 
 [[known-uses-2]]
 ==== Known Uses
 
-A study by Fjeldstadt and Hamlen reported that “in making an enhancement, maintenance programmers studied the original program about three-and-a-half times as long as they studied the documentation, but just as long as they spent implementing the enhancement.” [Cor89] quoting [FH79]. This equation gives a good impression of the relative importance studying the documentation should have.
+A study by Fjeldstadt and Hamlen reported that “in making an enhancement, maintenance programmers studied the original program about three-and-a-half times as long as they studied the documentation, but just as long as they spent implementing the enhancement.” <<Cor89>> quoting <<FH79>>. This equation gives a good impression of the relative importance studying the documentation should have.
 
 “The case-study began with an effort to understand the existing design of CTAS in general and the CM in particular. — The documentation for CTAS includes motivation and architecture overview, software structures, user manuals and research papers on the underlying algorithms. However, there appears to be no document that explains in high-level terms what the system computes or what assumptions it makes about its environment. Nor is there a design document that explains the relationship between the CTAS components: how they communicate, what services they offer, and so forth. We were forced to infer this information from the code, a challenge common to many commercial development efforts.”
-— Daniel Jackson & John Chapin, [JC00]
+— Daniel Jackson & John Chapin, <<JC00>>
 
 The above quotation summarizes quite well that you need to study the documentation, yet that it will not tell you all you need to know. The casestudy they are referring to concerns an air-traffic control system (CTAS) where they reverse- and reengineered a key component _CommunicationsManager_ (CM) of about 80 KLOC C++ code.
 
@@ -536,29 +536,30 @@ Once you are back in your office you write a small report, which includes the se
 ==== Rationale
 
 _“The ability to respond flexibly to the interviewee’s responses is one of the reasons why interviews are so widely used”
-— Simon Bennett, et al., [BMF99]_
+— Simon Bennett, et al., <<BMF99>>_
 
 _“Interviews are well suited to exploratory studies where one does not know yet what one is looking for, since the interviewer can adjust the interview to the situation”
-— Jakob Nielsen, [Nie99]_
+— Jakob Nielsen, <<Nie99>>_
 
 Interviewing people working with a software system is essential to get a handle on the important functionality and the typical usage scenario’s. However, asking predefined questions does not work, because in the initial phases of reengineering you do not know what to ask. Merely asking what people like about a system will result in vague or meaningless answers. On top of that, you risk getting a very negative picture because users have a tendency to complain about a legacy system.
 
 _“The real challenge of analysis begins when the expert must communicate the concept to someone else — to an analyst. Since the concept is often very rich and expansive, it is generally not possible for experts adequately to communicate their entire understanding in a single, holistic expression.”
-— Adele Goldberg & Kenny Rubin, [GR95]_
+— Adele Goldberg & Kenny Rubin, <<GR95>>_
 
 Compared to a forward engineering situation, a reverse engineer has one major advantage: there is a working software system available and you can exploit its presence. In such a situation it is safe to hand over the initiative to the user by requesting a demo. First of all, a demo allows users to tell the story in their own words, yet is comprehensible because the demo imposes some kind of tangible structure. Second, because users must start from a working system, they will adopt a more positive attitude explaining what works. Finally, during the course of the demo, the interviewer can ask lots of precise questions, getting lots of precise answers, this way digging out the expert knowledge about the system’s usage.
 
 [[known-uses-3]]
 ==== Known Uses
 
-The main idea of this pattern — let the user explain the system while using it — is commonly used for evaluating user-interfaces. “Thinking aloud may be the single most valuable usability engineering method. Basically, a thinking-aloud test involves having a test subject use the system while continuously thinking out loud.” [Nie99] The same idea is also often applied during rapid prototyping for requirements elicitation [Som96].
+The main idea of this pattern — let the user explain the system while using it — is commonly used for evaluating user-interfaces. “Thinking aloud may be the single most valuable usability engineering method. Basically, a thinking-aloud test involves having a test subject use the system while continuously thinking out loud.” <<Nie99>> 
+The same idea is also often applied during rapid prototyping for requirements elicitation <<Som96>>.
 
 One anecdote from the very beginning of the FAMOOS project — an application of the _Demonstrate to yourself_ variant of this pattern — shows how ignorant questions arising from seeing a software system in action may trigger dormant expertise within the maintenance team. For one of the case studies — a typical example of a 3-tiered system with a database layer, domain objects layer and user-interface layer — we were asked ‘to get the business objects out’. Two separate individuals were set to that task, one took a source code browser and a CASE tool and extracted some class diagrams that represented those business objects. The other installed the system on his local PC and spent about an hour playing around with the user interface (that is, he demonstrated the system to himself) to come up with a list of ten questions about some strange observations he made. Afterwards, a meeting was organized with the chief analyst-designer of the system and the two individuals that tried to reverse engineer the system. When the analyst-designer was confronted with the class-diagrams he confirmed that these were indeed the business objects, but he couldn’t tell us whether there was something missing, nor did he tell us anything about the rationale behind his design. It was only when we asked him the ten questions that he launched off into a very enthusiastic and very detailed explanation of the problems he was facing during the design — he even pointed to our class diagrams during his story! After having listened to the analyst-designer, the first reaction of the person that extracted the class diagrams from the source code was ‘Gee, I never read that in the source code’.
 
 [[related-patterns-1]]
 ==== Related Patterns
 
-A lot of good advice concerning how to interact with end users is embodied in the “Customer Interaction Patterns” [Ris00]. The main message of these patterns is that “It’s a Relationship, Not a Sale”, emphasizing that your contacts with the end users should aim to develop a relationship of trust.
+A lot of good advice concerning how to interact with end users is embodied in the “Customer Interaction Patterns” <<Ris00>>. The main message of these patterns is that “It’s a Relationship, Not a Sale”, emphasizing that your contacts with the end users should aim to develop a relationship of trust.
 
 [[what-next-4]]
 ==== What Next
@@ -656,7 +657,7 @@ In one of the FAMOOS case studies, we had to reengineer a distributed system tha
 
 Towards the end of the first day of an auditing project we carried out, we requested to see a clean install the following morning. We considered this to be an innocent request meant to prepare things for an Interview During Demo, but during the installation we discovered that one maintainer had to stay overnight to prepare the installation CD. From the subsequent discussion we learned that the system wasn’t meant to be installed: the user base was fixed and the system was designed to download weekly updates over the internet. This explained many peculiarities we observed during a previous effort to Read all the Code in One Hour and helped us a lot to expose the design issues during the remainder of the auditing project.
 
-When working with a configuration management system, it is a good idea to first try to import the code into a clean configuration before recompiling it. In case of a Smalltalk system for instance, one general piece of advice is to first try to load the Envy configuration maps that compose the system and then load the code into a clean image [PK01].
+When working with a configuration management system, it is a good idea to first try to import the code into a clean configuration before recompiling it. In case of a Smalltalk system for instance, one general piece of advice is to first try to load the Envy configuration maps that compose the system and then load the code into a clean image <<PK01>>.
 
 [[what-next-5]]
 ==== What Next

@@ -27,6 +27,9 @@
                         <sourcedir>${project.build.sourceDirectory}</sourcedir>
                         <project-version>${project.version}</project-version>
                     </attributes>
+                    <!--logHandler>
+                        <outputToConsole>false</outputToConsole> 
+                    </logHandler-->
                 </configuration>
                 <executions>
                     <execution>

@@ -433,7 +433,7 @@ void initiateCalls(Telephone ** phoneArray, int numOfCalls) {
 [[rationale-31]]
 ==== Rationale
 
-Riel states, “Explicit case analysis on the type of an object is usually an error. The designer should use polymorphism in most of these cases” [Rie96]. Indeed, explicit type checks in clients are a sign of misplaced responsibilities since they increase coupling between clients and providers. Shifting these responsibilities to the provider will have the following consequences:
+Riel states, “Explicit case analysis on the type of an object is usually an error. The designer should use polymorphism in most of these cases” <<Rie96>>. Indeed, explicit type checks in clients are a sign of misplaced responsibilities since they increase coupling between clients and providers. Shifting these responsibilities to the provider will have the following consequences:
 
 * The client and the provider will be more weakly coupled since the client will only need to explicitly know the root of the provider hierarchy instead of all of its concrete subclasses.
 * The provider hierarchy may evolve more gracefully, with less chance of breaking client code.
@@ -448,7 +448,7 @@ InTransform Client Type Checks the conditional is made on the type information o
 
 Transform Conditionals into Registration handles the special case in which the client’s conditional is used to select a third object (typically an external application or tool) to handle the argument.
 
-Replace Conditional with Polymorphism [p. 292] is the core refactoring of this reengineering pattern, so the reader may refer to the steps described in [FBB^+^99].
+Replace Conditional with Polymorphism [p. 292] is the core refactoring of this reengineering pattern, so the reader may refer to the steps described in <<FBB99>>.
 
 [[factor-out-state]]
 === 10.3 Factor out State
@@ -475,7 +475,7 @@ _Yet, solving this problem is feasible because:_
 
 Apply the State [p. 295] pattern, _i.e._, encapsulate the state-dependent behavior into separate objects, delegate calls to these objects and keep the state of the object consistent by referring to the right instance of these state objects (see figure 47).
 
-As in Transform Self Type Checks, transform complex conditional code that tests over quantified states into delegated calls to state classes. Apply the State [p. 295] pattern, delegating each conditional case to a separate State object. We invite the reader to read State and State Patterns [p. 295] for a deep description of the problem and discussion [GHJV95] [ABW98] [DA97]. Here we only focus on the reengineering aspects of the pattern.
+As in Transform Self Type Checks, transform complex conditional code that tests over quantified states into delegated calls to state classes. Apply the State [p. 295] pattern, delegating each conditional case to a separate State object. We invite the reader to read State and State Patterns [p. 295] for a deep description of the problem and discussion <<GHJV95>> <<ABW98>> <<DA97>>. Here we only focus on the reengineering aspects of the pattern.
 
 [[steps-19]]
 ===== Steps
@@ -595,11 +595,11 @@ all the previously implemented algorithms are now moved to Strategy classes. So 
 [[difficulties-34]]
 ===== Difficulties
 
-• There are several ways to share information between the Context and the Strategy objects, and the tradeoffs can be subtle. The information can be passed as argument when the Strategy method is invoked, the Context object itself can be passed as argument, or the Strategy objects can hold a reference to their context. If the relationship between the Context and the Strategy is highly dynamic, then it may be preferable to pass this information as a method argument. More detailed discussions of this issue exist in the literature on the Strategy [p. 295] pattern [GHJV95] [ABW98].
+• There are several ways to share information between the Context and the Strategy objects, and the tradeoffs can be subtle. The information can be passed as argument when the Strategy method is invoked, the Context object itself can be passed as argument, or the Strategy objects can hold a reference to their context. If the relationship between the Context and the Strategy is highly dynamic, then it may be preferable to pass this information as a method argument. More detailed discussions of this issue exist in the literature on the Strategy [p. 295] pattern <<GHJV95>> <<ABW98>>.
 [[example-18]]
 ==== Example
 
-The _Design Patterns Smalltalk Companion_ [ABW98] presents a step-by-step code transformation.
+The _Design Patterns Smalltalk Companion_ <<ABW98>> presents a step-by-step code transformation.
 
 [[related-patterns-26]]
 ==== Related Patterns
@@ -643,7 +643,7 @@ Null tests may take different forms, depending on the programming language and t
 [[steps-21]]
 ===== Steps
 
-Fowler discusses in detail the necessary refactoring steps [FBB^+^99].
+Fowler discusses in detail the necessary refactoring steps <<FBB99>>.
 
 image:media/figure10-10.png[image,width=729,height=369]
 
@@ -656,7 +656,7 @@ Figure 10.10: Transformation from a situation based on explicit test of null val
 5.  Initialize the instance variable or structure that was checked to now hold at least an instance of the Null Object class.
 6.  Remove the conditional tests from the client.
 
-If you still want to be able to test for null values in a clean way, you may introduce a query method called isNull in RealObject and Null Object classes, as described by Fowler [FBB^+^99].
+If you still want to be able to test for null values in a clean way, you may introduce a query method called isNull in RealObject and Null Object classes, as described by Fowler <<FBB99>>.
 
 [[tradeoffs-40]]
 ==== Tradeoffs
@@ -684,7 +684,7 @@ If you still want to be able to test for null values in a clean way, you may int
 [[example-19]]
 ==== Example
 
-The following Smalltalk code is taken from Woolf [Woo98]. Initially the code contains explicit null tests::
+The following Smalltalk code is taken from Woolf <<Woo98>>. Initially the code contains explicit null tests::
 
 [source,smalltalk]
 ----
@@ -755,7 +755,7 @@ The client or the plug-in object may have the responsibility to invoke a tool. I
 [[example-20]]
 ==== Example
 
-In Squeak [IKM^+^97], the FileList is a tool that allows the loading of different kinds of files, such as Smalltalk code, JPEG images, MIDI files, HTML, and so on. Depending on the suffix of the selected file, the FileList proposes different actions to the user. We show in the example the loading of the different file depending on their format.
+In Squeak <<IKM97>>, the FileList is a tool that allows the loading of different kinds of files, such as Smalltalk code, JPEG images, MIDI files, HTML, and so on. Depending on the suffix of the selected file, the FileList proposes different actions to the user. We show in the example the loading of the different file depending on their format.
 
 [[before-3]]
 ===== Before

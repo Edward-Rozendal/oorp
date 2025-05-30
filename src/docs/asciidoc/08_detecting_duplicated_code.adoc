@@ -1,9 +1,9 @@
 [[detecting-duplicated-code]]
 == 8. Detecting Duplicated Code
 
-Fowler and Beck have ranked duplicated code as the first of the top ten code smells indicating the need to refactor a piece of software [FBB^+^99]. As they like to explain it, whenever you duplicate a piece of code, you are taking out a loan, in the sense that you are getting something now (an almost ready-made piece of software) that you will have to pay for later. There is nothing wrong with taking out a loan, but you have a choice between paying back a small amount now (by taking out the time to refactor your code to eliminate the duplication) or paying back a lot later (in terms of increased complexity and maintenance costs).
+Fowler and Beck have ranked duplicated code as the first of the top ten code smells indicating the need to refactor a piece of software <<FBB99>>. As they like to explain it, whenever you duplicate a piece of code, you are taking out a loan, in the sense that you are getting something now (an almost ready-made piece of software) that you will have to pay for later. There is nothing wrong with taking out a loan, but you have a choice between paying back a small amount now (by taking out the time to refactor your code to eliminate the duplication) or paying back a lot later (in terms of increased complexity and maintenance costs).
 
-Data from empirical studies show that typically between 8% and 12% of industrial software consists of duplicated code [DRD99]. Although this may not seem like much, in fact it is difficult to achieve very high rates of duplication. (Imagine what it would take to have a duplication rate of even 50%!) Duplication rates of 15 to 20% are therefore considered to be severe.
+Data from empirical studies show that typically between 8% and 12% of industrial software consists of duplicated code <<DRD99>>. Although this may not seem like much, in fact it is difficult to achieve very high rates of duplication. (Imagine what it would take to have a duplication rate of even 50%!) Duplication rates of 15 to 20% are therefore considered to be severe.
 
 It is important to identify duplicated code for the following reasons:
 
@@ -267,7 +267,7 @@ print "Number of marked elements: $numOfMarkedElements\n";
 [[known-uses-18]]
 ==== Known Uses
 
-In the context of software reengineering, the pattern has been applied to detect duplicated code in FAMOOS case studies containing up to one million lines of C++. It also has been applied to detect duplicated code in a COBOL system of 4 million lines of code. DATRIX has investigated multiple versions of a large telecommunications system, wading through 89 million lines of code all in all [LPM^+^97].
+In the context of software reengineering, the pattern has been applied to detect duplicated code in FAMOOS case studies containing up to one million lines of C++. It also has been applied to detect duplicated code in a COBOL system of 4 million lines of code. DATRIX has investigated multiple versions of a large telecommunications system, wading through 89 million lines of code all in all <<LPM97>>.
 
 [[visualize-code-as-dotplots]]
 === 8.2 Visualize Code as Dotplots
@@ -343,7 +343,7 @@ A simple version of the approach can be implemented by a good programmer using a
 
 * A naive implementation of a dotplot visualizer may not scale well to large systems. Tuning and optimizing the approach for large data sets can compromise the simplicity of the approach.
 * The interpretation of the data may be more subtle than it appears at first glance. Indeed, while comparing multiple files the diagonals represent more duplication than is really in the system because we are comparing duplicated fragments with themselves over different files, as shown by Figure 8.3 and Figure 8.4.
-* The screen size limits the amount of information that can be visualized. Some success has been achieved with so-called “mural” visualization approaches [JS96]. However, these techniques are significantly more difficult to implement than simple dotplots and are not worth the extra effort.
+* The screen size limits the amount of information that can be visualized. Some success has been achieved with so-called “mural” visualization approaches <<JS96>>. However, these techniques are significantly more difficult to implement than simple dotplots and are not worth the extra effort.
 
 [[example-13]]
 ==== Example
@@ -370,7 +370,7 @@ Dotplots can also be useful to detect other problems. Figure 8.5 presents four c
 [[known-uses-19]]
 ==== Known Uses
 
-The pattern has been applied in biological research to detect DNA sequences [PK82]. The Dotplot tool [Hel95] has been used to detect similarities in manual pages, literary texts and names from file systems. In the FAMOOS project, the pattern has been applied to build Duploc, a tool for identifying duplication in software source code [DRD99]. The Dup tool [Bak92] has been used to investigated the source code of the X-Window system and uses a dotplot matrix graphical representation.
+The pattern has been applied in biological research to detect DNA sequences <<PK82>>. The Dotplot tool <<Hel95>> has been used to detect similarities in manual pages, literary texts and names from file systems. In the FAMOOS project, the pattern has been applied to build Duploc, a tool for identifying duplication in software source code <<DRD99>>. The Dup tool <<Bak92>> has been used to investigated the source code of the X-Window system and uses a dotplot matrix graphical representation.
 
 [[related-patterns-20]]
 ==== Related Patterns

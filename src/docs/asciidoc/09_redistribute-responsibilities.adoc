@@ -20,7 +20,7 @@ This cluster deals with problems of misplaced responsibilities. The two extreme 
 
 Although there are sometimes borderlines cases where data containers and god classes may be tolerated, particularly if they are buried in a stable part of the system which will not change, generally they are a sign of a fragile design.
 
-Data containers lead to violations of the _Law of Demeter_ (LOD) [LHR88]. In a nutshell, the Law of Demeter provides a number of design guidelines to reduce coupling between distantly-related classes. Although the Law of Demeter has various forms, depending on whether one focusses on objects or classes, and depending on which programming language is being used, the law essentially states that methods should only send messages to instance variables, method arguments, self, super, and the receiver class.
+Data containers lead to violations of the _Law of Demeter_ (LOD) <<LHR88>>. In a nutshell, the Law of Demeter provides a number of design guidelines to reduce coupling between distantly-related classes. Although the Law of Demeter has various forms, depending on whether one focusses on objects or classes, and depending on which programming language is being used, the law essentially states that methods should only send messages to instance variables, method arguments, self, super, and the receiver class.
 
 Violations of the Law of Demeter typically take the form of _navigation code_ in which an _indirect client_ accesses an _indirect provider_ by accessing either an instance variable or an acquaintance of an _intermediate provider_. The indirect client and provider are thereby unnecessarily coupled, making future enhancements more difficult to realize (Figure 9.2). The intermediate provider may take the form of a data container or opens its encapsulation by providing accessor methods. Designs with many data containers present often suffer from complex navigation code in which indirect clients may have to navigate through a chain of intermediates to reach the indirect provider.
 
@@ -93,7 +93,7 @@ Move Behavior Close to Data makes use of the refactorings Extract Method [p. 291
 1.  _Identify the client behavior that you want to move_, _i.e._, the complete method or a part of a method that accesses provider data.
 * Look for the invocations of the accessor methods of the data container.
 * Look for duplicated code in multiple clients that access the same provider data.
-2.  _Create the corresponding method in the provider class_, if it does not already exist. Be sure to check that moving the code will not introduce any naming conflicts. Tools like the Refactoring Browser [RBJ97] automate these steps:
+2.  _Create the corresponding method in the provider class_, if it does not already exist. Be sure to check that moving the code will not introduce any naming conflicts. Tools like the Refactoring Browser <<RBJ97>> automate these steps:
 * If the extracted functionality is a complete method with arguments, check that the arguments do not conflict with attributes of the provider class. If so, rename the arguments.
 * If the extracted functionality uses temporary variables, check that the local variables do not conflict with attributes or variables in the target scope. If so, rename the temporary variables.
 * Check if the extracted functionality accesses local variables of the client classes (attributes, temporary variables,...), if so, add arguments to the method to represent these client variables.
@@ -137,9 +137,9 @@ It may be the case that the calling methods defined on the same object have to b
 
 Data containers may have been automatically generated from a database schema to provide an object interface to an existing database. It is almost always a bad idea to modify generated classes, since you will lose your changes if the code ever needs to be regenerated. In this case, you may decide to implement wrapper classes to hold the behavior that should be associated with the generated classes. Such a wrapper would function as an Adapter [p. 293] that converts the generated data container to a real service provider.
 
-Sometimes you know that a class defined in a library is missing crucial functionality. For example, an operation convertToCapitals that is missing for class String. In such a case it is typically impossible to add code to the library, so you may have to define it in client class. In C++ for example, it may be the only way to avoid recompilation or to extend a class when the code is not available [ABW98] (p. 378). In Smalltalk you have the possibility to extend or modify the library, however you should pay particular attention to separate the additional code so you can easily merge it with future releases of the library, and quickly detect any conflicts.
+Sometimes you know that a class defined in a library is missing crucial functionality. For example, an operation convertToCapitals that is missing for class String. In such a case it is typically impossible to add code to the library, so you may have to define it in client class. In C++ for example, it may be the only way to avoid recompilation or to extend a class when the code is not available <<ABW98>> (p. 378). In Smalltalk you have the possibility to extend or modify the library, however you should pay particular attention to separate the additional code so you can easily merge it with future releases of the library, and quickly detect any conflicts.
 
-The intent of the Visitor [p. 296] design pattern states: _“Represent an operation to be performed on the elements of an object structure in a class separate from the elements themselves. Visitor lets you define a new operation without changing the classes of the elements on which it operates”_ [GHJV95]. The Visitor pattern is one of the few cases where you want to have classes access the data of a separate provider class. Visitor allows one to dynamically add new operations to a set of stable classes without having to change them.
+The intent of the Visitor [p. 296] design pattern states: _“Represent an operation to be performed on the elements of an object structure in a class separate from the elements themselves. Visitor lets you define a new operation without changing the classes of the elements on which it operates”_ <<GHJV95>>. The Visitor pattern is one of the few cases where you want to have classes access the data of a separate provider class. Visitor allows one to dynamically add new operations to a set of stable classes without having to change them.
 
 _Configuration classes_ are classes that represent the configuration of a system (_e.g._, global parameters, language dependent representation, policies in place). For example, in a graphic tool the default size of the boxes, edges, width of the lines can be stored in a such class and other classes refer to it when needed.
 
@@ -278,7 +278,7 @@ clients do not rely on the internal representation of Employee. Moreover, by mov
 ==== Rationale
 
 _Keep related data and behavior in one place.
-— Arthur Riel, Heuristic 2.9 [Rie96]_
+— Arthur Riel, Heuristic 2.9 <<Rie96>>_
 
 Data containers impede evolution because they expose structure and force clients to define their behavior rather than sharing it. By promoting data containers to service providers, you reduce coupling between classes and improve cohesion of data and behavior.
 
@@ -290,7 +290,7 @@ Encapsulate Field [p. 291] offers heuristics that help determine where methods s
 [[eliminate-navigation-code]]
 === 9.2 Eliminate Navigation Code
 
-_Also Known As:_ Law of Demeter [LHR88]
+_Also Known As:_ Law of Demeter <<LHR88>>
 
 *Intent* _Reduce the impact of changes by shifting responsibility down a chain of connected classes._
 [[problem-34]]
@@ -400,7 +400,7 @@ a.abstraction.identifier.traverse(this)
 
 More sophisticated matching expressions can reduce the noise produced by the parentheses of casts or other combinations.
 
-_AST Matching._ If you have a way to express tree matching, you can detect navigation code. For example, the Rewrite Rule Editor that comes with the Refactoring Browser [RBJ97] can detect navigation code using the pattern
+_AST Matching._ If you have a way to express tree matching, you can detect navigation code. For example, the Rewrite Rule Editor that comes with the Refactoring Browser <<RBJ97>> can detect navigation code using the pattern
 
 image:media/figure9-6.png[image,width=586,height=471]
 
@@ -562,7 +562,7 @@ _A method “M” of an object “O” should invoke only the methods of the fol
 4.  its direct component objects
 — Law of Demeter_
 
-Navigation code is a well-known symptom of misplaced behavior [LK94] [Sha97] [Rie96] that violates the Law of Demeter [LHR88]. It leads to unnecessary dependencies between classes and as a consequence changing the representation of a class requires _all_ clients to be adapted.
+Navigation code is a well-known symptom of misplaced behavior <<LK94>> <<Sha97>> <<Rie96>> that violates the Law of Demeter <<LHR88>>. It leads to unnecessary dependencies between classes and as a consequence changing the representation of a class requires _all_ clients to be adapted.
 
 [[related-patterns-22]]
 ==== Related Patterns
@@ -572,7 +572,7 @@ Eliminate Navigation Code and Compare Code Mechanically [p. 204] reinforce each 
 [[split-up-god-class]]
 === 9.3 Split Up God Class
 
-_Also Known As:_ The Blob [BMMM98], God Class [Rie96]
+_Also Known As:_ The Blob <<BMMM98>>, God Class <<Rie96>>
 
 *Intent* _Split up a class with too many responsibilities into a number of smaller, cohesive classes._A
 
@@ -669,16 +669,16 @@ Suppose, on the other hand, that it is the _clients_ of the god class that are u
 ==== Rationale
 
 _Do not create god classes/objects in your system.
-— Arthur Riel, Heuristic 3.2 [Rie96]_
+— Arthur Riel, Heuristic 3.2 <<Rie96>>_
 
 God classes impede evolution because they achieve only a low level of procedural abstraction, so changes may affect many parts of the god class, its data containers and its clients. By splitting a god class up into objectoriented abstractions, changes will tend to be more localized, therefore easier to implement.
 
 [[related-patterns-23]]
 ==== Related Patterns
 
-Foote and Yoder in “Big Ball of Mud” [FY00] note that god classes (and worse) arise naturally in software development.
+Foote and Yoder in “Big Ball of Mud” <<FY00>> note that god classes (and worse) arise naturally in software development.
 
 _“People build BIG BALLS OF MUD because they work. In many domains, they are the only things that have been shown to work. Indeed, they work where loftier approaches have yet to demonstrate that they can compete.
-It is not our purpose to condemn BIG BALLS OF MUD. Casual architecture is natural during the early stages of a system’s evolution. The reader must surely suspect, however, that our hope is that we can aspire to do better. By recognizing the forces and pressures that lead to architectural malaise, and how and when they might be confronted, we hope to set the stage for the emergence of truly durable artifacts that can put architects in dominant positions for years to come. The key is to ensure that the system, its programmers, and, indeed the entire organization, learn about the domain, and the architectural opportunities looming within it, as the system grows and matures.”— Foote & Yoder [FY00]_
+It is not our purpose to condemn BIG BALLS OF MUD. Casual architecture is natural during the early stages of a system’s evolution. The reader must surely suspect, however, that our hope is that we can aspire to do better. By recognizing the forces and pressures that lead to architectural malaise, and how and when they might be confronted, we hope to set the stage for the emergence of truly durable artifacts that can put architects in dominant positions for years to come. The key is to ensure that the system, its programmers, and, indeed the entire organization, learn about the domain, and the architectural opportunities looming within it, as the system grows and matures.”— Foote & Yoder <<FY00>>_
 
 Present the Right Interface [p. 187] is a competing pattern that should be applied when the god class itself rarely needs to be modified or extended.

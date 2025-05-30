@@ -10,7 +10,7 @@ Most of the patterns concerned with Detailed Model Capture entail considerably m
 
 Although you already have an impression of the system, there are several forces at play that may make it difficult to extract a more detailed model:
 
-* _Details matter._ As argued by Brooks [Bro87], software engineering is different from other engineering disciplines because of the inherent lack of abstraction barriers. Other engineering disciplines rely on the laws of nature to hide irrelevant details, but software engineering must build on less solid foundations. _Consequently, it is essential to pay attention to the details._ The only question is how to filter out those details that do not matter, because you cannot possible investigate everything.
+* _Details matter._ As argued by Brooks <<Bro87>>, software engineering is different from other engineering disciplines because of the inherent lack of abstraction barriers. Other engineering disciplines rely on the laws of nature to hide irrelevant details, but software engineering must build on less solid foundations. _Consequently, it is essential to pay attention to the details._ The only question is how to filter out those details that do not matter, because you cannot possible investigate everything.
 * _Design remains implicit._ As you read the code, many design decisions will become apparent to you, but it will not be clear why and how these decisions were made. In particular, it will be hard to tell which design decisions were easy to make, and which of them created a lot of grief. Nevertheless, such knowledge is crucial during a reengineering project because you want to avoid making the same mistakes over and over again. _Consequently, once you discover the underlying design rationale, make sure that it is properly recorded._ This way, your successors will be able to build on your discoveries rather than be forced to reinvent the wheel.
 * _Design does evolve._ Change is an essential ingredient of a successful system, certainly in object-oriented development processes with their emphasis on iterative development. As a consequence, design documents will always be out-of date with respect to the actual situation. However, this also implies that change itself is the key to understand how and why the design of a system has evolved the way it is. _Consequently, assume that important design issues will be reflected in the source code and in the way this code has changed over time.
 * _Static structure versus Dynamic behavior._ Object-oriented source code tells you which classes are defined, and how they are arranged in a class hierarchy. It is much harder to see which objects are instantiated at run-time, and how they collaborate to support the system. On a fine-grained level however, the latter is much more relevant than the former, especially due to the use of polymorphism. _Consequently, to extract the detailed design one must inevitably study the dynamic behavior._
@@ -129,16 +129,16 @@ Note that the less you change the code, the less likely it is that you will intr
 [[rationale-7]]
 ==== Rationale
 
-This pattern has its roots in _literate programming_ [RS89][Knu92]. A literate program reverses the usual relationship between program text and comments: executable code is embedded within documentation, not the other way around. Literate programming puts the emphasis on keeping the code and its documentation physically close. The physical proximity reduces the effort spent in keeping the code and its documentation in sync.
+This pattern has its roots in _literate programming_ <<RS89>> <<Knu92>>. A literate program reverses the usual relationship between program text and comments: executable code is embedded within documentation, not the other way around. Literate programming puts the emphasis on keeping the code and its documentation physically close. The physical proximity reduces the effort spent in keeping the code and its documentation in sync.
 
 [[known-uses-8]]
 ==== Known Uses
 
-_Comment-based annotations._ Various programming environments provide implicit support for managing annotations within the code. Emacs, for example, has a built-in tool, called e-tags, which allows you to easily generate a cross-reference database of a a set of files [CRR96]. The Eiffel environment, on the other hand, allows you to assign different levels of visibility to your comments (and your code). If you assign private scope to your annotations you can easily separate the annotations yet make sure that these will not be seen externally.
+_Comment-based annotations._ Various programming environments provide implicit support for managing annotations within the code. Emacs, for example, has a built-in tool, called e-tags, which allows you to easily generate a cross-reference database of a a set of files <<CRR96>>. The Eiffel environment, on the other hand, allows you to assign different levels of visibility to your comments (and your code). If you assign private scope to your annotations you can easily separate the annotations yet make sure that these will not be seen externally.
 
 The company MediaGeniX — a Belgian company operating in the multi-media sector — used a systematic code tagging mechanism to record information about changes. The programming environment was altered in such a way that every change to the code was automatically annotated with a tag that describes the motivation for the code change (bug fix, change request, new release), the name of developer, and the time of the modification. Only the last tag is kept in the code, but via the configuration management system it is possible to inspect previous tags and changes. The tag also includes a free field where the developers may write what they want and is often used for questions and answers.
 
-_Method-based annotations._ The Squeak development team [IKM^+^97] used this technique not so much to keep track of questions but as a means to facilitate communication in an open-source development project. In this team comments were introduced by invoking the method flag: defined in the class Object. Developers can query all senders of the flag: message to locate annotations. Furthermore, the method is defined to accept a symbol as its argument. This makes it possible to search more specifically, for example, for all the annotations flagged with the symbol #noteForJohn.
+_Method-based annotations._ The Squeak development team <<IKM97>> used this technique not so much to keep track of questions but as a means to facilitate communication in an open-source development project. In this team comments were introduced by invoking the method flag: defined in the class Object. Developers can query all senders of the flag: message to locate annotations. Furthermore, the method is defined to accept a symbol as its argument. This makes it possible to search more specifically, for example, for all the annotations flagged with the symbol #noteForJohn.
 
 [source, smalltalk]
 ----
@@ -194,7 +194,7 @@ It is hard to do a good job of refactoring without having tests in place to veri
 
 You should select refactoring operations that will make design decisions more explicit in the code. The typical refactorings applied during this iterative restructuring are Rename Attribute [p. 292], Rename Method [p. 292], and Extract Method [p. 291].
 
-The following guidelines will help you to find out where and how to apply these refactorings to improve the readability of the code. Many of these guidelines are considered to be just good, standard practice in Smalltalk programming [Bec97]. They apply, however, equally well to other programming languages. They can be applied in any order; each of them participates in the understanding of the others.
+The following guidelines will help you to find out where and how to apply these refactorings to improve the readability of the code. Many of these guidelines are considered to be just good, standard practice in Smalltalk programming <<Bec97>>. They apply, however, equally well to other programming languages. They can be applied in any order; each of them participates in the understanding of the others.
 
 * _Rename attributes to convey roles._ Focus on attributes with cryptic names. To find out about their roles, look at all the attribute accesses (including invocations of accessors methods). Afterwards, rename the attribute and its accessors according to its role, update all references and re-compile the system.
 * _Rename methods to convey intent._ To retrieve the intent of a method that does not have an intention revealing name, investigate all invocations and attribute uses, and deduce the method’s responsibility. Afterwards, rename the method according to its intent, update all invocations and re-compile the system.
@@ -220,7 +220,7 @@ The following guidelines will help you to find out where and how to apply these 
 [[difficulties-9]]
 ===== Difficulties
 
-* _Tool Support._ Manually refactoring code can be tedious and risky [FBB^+^99]. Various tools, like the Refactoring Browser [RBJ97], greatly simplify the task of refactoring, and especially help to apply non-trivial refactorings such as Extract Method.
+* _Tool Support._ Manually refactoring code can be tedious and risky <<FBB99>>. Various tools, like the Refactoring Browser <<RBJ97>>, greatly simplify the task of refactoring, and especially help to apply non-trivial refactorings such as Extract Method.
 * _Acceptance of Changes._ Refactoring someone else’s code may prove a lot harder than refactoring your own. A lot of companies have a strong culture of code ownership, so improving someone else’s code is often considered an insult. That is one of the reasons why you should not necessarily release the refactored version to the rest of the team.
 * _When to stop._ It is often difficult to stop changing code when you identify problems. Remember that your primary goal here is to just understand the system. When you have achieved that goal, it is time to stop.
 
@@ -231,12 +231,12 @@ Don Roberts and John Brant coined the term Refactor to Understand at ESUG ’97 
 
 We applied this pattern ourselves during a FAMOOS case study. We had to understand a single method of about 3000 lines of C++, which was a deeply nested conditional. We first replaced the leaf condition branches by methods, gradually working our way up the nesting structure. After several iterations, we discovered that this method was actually implementing a complete parser for a small command language.
 
-Harry Sneed reports several reengineering projects where a large Cobol program was refactored by removing all goto statements. However, he was later forced to reintroduce the go-to statements because the developers rejected his changes [Sne99].
+Harry Sneed reports several reengineering projects where a large Cobol program was refactored by removing all goto statements. However, he was later forced to reintroduce the go-to statements because the developers rejected his changes <<Sne99>>.
 
 [[related-patterns-3]]
 ==== Related Patterns
 
-“Arranging the Furniture” [Tay00] is a pattern to help newcomers feel at home when they start in a new project. The pattern solution is: “An adopter should be encouraged to ‘move in’ by cosmetically arranging the code.”
+“Arranging the Furniture” <<Tay00>> is a pattern to help newcomers feel at home when they start in a new project. The pattern solution is: “An adopter should be encouraged to ‘move in’ by cosmetically arranging the code.”
 
 [[what-next-11]]
 ==== What Next
@@ -354,7 +354,7 @@ The design overview can help you to identify key classes in the hierarchy (_i.e.
 
 _Look for Key Methods._ Focus on the most important methods. With your knowledge of the system you will recognize key methods based on their signature.
 
-* _Method Names._ Key methods are likely to bear intention revealing names [Bec97].
+* _Method Names._ Key methods are likely to bear intention revealing names <<Bec97>>.
 * _Parameter types._ Methods taking parameters with types corresponding to key classes in the system are likely to be important.
 * _Recurring parameter types._ Parameters represent temporary associations between objects. When the same parameter types often recur in method signatures, they are likely to represent important associations.
 
@@ -390,7 +390,7 @@ This idiom is heavily used in Java by classes that define multiple constructors.
 [[known-uses-10]]
 ==== Known Uses
 
-Many researchers have investigated ways to analyze how clients use a class interface. For instance, Brown [Bro96], Florijn [FMvW97] and Wuyts [Wuy98] have all shown that it is possible to find symptoms of design patterns in code. Also, Schauer _et al._ [SRMK99] report about a technique to semi-automatically detect hook methods based on analysis of overridden methods. The latter technique scales quite well, due to their particular way of visualizing class hierarchies and emphasizing classes where many methods are overridden, hence are likely to define hook methods. Additionally, Steyaert _et al._ [SLMD96] have shown that it is possible to capture how subclasses depend on their superclasses (they have named these dependencies _reuse contracts_) and afterwards detect potential conflicts when the superclasses gets changed.
+Many researchers have investigated ways to analyze how clients use a class interface. For instance, Brown <<Bro96>>, Florijn <<FMvW97>> and Wuyts <<Wuy98>> have all shown that it is possible to find symptoms of design patterns in code. Also, Schauer _et al._ <<SRMK99>> report about a technique to semi-automatically detect hook methods based on analysis of overridden methods. The latter technique scales quite well, due to their particular way of visualizing class hierarchies and emphasizing classes where many methods are overridden, hence are likely to define hook methods. Additionally, Steyaert _et al._ <<SLMD96>> have shown that it is possible to capture how subclasses depend on their superclasses (they have named these dependencies _reuse contracts_) and afterwards detect potential conflicts when the superclasses gets changed.
 
 [[what-next-13]]
 ==== What Next
@@ -463,16 +463,16 @@ _Mature and stable design._ A mature subsystem will exhibit some growth and refa
 [[rationale-8]]
 ==== Rationale
 
-Many object-oriented systems came into being via a combination of iterative and incremental development (see [Boo94] [GR95] [JGJ97] [Ree96]). That is, the original development team recognized their lack of problem domain expertise and therefore invested in a learning process where each learning phase resulted in a new system release. It is worthwhile to reconstruct that learning process because it will help you to understand the rationale embodied in the system design.
+Many object-oriented systems came into being via a combination of iterative and incremental development (see <<Boo94>> <<GR95>> <<JGJ97>> <<Ree96>>). That is, the original development team recognized their lack of problem domain expertise and therefore invested in a learning process where each learning phase resulted in a new system release. It is worthwhile to reconstruct that learning process because it will help you to understand the rationale embodied in the system design.
 
 One way to reconstruct the learning process is to recover its primitive steps. In object-oriented parlance, these steps are called refactorings and consequently this pattern tells you how to recover refactorings like they have been applied in the past. The technique itself compares two subsequent releases of the source code identifying entities that decrease in size, because that’s the typical symptom of functionality that has been moved elsewhere.
 
 [[known-uses-11]]
 ==== Known Uses
 
-We ran an experiment on three medium-sized systems implemented in Smalltalk. As reported in [DDN00], these case studies suggest that some simple heuristics can support the reverse engineering process by focusing attention on parts of the system where functionality has been removed. This way, we could for instance detect where a class had been split or where methods have been moved to a sibling class. Of course these refactorings must be examined in further detail to guess the intent behind the refactoring. This is never easy but in our experience has proven worthwhile. In one particular case for instance, we discovered several classes where methods had been moved to sibling classes. Closer examination revealed that the reengineer was moving these methods to break circular dependencies and was in fact introducing a layer.
+We ran an experiment on three medium-sized systems implemented in Smalltalk. As reported in <<DDN00>>, these case studies suggest that some simple heuristics can support the reverse engineering process by focusing attention on parts of the system where functionality has been removed. This way, we could for instance detect where a class had been split or where methods have been moved to a sibling class. Of course these refactorings must be examined in further detail to guess the intent behind the refactoring. This is never easy but in our experience has proven worthwhile. In one particular case for instance, we discovered several classes where methods had been moved to sibling classes. Closer examination revealed that the reengineer was moving these methods to break circular dependencies and was in fact introducing a layer.
 
-Other researchers also report on examining changes to support the reverse engineering process. For instance, Ball _et al._ annotate code views with colors showing code age [BE96]. On the other hand, Jazayeri _et al._ use a three-dimensional visual representation for examining a system’s software release history [JGR99]. The same people have also investigated which change requests affect which software modules to detect logical dependencies between software modules [GHJ98].
+Other researchers also report on examining changes to support the reverse engineering process. For instance, Ball _et al._ annotate code views with colors showing code age <<BE96>>. On the other hand, Jazayeri _et al._ use a three-dimensional visual representation for examining a system’s software release history <<JGR99>>. The same people have also investigated which change requests affect which software modules to detect logical dependencies between software modules <<GHJ98>>.
 
 [[what-next-14]]
 ==== What Next

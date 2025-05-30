@@ -89,7 +89,7 @@ image:media/figure4-2.png[image,width=731,height=502]
 
 Figure 4.2: Mapping a series of relational tables onto an inheritance hierarchy. (a) one to one; (b) rolled down; (c) rolled up
 
-_Incorporate inheritance._ After the above steps, you will have a set of classes that represents the tables being stored in the relational database. However, because relational databases cannot represent inheritance relationships, you have to infer these from the foreign keys. (The terminology for the three representations of inheritance relations in steps 5-7 stems from [Fro94].)
+_Incorporate inheritance._ After the above steps, you will have a set of classes that represents the tables being stored in the relational database. However, because relational databases cannot represent inheritance relationships, you have to infer these from the foreign keys. (The terminology for the three representations of inheritance relations in steps 5-7 stems from <<Fro94>>.)
 
 1.  _One to one_ (Figure 4.2 (a)). Check tables where the primary key also serves as a foreign key to another table, as such foreign keys may represent inheritance relationships. Examine the SELECT statements that are executed against these tables to see whether they usually involve a join over this foreign key. If this is the case, analyze the table names and the corresponding source code to verify whether this foreign key indeed represents an inheritance relationship. If it does, transform the association that corresponds with the foreign key into an inheritance relationship.
 2.  _Rolled down_ (Figure 4.2 (b)). Check tables with common sets of column definitions, as these probably indicate a situation where the class hierarchy is spread over several tables, each table representing one non-abstract class. Define a common superclass for each cluster of duplicated column definitions and move the corresponding attributes inside the new class. Check the source code for the name applicable for the newly created classes.
@@ -151,21 +151,21 @@ Patient (see left side of Figure 4.2). Next, you verify the indices defined on T
 ==== Rationale
 
 _The object model is important for database applications because it concisely describes data structure and captures structural constraints.
-— Michael Blaha, et al. [BLM98]_
+— Michael Blaha, et al. <<Fro94>>_
 
 Having a well-defined central database schema is a common practice in larger software projects that deal with persistent data. Not only does it specify common rules on how to access certain data structures, it is also a great aid in dividing the work between team members. Therefore, it is a good idea to extract an accurate model of the database before proceeding with other reverse engineering activities.
 
 Note that extracting a database model is essentially a bottom-up approach: you start from the rough information contained in the database schema and you polish it up until you have a satisfactory class diagram. A bottom up approach works quite well in such a situation, because a database schema is already an abstraction from a more detailed representation.
 
 _All data should be hidden within its class.
-— Arthur Riel, Heuristic 2.1 [Rie96]_
+— Arthur Riel, Heuristic 2.1 <<Rie96>>_
 
 Information hiding is an important design principle, and most authors agree that for a class this implies that all data should be encapsulated within the class and only accessed via the operations defined on that class. Unfortunately, the class diagram you extract from a database will expose all of its data, because that’s the nature of a database. Therefore, this class diagram is just a first step towards a well-designed interface to the database.
 
 [[known-uses-5]]
 ==== Known Uses
 
-The reverse engineering and reengineering of database systems is a well explored area of research [Arn92] [MJS+00]. Several experiments indicate that it is feasible to recover the database structure, even for these database systems that are poorly designed. [PB94] for instance reports about an experiment concerning the reverse engineering of a data dictionary of a leading RDBMS vendor, as well as a production database storing data about mechanical parts. [HEH+96] describes a prototype database reverse engineering toolkit, as well as five industrial cases where the toolkit has been applied. To illustrate the unpredictable nature of database reverse engineering, [JSZ97] reports on the use of a fuzzy reasoning engine as the core of a tool that extracts class diagrams out of relational database schemas.
+The reverse engineering and reengineering of database systems is a well explored area of research <<Arn92>> <<MJS00>>. Several experiments indicate that it is feasible to recover the database structure, even for these database systems that are poorly designed. <<PB94>> for instance reports about an experiment concerning the reverse engineering of a data dictionary of a leading RDBMS vendor, as well as a production database storing data about mechanical parts. <<HEH96>> describes a prototype database reverse engineering toolkit, as well as five industrial cases where the toolkit has been applied. To illustrate the unpredictable nature of database reverse engineering, <<JSZ97>> reports on the use of a fuzzy reasoning engine as the core of a tool that extracts class diagrams out of relational database schemas.
 
 [[what-next-7]]
 ==== What Next
@@ -174,7 +174,7 @@ Analyze the Persistent Data results in a class diagram for the persistent data i
 
 If you need to migrate to another database, you should cast your understanding of the database model in a test suite as explained in Tests: Your Life Insurance! [p. 135].
 
-Note that there exist patterns, idioms and pattern languages that describe various ways to map object-oriented data structures on relational database counterparts [BW96] [KC98b]. Consulting these may help you when you are reverse engineering a database schema.
+Note that there exist patterns, idioms and pattern languages that describe various ways to map object-oriented data structures on relational database counterparts <<BW96>> <<KC98b>>. Consulting these may help you when you are reverse engineering a database schema.
 
 [[speculate-about-design]]
 === 4.2 Speculate about Design
@@ -220,13 +220,13 @@ d.  _seeking alternatives_, when you do not find the design concept in the sourc
 
 _Speculate about Business Objects._ A crucial part of the system design is the way concepts of the problem domain are represented as classes in the source code. You can use a variant of this pattern to extract those so-called “business objects”.
 
-One way to build an initial hypothesis is to use the noun phrases in the requirements as the initial class names and the verb phrases as the initial method names (See [WBWW90] [BS97] [Boo94] for in-depth treatments of finding classes and their responsibilities).You should probably augment this information via the usage scenarios that you get out of Interview During Demo [p. 59] which may help you to find out which objects fulfil which roles. (See [JCJO92] [SW98] for scenarios and use cases and [Ree96] [RG98] for role modeling.)
+One way to build an initial hypothesis is to use the noun phrases in the requirements as the initial class names and the verb phrases as the initial method names (See <<WBWW90>> <<BS97>> <<Boo94>> for in-depth treatments of finding classes and their responsibilities).You should probably augment this information via the usage scenarios that you get out of Interview During Demo [p. 59] which may help you to find out which objects fulfil which roles. (See <<JCJO92>> <<SW98>> for scenarios and use cases and <<Ree96>> <<RG98>> for role modeling.)
 
-_Speculate about Patterns._ Patterns are “recurring solutions to a common design problem in a given context”. Once you know where a certain pattern has been applied, it reveals a lot about the underlying system design. This variant verifies a hypothesis about occurrences of architectural [BMR^+^96], analysis [Fow97] or design patterns [GHJV95].
+_Speculate about Patterns._ Patterns are “recurring solutions to a common design problem in a given context”. Once you know where a certain pattern has been applied, it reveals a lot about the underlying system design. This variant verifies a hypothesis about occurrences of architectural <<BMR96>>, analysis <<Fow97>> or design patterns <<GHJV95>>.
 
-_Speculate about Architecture._ “A software architecture is a description of the subsystem and components of a software system and the relationships between them” [BMR^+^96] (a.k.a. Components and Connectors [SG96]). The software architecture is typically associated with the coarse level design of a system and as such it is crucial in understanding the overall structure. Software architecture is especially relevant in the context of a distributed system with multiple cooperating processes, an area where reverse engineering is quite difficult.
+_Speculate about Architecture._ “A software architecture is a description of the subsystem and components of a software system and the relationships between them” <<BMR96>> (a.k.a. Components and Connectors <<SG96>>). The software architecture is typically associated with the coarse level design of a system and as such it is crucial in understanding the overall structure. Software architecture is especially relevant in the context of a distributed system with multiple cooperating processes, an area where reverse engineering is quite difficult.
 
-This variant builds and refines a hypothesis about which components and connectors exist, or in the context of a distributed system, which processes exist, how they are launched, how they get terminated and how they interact. Consult [BMR+96] for a catalogue of architectural patterns and [SG96] for a list of well-known architectural styles. See [Lea96] for some typical patterns and idioms that may be applied in concurrent programming and [SSRB00] for architectural patterns in distributed systems.
+This variant builds and refines a hypothesis about which components and connectors exist, or in the context of a distributed system, which processes exist, how they are launched, how they get terminated and how they interact. Consult <<BMR96>> for a catalogue of architectural patterns and <<SG96>> for a list of well-known architectural styles. See <<Lea96>> for some typical patterns and idioms that may be applied in concurrent programming and <<SSRB00>> for architectural patterns in distributed systems.
 
 [[tradeoffs-6]]
 ==== Tradeoffs
@@ -302,21 +302,21 @@ image:media/figure4-5.png[image,width=729,height=357]
 
 Figure 4.5: White-noise obtained by a bottom-up design extraction approach. 
 
-The figure shows a fragment of an inheritance hierarchy augmented with all method invocations and attribute accesses for a medium sized system. The visualization is performed by CodeCrawler [DDL99] [Lan99].
+The figure shows a fragment of an inheritance hierarchy augmented with all method invocations and attribute accesses for a medium sized system. The visualization is performed by CodeCrawler <<DDL99>> <<Lan99>>.
 
 _“We get things wrong before we get things right.”
-— Alistair Cockburn, [Coc93]_
+— Alistair Cockburn, <<Coc93>>_
 
 In order to gain a true understanding of the legacy problem, you must go through a learning process. Speculate about Design is intended to stimulate such a learning process and therefore evidence that contradicts your hypothesis is as valuable as evidence that confirms it. Indeed, mismatches force you to consider alternative solutions and assess their pros and cons, and that is the moment when true understanding emerges.
 
 [[known-uses-6]]
 ==== Known Uses
 
-In [MN97], there is a report of an experiment where a software engineer at Microsoft applied this pattern (it is called “the Reflection Model” in the paper) to reverse engineer the C-code of Microsoft Excel. One of the nice sides of the story is that the software engineer was a newcomer to that part of the system and that his colleagues could not spend too much time to explain it to him. Yet, after a brief discussion he could come up with an initial hypothesis and then use the source code to gradually refine his understanding. Note that the paper also includes a description of a lightweight tool to help specifying the model, the mapping from the model to the source code and the checking of the code against the model.
+In <<MN97>>, there is a report of an experiment where a software engineer at Microsoft applied this pattern (it is called “the Reflection Model” in the paper) to reverse engineer the C-code of Microsoft Excel. One of the nice sides of the story is that the software engineer was a newcomer to that part of the system and that his colleagues could not spend too much time to explain it to him. Yet, after a brief discussion he could come up with an initial hypothesis and then use the source code to gradually refine his understanding. Note that the paper also includes a description of a lightweight tool to help specifying the model, the mapping from the model to the source code and the checking of the code against the model.
 
-The articles [Big89] [BMW93] [BMW94], report several successful uses of this pattern (there it is called the “concept assignment problem”). In particular, the authors describe a tool-prototype named DESIRE, which includes advanced browsing facilities, program slicing and a Prolog-based query language. The tool has been used by a number of people in different companies to analyze programs of up to 220 KLOC. Other well- known applications are reported by the Rigi group, which among others have applied this pattern on a system consisting of over 2 million lines of PL/AS code [WTMS95].
+The articles <<Big89>> <<BMW93>> <<BMW94>>, report several successful uses of this pattern (there it is called the “concept assignment problem”). In particular, the authors describe a tool-prototype named DESIRE, which includes advanced browsing facilities, program slicing and a Prolog-based query language. The tool has been used by a number of people in different companies to analyze programs of up to 220 KLOC. Other well- known applications are reported by the Rigi group, which among others have applied this pattern on a system consisting of over 2 million lines of PL/AS code <<WTMS95>>.
 
-It has been shown that such an approach can be used to map an object-oriented design onto a procedural implementation purely based on a static analysis of the source-code [GW99] [WG98]. Nevertheless, newer approaches try to exploit richer and more diverse information sources. DALI for instance also analyses information from makefiles and profilers [BCK98] [KC98a] [KC99]. Gaudi on the other hand, verifies the hypothesis against a mixture of the static call graphs with run-time traces [RD99].
+It has been shown that such an approach can be used to map an object-oriented design onto a procedural implementation purely based on a static analysis of the source-code <<GW99>> <<WG98>>. Nevertheless, newer approaches try to exploit richer and more diverse information sources. DALI for instance also analyses information from makefiles and profilers <<BCK98>> <<KC98a>> <<KC99>>. Gaudi on the other hand, verifies the hypothesis against a mixture of the static call graphs with run-time traces <<RD99>>.
 
 [[what-next-8]]
 ==== What Next
@@ -395,7 +395,7 @@ However, formulas that combine different measurements in a single number should 
 ===== Difficulties
 
 * _Data is tedious to interpret._ To measure the quality of a piece of code, you must collect several measurements. Interpreting and comparing such multi-valued tuples is quite tedious especially when dealing with large software systems. Therefore, use visualizations which allow you to analyze different measurements simultaneously.
-* _Requires expertise._ The interpretation of measurement data is difficult and requires a lot of expertise. Fortunately, part of this expertise is documented in the form of design heuristics (see among others [Rie96] [LK94]) and the rest can be acquired on the job.
+* _Requires expertise._ The interpretation of measurement data is difficult and requires a lot of expertise. Fortunately, part of this expertise is documented in the form of design heuristics (see among others <<Rie96>> <<LK94>>) and the rest can be acquired on the job.
 
 image:media/figure4-6.png[image,width=443,height=229]
 
@@ -404,7 +404,7 @@ Figure 4.6: Class size overview with node size showing the lines of code and gra
 [[example-7]]
 ==== Example
 
-The analysis of the database and the design of _XDoctor_ was quite reassuring. Although there were some things to improve, the overall quality was quite good. Yet, you want to confirm this feeling and therefore plan to collect a number of quality metrics and visualize them. (Of course the visualization can be done with ordinary spreadsheets, but in this case you decide to use the CodeCrawler tool [DDL99] [Lan99].)
+The analysis of the database and the design of _XDoctor_ was quite reassuring. Although there were some things to improve, the overall quality was quite good. Yet, you want to confirm this feeling and therefore plan to collect a number of quality metrics and visualize them. (Of course the visualization can be done with ordinary spreadsheets, but in this case you decide to use the CodeCrawler tool <<DDL99>> <<Lan99>>.)
 
 _Class Size Overview._ As a starter, you get an impression of the raw physical size of all the classes constituting _XDoctor_. You measure the class size in terms of number of lines of code (LOC) and number of instance variables (NIV) and use a _checkers graph_ to show the relative proportion of the sizes. In such a graph all nodes are shown as squares where the size of the square is proportional to one size (here LOC) and the gray value is proportional to another size (here NIV).
 
@@ -431,7 +431,7 @@ As far as the subclasses concerns, you observe two phenomena. On the one hand, t
 
 _Method Size Overview._ An example of how to identify potential problems in the method bodies concerns the ratio of lines of code (LOC) and the number of messages sent (MSG). In most method bodies, these two measurements will correlate but methods where this correlation does not hold typically represent special code.
 
-To study this correlation relationship one might divide the two measurements. footnote:[Metrics theory prohibits arbitrary manipulations of numbers; one should first verify whether the scale of the measurement permits the calculation [FP96]. However, both are counting measurements having a ratio scale and then division is permitted.] However, then you lose the sense for the constituting measurements which makes interpretation difficult. Therefore, you visualize the relationship by means of a _correlation graph_, where each method is shown as a small square and where the x, y position shows the measurements that are supposed to correlate. In such a graph, the nodes where the measurements correlate cluster around a diagonal, while the exceptions are from the diagonal.
+To study this correlation relationship one might divide the two measurements. footnote:[Metrics theory prohibits arbitrary manipulations of numbers; one should first verify whether the scale of the measurement permits the calculation <<FP96>>. However, both are counting measurements having a ratio scale and then division is permitted.] However, then you lose the sense for the constituting measurements which makes interpretation difficult. Therefore, you visualize the relationship by means of a _correlation graph_, where each method is shown as a small square and where the x, y position shows the measurements that are supposed to correlate. In such a graph, the nodes where the measurements correlate cluster around a diagonal, while the exceptions are from the diagonal.
 
 Figure 4.9 shows a correlation graph where the horizontal axis (left to right) represents the number of messages sent and the vertical axis (top to bottom) the number of lines of code. You observe a big cluster in the top left corner where most nodes are superimposed on each other. 
 
@@ -445,9 +445,9 @@ This is reassuring because it implies that most methods have fewer than 15 lines
 ==== Rationale
 
 _You cannot control what you cannot measure.
-— Tom De Marco, [Mar82]_
+— Tom De Marco, <<Mar82>>_
 
-In several places in the literature it is mentioned that measuring source code helps in problem identification (see among others, [LK94] [FP96] [MLM96] [Nes88]). Most metric tools applied during these experiments visualize information by means of histograms and Kiviat diagrams. However, few research have studied the impact of thresholds while identifying exceptional entities; our own experience is that thresholds don’t really matter [DD99].
+In several places in the literature it is mentioned that measuring source code helps in problem identification (see among others, <<LK94>> <<FP96>> <<MLM96>> <<Nes88>>). Most metric tools applied during these experiments visualize information by means of histograms and Kiviat diagrams. However, few research have studied the impact of thresholds while identifying exceptional entities; our own experience is that thresholds don’t really matter <<DD99>>.
 
 Unfortunately, the current research is inconclusive with regards to the accuracy of the results. Up until now, no experiments exist that count how many problems remain undiscovered, nor is there any work on assessing the severity of the problems discovered. As such it is impossible to assess the reliability of metrics for reverse engineering.
 

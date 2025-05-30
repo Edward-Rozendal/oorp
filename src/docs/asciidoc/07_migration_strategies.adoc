@@ -53,7 +53,7 @@ Finally, the following two practices may help you avoid making radical, but unne
 [[involve-the-users]]
 === 7.1 Involve the Users
 
-_Also Known As:_ Engage Customers [Cop95]
+_Also Known As:_ Engage Customers <<Cop95>>
 
 *Intent* _Maximize acceptance of changes by involving the users at every step._
 [[problem-19]]
@@ -102,7 +102,7 @@ Establish simple procedures for delivering intermediate results on a regular bas
 ===== Cons
 
 * Developers may feel that supporting users is distracting them from the job of reengineering the system.
-* If you succeed in involving the users, this will raise expectations and put extra pressure on your team. For instance, Yourdon mentions that prototypes can really raise expectations too much and that you should always make clear which parts are not yet working [You97].
+* If you succeed in involving the users, this will raise expectations and put extra pressure on your team. For instance, Yourdon mentions that prototypes can really raise expectations too much and that you should always make clear which parts are not yet working <<You97>>.
 
 [[difficulties-17]]
 ===== Difficulties
@@ -115,14 +115,14 @@ Establish simple procedures for delivering intermediate results on a regular bas
 
 You need a feedback loop to ensure that you are addressing the real customer needs. By involving and supporting the users, you encourage this feedback loop.
 
-Coplien points out: _“Note that ‘maintaining product quality’ is not the problem being solved here. Product quality is only one component of customer satisfaction.”_ [Cop95]
+Coplien points out: _“Note that ‘maintaining product quality’ is not the problem being solved here. Product quality is only one component of customer satisfaction.”_ <<Cop95>>
 
 [[related-patterns-9]]
 ==== Related Patterns
 
 Virtually all of the patterns in this cluster support Involve the Users. Migrate Systems Incrementally to get the users working with the system as it is being reengineered and thereby Build Confidence.
 
-The Planning Game [BF01] is an effective technique to Involve the Users by iteratively identifying stories, estimating costs, and committing to the stories to be released.
+The Planning Game <<BF01>> is an effective technique to Involve the Users by iteratively identifying stories, estimating costs, and committing to the stories to be released.
 
 [[build-confidence]]
 === 7.2 Build Confidence
@@ -179,7 +179,7 @@ Pick short intervals for delivering new results. At each step, try to agree toge
 [[rationale-16]]
 ==== Rationale
 
-By taking smaller steps, you reduce the risk that an individual step will fail. Frequent, positive results help to build confidence. By the same token, Extreme Programming advocates Small Releases [Bec00]. Even negative results help you to monitor progress and understand better the situation, and so help to build up confidence.
+By taking smaller steps, you reduce the risk that an individual step will fail. Frequent, positive results help to build confidence. By the same token, Extreme Programming advocates Small Releases <<Bec00>>. Even negative results help you to monitor progress and understand better the situation, and so help to build up confidence.
 
 [[related-patterns-10]]
 ==== Related Patterns
@@ -190,7 +190,7 @@ It is easier to Build Confidence if you Involve the Users.
 [[migrate-systems-incrementally]]
 === 7.3 Migrate Systems Incrementally
 
-_Also Known As:_ Chicken Little [BS95]
+_Also Known As:_ Chicken Little <<BS95>>
 
 *Intent* _Avoid complexity and risk of big-bang reengineering by deploying functionality in frequent increments._
 [[problem-21]]
@@ -255,7 +255,7 @@ You get the best user feedback from a running system. Users are more motivated a
 [[known-uses-13]]
 ==== Known Uses
 
-_Migrating Legacy Systems_ [BS95] introduces this pattern under the name “Chicken Little” (to migrate incrementally means to “take Chicken Little steps”). This book discusses in great detail strategies and techniques for incremental migration.
+_Migrating Legacy Systems_ <<BS95>> introduces this pattern under the name “Chicken Little” (to migrate incrementally means to “take Chicken Little steps”). This book discusses in great detail strategies and techniques for incremental migration.
 
 [[related-patterns-11]]
 ==== Related Patterns
@@ -328,9 +328,9 @@ Develop a prototype of the new concept and evaluate it with respect to the new, 
 [[rationale-18]]
 ==== Rationale
 
-A prototype can tell you quickly whether a certain technical approach is sound or not. Brooks in _The Mythical Man-Month_ [Bro75] advises us to “write one to throw away” since it is hard to get it right the first time.
+A prototype can tell you quickly whether a certain technical approach is sound or not. Brooks in _The Mythical Man-Month_ <<Bro75>> advises us to “write one to throw away” since it is hard to get it right the first time.
 
-Love [Lov93] takes this one step further and warns us that, for objectoriented systems we should “write two to throw away"! Foote and Yoder [FY00] argue that, among other things, Throwaway Code is often the best way to clarify domain requirements, but they also warn that a prototype risks evolving into a “Big Ball of Mud”.
+Love <<Lov93>> takes this one step further and warns us that, for objectoriented systems we should “write two to throw away"! Foote and Yoder <<FY00>> argue that, among other things, Throwaway Code is often the best way to clarify domain requirements, but they also warn that a prototype risks evolving into a “Big Ball of Mud”.
 
 [[related-patterns-12]]
 ==== Related Patterns
@@ -390,14 +390,14 @@ Institute a discipline of integrating new changes and developments on a daily ba
 [[rationale-19]]
 ==== Rationale
 
-Many practitioners advocate a process of continuous integration as a way to avoid a risky and painful big-bang integration [Boo94].
+Many practitioners advocate a process of continuous integration as a way to avoid a risky and painful big-bang integration <<Boo94>>.
 
 [[related-patterns-13]]
 ==== Related Patterns
 
 Regression Test After Every Change minimizes the risk of defects creeping in during integration.
 
-Continuous Integration [Boo94] [Bec00] is a proven way to Always Have a Running Version.
+Continuous Integration <<Boo94>> <<Bec00>> is a proven way to Always Have a Running Version.
 
 [[regression-test-after-every-change]]
 === 7.6 Regression Test After Every Change
@@ -445,21 +445,21 @@ Run your regression test suite every time you think you have reached a stable st
 
 Regression tests tell you that whatever ran before still runs. If you consistently build up tests for defects you discover and new features, you will end up with a reusable test base that gives you confidence that your changes are sound, and helps you detect problems earlier.
 
-Davis advocates “Regression Test After Every Change” [Dav95] as standard Software Development practice.
+Davis advocates “Regression Test After Every Change” <<Dav95>> as standard Software Development practice.
 
 [[related-patterns-14]]
 ==== Related Patterns
 
 You should have already started to Write Tests to Enable Evolution [p. 139].
 
-A common practice in Extreme Programming is to write tests _before_ you implement new functionality [JAH01]. In the context of reengineering, you should consider writing tests that will fail before you make a change, and will pass if the change is correctly implemented. (Unfortunately it is not generally possible to design tests that will _only_ pass if the change is correct!)
+A common practice in Extreme Programming is to write tests _before_ you implement new functionality <<JAH01>>. In the context of reengineering, you should consider writing tests that will fail before you make a change, and will pass if the change is correctly implemented. (Unfortunately it is not generally possible to design tests that will _only_ pass if the change is correct!)
 
 Regression tests should help you to Retest Persistent Problems [p. 290].
 
 [[make-a-bridge-to-the-new-town]]
 === 7.7 Make a Bridge to the New Town
 
-_Also Known As:_ The Bridge to the New Town [Kel00], Keep the Data — Toss the Code [BS95]
+_Also Known As:_ The Bridge to the New Town <<Kel00>>, Keep the Data — Toss the Code <<BS95>>
 
 *Intent* _Migrate data from a legacy system by running the new system in parallel, with a bridge in between._
 [[problem-25]]
@@ -513,14 +513,14 @@ Figure 7.2: A Bridge helps you to transparently transfer data to the new system.
 [[difficulties-23]]
 ===== Difficulties
 
-• _“Stepwise migration schemes have proven very effective in large, layered business systems. They are not common in let’s say CAD applications that have check in /check out persistence and a tightly coupled and very woven object net.”_ [Kel00]
+• _“Stepwise migration schemes have proven very effective in large, layered business systems. They are not common in let’s say CAD applications that have check in /check out persistence and a tightly coupled and very woven object net.”_ <<Kel00>>
 
 [[known-uses-14]]
 ==== Known Uses
 
-Brodie & Stonebraker discuss much more thoroughly the use of data bridges and gateways in _Migrating Legacy Systems_ [BS95].
+Brodie & Stonebraker discuss much more thoroughly the use of data bridges and gateways in _Migrating Legacy Systems_ <<BS95>>.
 
-Keller in “The Bridge to the New Town” [Kel00] focusses more on the technical issue of migrating legacy data, and he points out numerous examples of the pattern successfully being applied.
+Keller in “The Bridge to the New Town” <<Kel00>> focusses more on the technical issue of migrating legacy data, and he points out numerous examples of the pattern successfully being applied.
 
 There are many possible variants of this pattern, depending on whether the entire legacy system is to be replaced, or only a component, and whether users should be able to have access to both systems at the same time or not.
 
@@ -537,7 +537,7 @@ A bridge helps you Migrate Systems Incrementally and thereby Build Confidence.
 [[present-the-right-interface]]
 === 7.8 Present the Right Interface
 
-_Also Known As:_ Semantic Wrapper [O’C00], Sweeping it Under the Rug [FY00]
+_Also Known As:_ Semantic Wrapper <<OC00>>, Sweeping it Under the Rug <<FY00>>
 
 *Intent* _Wrap a legacy system to export the right abstractions, even if they are not reflected in the existing implementation._
 [[problem-26]]
@@ -587,7 +587,7 @@ Consider, for example, a procedural graphics library that will be used within an
 [[known-uses-15]]
 ==== Known Uses
 
-Alan O’Callaghan [O’C00] presents this pattern as “Semantic Wrapper” briefly in the context of the ADAPTOR pattern language, which addresses migration of large-scale business-critical legacy systems to object-oriented and component-based technology.
+Alan O’Callaghan <<OC00>> presents this pattern as “Semantic Wrapper” briefly in the context of the ADAPTOR pattern language, which addresses migration of large-scale business-critical legacy systems to object-oriented and component-based technology.
 
 [[rationale-22]]
 ==== Rationale
@@ -606,7 +606,7 @@ If the new interface implemented by the Present the Right Interface is not stabl
 [[distinguish-public-from-published-interface]]
 === 7.9 Distinguish Public from Published Interface
 
-_Also Known As:_ Published Interface [O’C00]
+_Also Known As:_ Published Interface <<OC00>>
 
 *Intent* _Facilitate parallel development by distinguishing unstable “published interfaces” from stable “public interfaces”._
 
@@ -662,7 +662,7 @@ Since “published” interfaces are not supported by any programming language, 
 [[known-uses-16]]
 ==== Known Uses
 
-Published Interface is another pattern of the ADAPTOR pattern language [O’C00].
+Published Interface is another pattern of the ADAPTOR pattern language <<OC00>>.
 
 [[rationale-23]]
 ==== Rationale
@@ -679,7 +679,7 @@ Upgrading an interface to public may entail a change to the way it is accessed. 
 [[deprecate-obsolete-interfaces]]
 === 7.10 Deprecate Obsolete Interfaces
 
-_Also Known As:_ Deprecation [SP98]
+_Also Known As:_ Deprecation <<SP98>>
 
 *Intent* _Give clients time to react to changes to public interfaces by flagging obsolete interfaces as “deprecated”._
 [[problem-28]]
@@ -738,7 +738,7 @@ Flag the old interface as being “deprecated”, thereby notifying clients that
 [[known-uses-17]]
 ==== Known Uses
 
-Perdita Stevens and Rob Pooley identify Deprecation as a common practice for managing evolving APIs in complex systems [SP98].
+Perdita Stevens and Rob Pooley identify Deprecation as a common practice for managing evolving APIs in complex systems <<SP98>>.
 
 [[rationale-24]]
 ==== Rationale
@@ -786,7 +786,7 @@ Introduce only a constant, relatively low number of changes between each new rel
 
 Too much change between releases increases the risk of hidden defects, and decreases the chance of user acceptance.
 
-Lehman and Belady’s “Law of Conservation of Familiarity” suggests that the incremental change between releases of a system stays roughly constant over time [LB85]. This is a relatively natural phenomenon because to do anything else introduces unnecessary risks.
+Lehman and Belady’s “Law of Conservation of Familiarity” suggests that the incremental change between releases of a system stays roughly constant over time <<LB85>>. This is a relatively natural phenomenon because to do anything else introduces unnecessary risks.
 
 [[related-patterns-18]]
 ==== Related Patterns
@@ -842,7 +842,7 @@ The performance improvement that you can gain by optimizing a bit of code depend
 
 As a corollary, it may even be a good idea to replace a bit of complex, “optimized” code by a simpler, “naive” solution, if that won’t severely impact performance, but will make it easier to make other changes.
 
-See also Davis’ discussion of “Use Profiler Before Optimizing” [Dav95].
+See also Davis’ discussion of “Use Profiler Before Optimizing” <<Dav95>>.
 
 [[related-patterns-19]]
 ==== Related Patterns

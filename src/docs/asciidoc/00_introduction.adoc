@@ -52,7 +52,14 @@ Why isn’t real life more like this fairy tale?
 
 Could it be because there are no Good Software Engineers? Could it be because the Users don’t really know what they want? Or is it because the Perfect System doesn’t exist?
 
-Maybe there is a bit of truth in all of these observations, but the real reasons probably have more to do with certain fundamental laws of software evolution identified several years ago by Manny Lehman and Les Belady. The two most striking of these laws are [LB85]:
+Maybe there is a bit of truth in all of these observations, but the real reasons probably have more to do with certain fundamental laws of software evolution identified several years ago by Manny Lehman and Les Belady. The two most striking of these laws are <<LB85>>:
+
+// NOTE:
+//   During document generation "<<LB85>>" gives "[INFO] asciidoctor: INFO: 00_introduction.adoc: possible invalid reference: LB85"
+//   All asciidoctor application messages can be suppressed with "<logHandler><outputToConsole>false</outputToConsole></logHandler>" in pom.xml.
+//   There seems no way to suppress INFO (and DEBUG) sciidoctor application messages.
+//   An alternative is to use "xref:12_bibliography.adoc#ODF99[++[LB85]++]".
+//   However, asciidoctor messes up if there is more then one xref in one paragraph.
 
 * _The Law of Continuing Change_ — A program that is used in a realworld environment must change, or become progressively less useful in that environment.
 * _The Law of Increasing Complexity_ — As a program evolves, it becomes more complex, and extra resources are needed to preserve and simplify its structure.
@@ -79,7 +86,7 @@ In this book we summarize what we learned in the hope that it will help others w
 
 *Why patterns?*
 
-A pattern is a recurring motif, an event or structure that occurs over and over again. _Design patterns_ are generic solutions to recurring design problems [GHJV95]. It is because these design problems are never exactly alike, but only very similar, that the solutions are not pieces of software, but _documents that communicate best practice_.
+A pattern is a recurring motif, an event or structure that occurs over and over again. _Design patterns_ are generic solutions to recurring design problems <<GHJV95>>. It is because these design problems are never exactly alike, but only very similar, that the solutions are not pieces of software, but _documents that communicate best practice_.
 
 Patterns have emerged in recent years as a literary form that can be used to document best practice in solving many different kinds of problems. Although many kinds of problems and solutions can be cast as patterns, they can be overkill when applied to the simplest kinds of problems.
 

@@ -5,7 +5,7 @@ You are at the beginning of a reengineering project. You know that you will have
 
 The patterns presented in this cluster present effective ways of using tests in a reengineering context to reduce the risks posed by reengineering changes.
 
-_Caveat._ Testing is a rich and important subject that can scarcely be covered in any depth in the few pages we devote to it in this chapter. We have done no more than identify a few of the more significant testing patterns that are especially relevant to reengineering projects, and briefly sketch out some of the key issues. Binder, for example, devotes an entire book to testing object-oriented systems [Bin99].
+_Caveat._ Testing is a rich and important subject that can scarcely be covered in any depth in the few pages we devote to it in this chapter. We have done no more than identify a few of the more significant testing patterns that are especially relevant to reengineering projects, and briefly sketch out some of the key issues. Binder, for example, devotes an entire book to testing object-oriented systems <<Bin99>>.
 
 [[forces-4]]
 === Forces
@@ -96,7 +96,7 @@ Well-designed tests exhibit the following properties:
 * _Automation._ Tests should run without human intervention. Only fully automated tests offer an efficient way to check after every change to the system whether it still works as it did before. By minimizing the effort needed to run tests, developers will hesitate less to use them.
 * _Persistence._ Tests must be stored to be automatable. Each test documents its test data, the actions to perform, and the expected results. A test succeed if the expected result is obtained, otherwise it fails. Stored tests document the way the system is expected to work.
 * _Repeatability._ Confidence in the system is increased if tests can be repeated after any change is implemented. Whenever new functionality is added, new tests can be added to the pool of existing tests, thereby increasing the confidence in the system.
-* _Unit testing._ Tests should be associated to individual software components so that they identify clearly which part of the system they test [Dav95].
+* _Unit testing._ Tests should be associated to individual software components so that they identify clearly which part of the system they test <<Dav95>>.
 * _Independence._ Each test should minimize its dependencies on other tests. Dependent tests typically result in avalanche effects: when one test breaks, many others break as well. It is important that the number of failures represent quantitatively the size of the detected problems. This minimizes distrust in the tests. Programmers should believe in tests.
 
 [[tradeoffs-13]]
@@ -129,12 +129,12 @@ Well-designed tests exhibit the following properties:
 ** Debugging is easier when automated tests exist.
 ** Tests are simple documentation that is always in sync with the application.
 * Developers may be reluctant to adopt testing. Build a business case to show them that tests will not only speed up today’s development, but they will speed up future maintenance efforts. Once we discussed with a developer who spent one day fixing a bug and then three days more checking if the changes he made were valid. When we showed him that automated tests could help him in his daily work to debug his program more quickly, he was finally convinced.
-* Testing can be boring for developers so at least use the right tools. For unit testing, SUnit and its many variants are simple, free and available for Smalltalk, C++, Java and other languages [BG98].
+* Testing can be boring for developers so at least use the right tools. For unit testing, SUnit and its many variants are simple, free and available for Smalltalk, C++, Java and other languages <<BG98>>.
 
 [[example-8]]
 ==== Example
 
-The following code illustrates a unit test written using JUnit in Java[BG98]. The test checks that the add operation defined on a class Money works as expected, namely that 12 CHF + 14 CHF = 26 CHF.
+The following code illustrates a unit test written using JUnit in Java <<BG98>>. The test checks that the add operation defined on a class Money works as expected, namely that 12 CHF + 14 CHF = 26 CHF.
 
 [source,java]
 ----
@@ -170,9 +170,9 @@ image:media/figure6-2.png[image,width=725,height=194]
 
 Figure 6.2: Automated tests are the _foundation_ for reengineering. They establish your confidence in the system, reduce risks, and improve confidence in your ability to change the system.
 
-— Alan Davis, Principle 111 [Dav95]
+— Alan Davis, Principle 111 <<Dav95>>
 
-Systematic testing is heavily promoted by Extreme Programming [Bec00] one of the basic techniques necessary to be able to adapt programs quickly to changing requirements. Changing legacy systems is risky business. Will the code still work after a change? How many unexpected sideeffects will appear? Having a set of automated, repeatable tests helps to reduce this risk.
+Systematic testing is heavily promoted by Extreme Programming <<Bec00>> one of the basic techniques necessary to be able to adapt programs quickly to changing requirements. Changing legacy systems is risky business. Will the code still work after a change? How many unexpected sideeffects will appear? Having a set of automated, repeatable tests helps to reduce this risk.
 
 * A set of running tests provides confidence in the system. (“Are you really sure this piece of code works?” “Yes, look, here I have the tests that prove it.”)
 * A set of running tests represents _reproducible_ and _verifiable_ information about your system, and is at all times in sync with the application. This in contrast to most of the written documentation, which is typically slightly outdated already the next day.
@@ -297,7 +297,7 @@ Use a testing framework that allows suites of tests to be composed from individu
 [[steps-2]]
 ===== Steps
 
-Unit testing frameworks, like JUnit and SUnit [BG98], and various commercial test harness packages are available for most programming languages. If a suitable testing framework is not available for the programming language you are using, you can easily brew your own according to the following principles:
+Unit testing frameworks, like JUnit and SUnit <<BG98>>, and various commercial test harness packages are available for most programming languages. If a suitable testing framework is not available for the programming language you are using, you can easily brew your own according to the following principles:
 
 * The user must provide test cases that set up test data, exercise them, and make assertions about the results
 * The testing framework should wrap test cases as tests which can distinguish between assertion failures and unexpected errors.
@@ -455,12 +455,12 @@ ANT, C, C++, Delphi, .Net (all languages), Eiffel, Forte 4GL, GemStone/S,
 
 Jade, JUnit Java, JavaScript, k language (ksql, from kbd), Objective C, Open Road (CA), Oracle, PalmUnit, Perl, PhpUnit, PowerBuilder, Python, Rebol, ‘Ruby, Smalltalk, Visual Objects and UVisual Basic.
 
-Beck and Gamma give a good overview in the context of JUnit [BG98].
+Beck and Gamma give a good overview in the context of JUnit <<BG98>>.
 
 [[test-the-interface-not-the-implementation]]
 === 6.4 Test the Interface, Not the Implementation
 
-_Also Known As:_ Black-Box Testing [Pre94]
+_Also Known As:_ Black-Box Testing <<Pre94>>
 
 *Intent* _Build up reusable tests that focus on external behavior rather than on implementation details, and thereby will survive changes to the system._
 [[problem-16]]
@@ -558,14 +558,14 @@ Since interfaces tend to be more stable than implementations, blackbox tests hav
 
 *Known Uses*
 
-Black-Box testing is a standard testing strategy [Som96].
+Black-Box testing is a standard testing strategy <<Som96>>.
 
 [[related-patterns-6]]
 ==== Related Patterns
 
 Record Business Rules as Tests adopts a different strategy to developing tests which focuses on exercising business rules. This is fine if the components to be tested are the ones that implement the business logic. For most other components, Test the Interface, Not the Implementation will likely be more appropriate.
 
-Components that implement complex algorithms may not be well-suited to black-box testing, since an analysis of the interface alone may not reveal all the cases that the algorithm should handle. White-box testing [Som96] is another standard technique for testing algorithms in which test cases are generated to cover all possible paths through an algorithm.
+Components that implement complex algorithms may not be well-suited to black-box testing, since an analysis of the interface alone may not reveal all the cases that the algorithm should handle. White-box testing <<Som96>> is another standard technique for testing algorithms in which test cases are generated to cover all possible paths through an algorithm.
 
 [[record-business-rules-as-tests]]
 === 6.5 Record Business Rules as Tests
@@ -597,7 +597,7 @@ Write executable tests that record the business rules as test cases, actions, an
 [[hints-14]]
 ===== Hints
 
-* Developers and clients can write tests. Developers may write tests associated with specific functionality or piece of code. User may also have to write integration tests in the form of use cases that bind together several unit tests [Dav95] [Bec00].
+* Developers and clients can write tests. Developers may write tests associated with specific functionality or piece of code. User may also have to write integration tests in the form of use cases that bind together several unit tests <<Dav95>> <<Bec00>>.
 * Note that you are not interested in the implementation strategies or optimization aspects, but only the business rules.
 
 [[tradeoffs-17]]
