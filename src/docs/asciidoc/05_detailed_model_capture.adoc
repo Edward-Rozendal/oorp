@@ -215,7 +215,7 @@ The following guidelines will help you to find out where and how to apply these 
 [[cons-9]]
 ===== Cons
 
-• _Risk of introducing errors._ The less you change the code, the smaller your chances of introducing errors. Small refactorings should be behavior-preserving, but it may be non-trivial to verify that even simple refactorings do not break the code. If you do not have adequate regression tests in place, it can be risky to introduce changes, or costly to develop the needed tests. For these reasons it is important to attempt to Refactor to Understand only on a working copy of the software.
+* _Risk of introducing errors._ The less you change the code, the smaller your chances of introducing errors. Small refactorings should be behavior-preserving, but it may be non-trivial to verify that even simple refactorings do not break the code. If you do not have adequate regression tests in place, it can be risky to introduce changes, or costly to develop the needed tests. For these reasons it is important to attempt to Refactor to Understand only on a working copy of the software.
 
 [[difficulties-9]]
 ===== Difficulties
@@ -303,7 +303,7 @@ It is too time-consuming to step through every single statement of a running sys
 [[difficulties-10]]
 ===== Difficulties
 
-• _Dependency on Tools._ You need to have good debugger to Step Through the Execution. Not only must it allow to set and remove breakpoints dynamically, it also should provide the means to examine the state of the objects involved. And to easily verify alternative paths, the debugger should allow you to change the internal state of an object, or even restart a method currently on the execution stack.
+* _Dependency on Tools._ You need to have good debugger to Step Through the Execution. Not only must it allow to set and remove breakpoints dynamically, it also should provide the means to examine the state of the objects involved. And to easily verify alternative paths, the debugger should allow you to change the internal state of an object, or even restart a method currently on the execution stack.
 
 [[what-next-12]]
 ==== What Next
@@ -379,7 +379,7 @@ This idiom is heavily used in Java by classes that define multiple constructors.
 
 ===== Pros
 
-• _Reliable._ You can trust the source code more than the documentation.
+* _Reliable._ You can trust the source code more than the documentation.
 
 [[cons-11]]
 ===== Cons
@@ -442,7 +442,7 @@ _Mature and stable design._ A mature subsystem will exhibit some growth and refa
 [[tradeoffs-12]]
 ==== Tradeoffs
 
-[[pros-11]]
+[[id_6.2_pros]]
 ===== Pros
 
 * _Concentrates on important design artifacts,_ because the changes point you to those places where the design is expanding or consolidating and this in turn provides insight into the underlying design rationale.

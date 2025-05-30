@@ -147,7 +147,7 @@ Figure 10.3: Combining simple delegation and Transform Self Type Checks when the
 
 There are some situations in which explicit type-checks may nevertheless be the right solution:
 
-• The conditional code may be generated from a special tool. Lexical analysers and parsers, for example, may be automatically generated to contain the kind of conditional code we are trying to avoid. In these cases, however, the generated classes should never be manually extended, but simply regenerated from the modified specifications.
+* The conditional code may be generated from a special tool. Lexical analysers and parsers, for example, may be automatically generated to contain the kind of conditional code we are trying to avoid. In these cases, however, the generated classes should never be manually extended, but simply regenerated from the modified specifications.
 
 [[example-16]]
 ==== Example
@@ -276,12 +276,12 @@ Figure 10.6: Transformation of explicit type check used to determine which metho
 [[cons-31]]
 ===== Cons
 
-• Sometimes it is convenient to see the code handling different cases in a single location. Transform Client Type Checks redistributes the logic to the individual provider classes, with the result that the overview is lost.
+* Sometimes it is convenient to see the code handling different cases in a single location. Transform Client Type Checks redistributes the logic to the individual provider classes, with the result that the overview is lost.
 
 [[difficulties-33]]
 ===== Difficulties
 
-• Normally instances of the provider classes should be already have been created so we do not have to look for the creation of the instances, however refactoring the interface will affect all clients of the provider classes and must not be undertaken without considering the full consequences of such an action.
+* Normally instances of the provider classes should be already have been created so we do not have to look for the creation of the instances, however refactoring the interface will affect all clients of the provider classes and must not be undertaken without considering the full consequences of such an action.
 
 [[when-the-legacy-solution-is-the-solution-4]]
 ===== When the legacy solution is the solution
@@ -506,7 +506,8 @@ Step 4 can be performed using the Extract Method operation of the Refactoring Br
 [[pros-37]]
 ===== Pros
 
-• _Limited Impact._ The public interface of the original class does not have to change. Since the state instances are accessed by delegation from the original object, the clients are unaffected. In the straightforward case the application of this pattern has a limited impact on the clients.
+* _Limited Impact._ The public interface of the original class does not have to change. Since the state instances are accessed by delegation from the original object, the clients are unaffected. In the straightforward case the application of this pattern has a limited impact on the clients.
+
 [[cons-32]]
 ===== Cons
 
@@ -526,12 +527,13 @@ This pattern should not be applied lightly.
 [[known-uses-20]]
 ==== Known Uses
 
-The _Design Patterns Smalltalk Companion_ [ABW98] presents a step-by-step code transformation.
+The _Design Patterns Smalltalk Companion_ <<ABW98> presents a step-by-step code transformation.
 
 [[factor-out-strategy]]
 === 10.4 Factor out Strategy
 
 *Intent* _Eliminate conditional code that selects a suitable algorithm by applying the Strategy design pattern._
+
 [[problem-39]]
 ==== Problem
 
@@ -579,10 +581,7 @@ Step 4 can be performed using the Extract Method operation of the Refactoring Br
 [[pros-38]]
 ===== Pros
 
-* _Limited Impact._ The public interface of the original class does not have to change. Since the Strategy instances are accessed by delegation from the original object, the clients are unaffected. In a straightforward case the application of this pattern has a limited impact on the clients. However, the Context interface will be reduced because
-
-all the previously implemented algorithms are now moved to Strategy classes. So you have to check the invocations of these methods and decide on a per case base.
-
+* _Limited Impact._ The public interface of the original class does not have to change. Since the Strategy instances are accessed by delegation from the original object, the clients are unaffected. In a straightforward case the application of this pattern has a limited impact on the clients. However, the Context interface will be reduced because all the previously implemented algorithms are now moved to Strategy classes. So you have to check the invocations of these methods and decide on a per case base.
 * After applying this pattern, you will be able to plug new strategies without impacting modifying the interface of the Context. Adding a new strategy does not require to recompile the Context class and its clients.
 * After applying this pattern, the interface of the Context class and the Strategy classes will be clearer.
 
@@ -595,7 +594,8 @@ all the previously implemented algorithms are now moved to Strategy classes. So 
 [[difficulties-34]]
 ===== Difficulties
 
-• There are several ways to share information between the Context and the Strategy objects, and the tradeoffs can be subtle. The information can be passed as argument when the Strategy method is invoked, the Context object itself can be passed as argument, or the Strategy objects can hold a reference to their context. If the relationship between the Context and the Strategy is highly dynamic, then it may be preferable to pass this information as a method argument. More detailed discussions of this issue exist in the literature on the Strategy [p. 295] pattern <<GHJV95>> <<ABW98>>.
+* There are several ways to share information between the Context and the Strategy objects, and the tradeoffs can be subtle. The information can be passed as argument when the Strategy method is invoked, the Context object itself can be passed as argument, or the Strategy objects can hold a reference to their context. If the relationship between the Context and the Strategy is highly dynamic, then it may be preferable to pass this information as a method argument. More detailed discussions of this issue exist in the literature on the Strategy [p. 295] pattern <<GHJV95>> <<ABW98>>.
+
 [[example-18]]
 ==== Example
 
@@ -674,7 +674,8 @@ If you still want to be able to test for null values in a clean way, you may int
 [[difficulties-35]]
 ===== Difficulties
 
-• Multiple clients may not agree on the reasonable default behavior of the Null Object. In this case, multiple Null Object classes may need to be defined.
+* Multiple clients may not agree on the reasonable default behavior of the Null Object. In this case, multiple Null Object classes may need to be defined.
+
 [[when-the-legacy-solution-is-the-solution-6]]
 ===== When the legacy solution is the solution
 
@@ -684,7 +685,7 @@ If you still want to be able to test for null values in a clean way, you may int
 [[example-19]]
 ==== Example
 
-The following Smalltalk code is taken from Woolf <<Woo98>>. Initially the code contains explicit null tests::
+The following Smalltalk code is taken from Woolf <<Woo98>>. Initially the code contains explicit null tests.
 
 [source,smalltalk]
 ----
@@ -931,7 +932,7 @@ FileList>>itemsForFileEnding: suffix
 [[cons-34]]
 ===== Cons
 
-• You have to define two new classes, one for the object representing tool representation (plugin) and one for the object managing the registered tools (plugin manager).
+* You have to define two new classes, one for the object representing tool representation (plugin) and one for the object managing the registered tools (plugin manager).
 
 [[difficulties-36]]
 ===== Difficulties
@@ -942,7 +943,7 @@ FileList>>itemsForFileEnding: suffix
 [[when-the-legacy-solution-is-the-solution-7]]
 ===== When the legacy solution is the solution
 
-• If there is only a single tool client class, if all the tools are always available, and if you will never add or remove a tool at run-time, a conditional is simpler.
+* If there is only a single tool client class, if all the tools are always available, and if you will never add or remove a tool at run-time, a conditional is simpler.
 
 [[related-patterns-27]]
 ==== Related Patterns

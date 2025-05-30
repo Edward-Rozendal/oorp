@@ -239,7 +239,7 @@ Deploy a first _update_ of the legacy system as soon as you can, and migrate inc
 [[cons-20]]
 ===== Cons
 
-• You will have to work harder to keep the system running while you are changing it.
+* You will have to work harder to keep the system running while you are changing it.
 
 [[difficulties-19]]
 ===== Difficulties
@@ -501,9 +501,9 @@ Figure 7.2: A Bridge helps you to transparently transfer data to the new system.
 [[pros-24]]
 ===== Pros
 
-• You can start using the new system without migrating all the legacy data.
+* You can start using the new system without migrating all the legacy data.
 
-[[cons-22]]
+[[id_7.7_cons]]
 ===== Cons
 
 * A data bridge can be tricky to implement correctly if there is not a simple mapping between the legacy data and the new data.
@@ -513,7 +513,7 @@ Figure 7.2: A Bridge helps you to transparently transfer data to the new system.
 [[difficulties-23]]
 ===== Difficulties
 
-• _“Stepwise migration schemes have proven very effective in large, layered business systems. They are not common in let’s say CAD applications that have check in /check out persistence and a tightly coupled and very woven object net.”_ <<Kel00>>
+* _“Stepwise migration schemes have proven very effective in large, layered business systems. They are not common in let’s say CAD applications that have check in /check out persistence and a tightly coupled and very woven object net.”_ <<Kel00>>
 
 [[known-uses-14]]
 ==== Known Uses
@@ -577,12 +577,12 @@ Consider, for example, a procedural graphics library that will be used within an
 [[cons-23]]
 ===== Cons
 
-• The new interface may not be stable, so developers may be reluctant to use it.
+* The new interface may not be stable, so developers may be reluctant to use it.
 
 [[difficulties-24]]
 ===== Difficulties
 
-• It can be hard to resist the temptation to simply wrap the procedural abstractions as utility classes.
+* It can be hard to resist the temptation to simply wrap the procedural abstractions as utility classes.
 
 [[known-uses-15]]
 ==== Known Uses
@@ -772,7 +772,6 @@ Introduce only a constant, relatively low number of changes between each new rel
 ==== Tradeoffs
 
 [[pros-28]]
-//FIXME header Pros Cons not equal
 ===== Pros
 
 * Users do not have to change their work habits too much between releases.

@@ -312,12 +312,12 @@ Unit testing frameworks, like JUnit and SUnit <<BG98>>, and various commercial t
 [[pros-14]]
 ===== Pros
 
-• A testing framework simplifies the formulation of tests and encourages programmers to write tests and use them.
+* A testing framework simplifies the formulation of tests and encourages programmers to write tests and use them.
 
 [[cons-15]]
 ===== Cons
 
-• Testing requires commitment, discipline and support. You must convince your team of the need and benefits of disciplined testing, and you must integrate testing into your daily process. One way of supporting this discipline is to have one testing coach in your team; consider this when you Appoint a Navigator [p. 23].
+* Testing requires commitment, discipline and support. You must convince your team of the need and benefits of disciplined testing, and you must integrate testing into your daily process. One way of supporting this discipline is to have one testing coach in your team; consider this when you Appoint a Navigator [p. 23].
 
 [[example-10]]
 ==== Example
@@ -511,7 +511,7 @@ Develop black-box tests that exercise the public interface of your components.
 [[difficulties-14]]
 ===== Difficulties
 
-• Sometimes the class does not provide the right interface to support black-box testing. Adding accessors to sample the state of the object can be a simple solution, but this generally weakens encapsulation and makes the object less of a black box.
+* Sometimes the class does not provide the right interface to support black-box testing. Adding accessors to sample the state of the object can be a simple solution, but this generally weakens encapsulation and makes the object less of a black box.
 
 [[example-11]]
 ==== Example

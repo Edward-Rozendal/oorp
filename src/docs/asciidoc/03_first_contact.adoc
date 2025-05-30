@@ -114,7 +114,7 @@ It is crucial to ask what the maintainers will gain from the reengineering proje
 [[cons]]
 ===== Cons
 
-• _Provides anecdotal evidence only._ The information you obtain is anecdotal at best. The human brain is necessarily selective regarding which facts it remembers, thus the recollection of the maintainers may be insufficient. Worse, the information may be incomplete to start with, since the maintainers are often not the original developers of the system. Consequently, you will have to complement the information you obtained by other means (see for instance Skim the Documentation, Interview During Demo, Read all the Code in One Hour and Do a Mock Installation).
+* _Provides anecdotal evidence only._ The information you obtain is anecdotal at best. The human brain is necessarily selective regarding which facts it remembers, thus the recollection of the maintainers may be insufficient. Worse, the information may be incomplete to start with, since the maintainers are often not the original developers of the system. Consequently, you will have to complement the information you obtained by other means (see for instance Skim the Documentation, Interview During Demo, Read all the Code in One Hour and Do a Mock Installation).
 
 [[difficulties]]
 ===== Difficulties
@@ -246,7 +246,7 @@ Below are some additional items you might add to your checklist because they pro
 [[cons-1]]
 ===== Cons
 
-• _Obtain low abstraction._ Via this pattern, you will get some insight in the solution domain, but only very little on how these map onto problem domain concepts. Consequently, you will have to complement the information you obtained with other, more abstract representations (for instance Skim the Documentation and Interview During Demo).
+* _Obtain low abstraction._ Via this pattern, you will get some insight in the solution domain, but only very little on how these map onto problem domain concepts. Consequently, you will have to complement the information you obtained with other, more abstract representations (for instance Skim the Documentation and Interview During Demo).
 
 [[difficulties-1]]
 ===== Difficulties
@@ -631,7 +631,7 @@ After this build and install experiment, prepare a report containing:
 [[difficulties-4]]
 ===== Difficulties
 
-• _Easy to get carried away._ Building or installing a complex system may easily fail due to external factors (missing components, unclear installation scripts). It is tempting to continue fixing these annoying problems due to the “next time it will work” effect. Rather than getting carried away with these details, it is important not to lose sight of the main goal, which is not to build the system, but to gain insight into the build process. Consequently you should limit the time you spend, and focus on documenting the problems that arise so you can address them later.
+* _Easy to get carried away._ Building or installing a complex system may easily fail due to external factors (missing components, unclear installation scripts). It is tempting to continue fixing these annoying problems due to the “next time it will work” effect. Rather than getting carried away with these details, it is important not to lose sight of the main goal, which is not to build the system, but to gain insight into the build process. Consequently you should limit the time you spend, and focus on documenting the problems that arise so you can address them later.
 
 [[example-4]]
 ==== Example

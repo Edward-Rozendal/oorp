@@ -121,7 +121,7 @@ It may be the case that the calling methods defined on the same object have to b
 [[cons-27]]
 ===== Cons
 
-• If the moved behavior also accesses client data, turning these accesses into parameters will make the interface of the provider more complex and introduce explicit dependencies from the provider to the client.
+* If the moved behavior also accesses client data, turning these accesses into parameters will make the interface of the provider more complex and introduce explicit dependencies from the provider to the client.
 
 [[difficulties-29]]
 ===== Difficulties
@@ -431,12 +431,13 @@ _Caution._ It is important to note that the refactoring process relies on pushin
 [[cons-28]]
 ===== Cons
 
-• The systematic application of Eliminate Navigation Code may lead to large interfaces. In particular, if a class defines many instance variables that are collections, then Eliminate Navigation Code would force you to define a large number of additional methods to shield the underlying collections.
+* The systematic application of Eliminate Navigation Code may lead to large interfaces. In particular, if a class defines many instance variables that are collections, then Eliminate Navigation Code would force you to define a large number of additional methods to shield the underlying collections.
 
 [[difficulties-30]]
 ===== Difficulties
 
-• Deciding when to apply Eliminate Navigation Code can be difficult. Defining methods that merely delegate requests to class collaborators may not always be the solution. It may happen that giving away internal information can reduce the interface of a class. For example, if a class implements some well-defined behaviors but also serves as a Facade [p. 293] to other collaborators, it may be simpler to give access to the collaborator directly to reduce the interface of the class.
+* Deciding when to apply Eliminate Navigation Code can be difficult. Defining methods that merely delegate requests to class collaborators may not always be the solution. It may happen that giving away internal information can reduce the interface of a class. For example, if a class implements some well-defined behaviors but also serves as a Facade [p. 293] to other collaborators, it may be simpler to give access to the collaborator directly to reduce the interface of the class.
+
 [[when-the-legacy-solution-is-the-solution-1]]
 ===== When the legacy solution is the solution
 
@@ -655,7 +656,8 @@ The following steps are applied iteratively. Be sure to apply Regression Test Af
 [[difficulties-31]]
 ===== Difficulties
 
-• God class methods may themselves be large, procedural abstractions with too many responsibilities. Such methods may need to be decomposed before cohesive sets of instance variables and methods can be teased out as classes.
+* God class methods may themselves be large, procedural abstractions with too many responsibilities. Such methods may need to be decomposed before cohesive sets of instance variables and methods can be teased out as classes.
+
 [[when-the-legacy-solution-is-the-solution-2]]
 ===== When the legacy solution is the solution
 

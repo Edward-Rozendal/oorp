@@ -129,7 +129,7 @@ _Incorporate operations._ It should be clear that the class diagram you extract 
 [[difficulties-5]]
 ===== Difficulties
 
-• _Polluted database schema._ The database schema itself is not always the best source of information to reconstruct a class diagram for the valuable objects. Many projects must optimize database access and as such often sacrifice a clean database schema. Also, the database schema itself evolves over time, and as such will slowly deteriorate. _Therefore, it is quite important to refine the class diagram via analysis of data samples and embedded SQL statements.
+* _Polluted database schema._ The database schema itself is not always the best source of information to reconstruct a class diagram for the valuable objects. Many projects must optimize database access and as such often sacrifice a clean database schema. Also, the database schema itself evolves over time, and as such will slowly deteriorate. _Therefore, it is quite important to refine the class diagram via analysis of data samples and embedded SQL statements.
 
 [[example-5]]
 ==== Example
@@ -246,7 +246,7 @@ This variant builds and refines a hypothesis about which components and connecto
 [[difficulties-6]]
 ===== Difficulties
 
-• _Maintain consistency._ You should plan to keep the class diagram up to date while your reverse engineering project progresses and your understanding of the software system grows. Otherwise your efforts will be wasted. Therefore, make sure that your class diagram relies heavily on the naming conventions used in the source-code and that the class diagram is under the control of the configuration management system.
+* _Maintain consistency._ You should plan to keep the class diagram up to date while your reverse engineering project progresses and your understanding of the software system grows. Otherwise your efforts will be wasted. Therefore, make sure that your class diagram relies heavily on the naming conventions used in the source-code and that the class diagram is under the control of the configuration management system.
 
 [[example-6]]
 ==== Example

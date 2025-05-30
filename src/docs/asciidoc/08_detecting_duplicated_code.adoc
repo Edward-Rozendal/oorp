@@ -334,10 +334,12 @@ _image:media/figure8-3.png[image,width=584,height=516]
 Figure 8.3: Code duplication before and after refactoring.
 
 A simple version of the approach can be implemented by a good programmer using a appropriate tools in a couple of days. (One of our better students made a small dotplot browser in Delphi in two days.)
+
 [[cons-26]]
 ===== Cons
 
-• Dotplots only present pairwise comparisons. They do not necessarily help you identify all instances of duplicated elements in the entire software system. Although the approach can easily be extended to present multiple files across each axis, the comparisons are still only pairwise.
+* Dotplots only present pairwise comparisons. They do not necessarily help you identify all instances of duplicated elements in the entire software system. Although the approach can easily be extended to present multiple files across each axis, the comparisons are still only pairwise.
+
 [[difficulties-28]]
 ===== Difficulties
 
