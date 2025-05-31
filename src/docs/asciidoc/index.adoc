@@ -1,6 +1,6 @@
 = Object-Oriented Reengineering Patterns
 Legacy Edition
-1.0
+2.0-alpha
 
 :doctype: book
 :toc:
