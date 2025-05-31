@@ -19,7 +19,7 @@ There are many patterns that are not specifically concerned with reengineering, 
 
 *Source:* Patterns for system testing <<DR98>>.
 
-*Referenced from:* Regression Test After Every Change [p. 182].
+*Referenced from:* <<regression-test-after-every-change>>.
 
 [[a.1.2-test-fuzzy-features]]
 ==== A.1.2 Test Fuzzy Features
@@ -30,7 +30,7 @@ There are many patterns that are not specifically concerned with reengineering, 
 
 *Source:* Patterns for system testing <<DR98>>.
 
-*Referenced from:* Grow Your Test Base Incrementally [p. 144].
+*Referenced from:* <<grow-your-test-base-incrementally>>.
 
 [[a.1.3-test-old-bugs]]
 ==== A.1.3 Test Old Bugs
@@ -41,7 +41,7 @@ There are many patterns that are not specifically concerned with reengineering, 
 
 *Source:* Patterns for system testing <<DR98>>.
 
-*Referenced from:* Grow Your Test Base Incrementally [p. 144].
+*Referenced from:* <<grow-your-test-base-incrementally>>.
 
 [[a.2-refactorings]]
 === A.2 Refactorings
@@ -55,7 +55,7 @@ There are many patterns that are not specifically concerned with reengineering, 
 
 *Source:* _Refactoring: Improving the Design of Existing Code_ <<FBB99>>.
 
-*Referenced from:* Eliminate Navigation Code [p. 230].
+*Referenced from:* <<eliminate-navigation-code>>.
 
 [[a.2.2-extract-method]]
 ==== A.2.2 Extract Method
@@ -64,7 +64,7 @@ There are many patterns that are not specifically concerned with reengineering, 
 
 *Source:* _Refactoring: Improving the Design of Existing Code_ <<FBB99>>.
 
-*Referenced from:* Refactor to Understand [p. 115], Visualize Code as Dotplots [p. 210], Move Behavior Close to Data [p. 221]
+*Referenced from:* <<refactor-to-understand>>, <<visualize-code-as-dotplots>>, <<move-behavior-close-to-data>>
 
 [[a.2.3-move-method]]
 ==== A.2.3 Move Method
@@ -73,7 +73,7 @@ There are many patterns that are not specifically concerned with reengineering, 
 
 *Source:* _Refactoring: Improving the Design of Existing Code_ <<FBB99>>.
 
-*Referenced from:* Refactor to Understand [p. 115], Move Behavior Close to Data [p. 221]
+*Referenced from:* <<refactor-to-understand>>, <<move-behavior-close-to-data>>
 
 [[a.2.4-rename-attribute]]
 ==== A.2.4 Rename Attribute
@@ -82,7 +82,7 @@ There are many patterns that are not specifically concerned with reengineering, 
 
 *Source:* _Practical Analysis for Refactoring_ <<Rob99>>.
 
-*Referenced from:* Refactor to Understand [p. 115].
+*Referenced from:* <<refactor-to-understand>>.
 
 [[a.2.5-rename-method]]
 ==== A.2.5 Rename Method
@@ -91,7 +91,7 @@ There are many patterns that are not specifically concerned with reengineering, 
 
 *Source:* _Refactoring: Improving the Design of Existing Code_ <<FBB99>>.
 
-*Referenced from:* Refactor to Understand [p. 115]
+*Referenced from:* <<refactor-to-understand>>
 
 [[a.2.6-replace-conditional-with-polymorphism]]
 ==== A.2.6 Replace Conditional with Polymorphism
@@ -100,7 +100,7 @@ There are many patterns that are not specifically concerned with reengineering, 
 
 *Source:* _Refactoring: Improving the Design of Existing Code_ <<FBB99>>.
 
-*Referenced from:* Transform Client Type Checks [p. 257]
+*Referenced from:* <<transform-self-type-checks>>
 
 [[a.3-design-patterns]]
 === A.3 Design Patterns
@@ -112,7 +112,7 @@ There are many patterns that are not specifically concerned with reengineering, 
 
 *Source:* _Design Patterns_ <<GHJV95>>.
 
-*Referenced from:* Look for the Contracts [p. 123], Transform Client Type Checks [p. 257].
+*Referenced from:* <<look-for-the-contracts>>, <<transform-self-type-checks>>.
 
 [[a.3.2-adapter]]
 ==== A.3.2 Adapter
@@ -121,7 +121,7 @@ There are many patterns that are not specifically concerned with reengineering, 
 
 *Source:* _Design Patterns_ <<GHJV95>>.
 
-*Referenced from:* Present the Right Interface [p. 187], Move Behavior Close to Data [p. 221].
+*Referenced from:* <<present-the-right-interface>>, <<move-behavior-close-to-data>>.
 
 [[a.3.3-facade]]
 ==== A.3.3 Facade
@@ -130,7 +130,7 @@ There are many patterns that are not specifically concerned with reengineering, 
 
 *Source:* _Design Patterns_ <<GHJV95>>.
 
-*Referenced from:* Eliminate Navigation Code [p. 230], Split Up God Class [p. 239].
+*Referenced from:* <<eliminate-navigation-code>>, <<split-up-god-class>>.
 
 [[a.3.4-factory-method]]
 ==== A.3.4 Factory Method
@@ -139,7 +139,7 @@ There are many patterns that are not specifically concerned with reengineering, 
 
 *Source:* _Design Patterns_ <<GHJV95>>.
 
-*Referenced from:* Look for the Contracts [p. 123]
+*Referenced from:* <<look-for-the-contracts>>
 
 [[a.3.5-flyweight]]
 ==== A.3.5 Flyweight
@@ -148,7 +148,7 @@ There are many patterns that are not specifically concerned with reengineering, 
 
 *Source:* _Design Patterns_ <<GHJV95>>.
 
-*Referenced from:* Speculate about Design [p. 87]
+*Referenced from:* <<speculate-about-design>>
 
 [[a.3.6-null-object]]
 ==== A.3.6 Null Object
@@ -157,7 +157,7 @@ There are many patterns that are not specifically concerned with reengineering, 
 
 *Source:* _Null Object_ <<Woo98>>.
 
-*Referenced from:* Introduce Null Object [p. 274].
+*Referenced from:* <<introduce-null-object>>.
 
 [[a.3.7-quantity]]
 ==== A.3.7 Quantity
@@ -168,7 +168,7 @@ There are many patterns that are not specifically concerned with reengineering, 
 
 *Source:* _Analysis Patterns: Reusable Objects Models_ <<Fow97>>.
 
-*Referenced from:* Analyze the Persistent Data [p. 77].
+*Referenced from:* <<analyze-the-persistent-data>>.
 
 [[a.3.8-singleton]]
 ==== A.3.8 Singleton
@@ -177,7 +177,7 @@ There are many patterns that are not specifically concerned with reengineering, 
 
 *Source:* _Design Patterns_ <<GHJV95>>.
 
-*Referenced from:* Read all the Code in One Hour [p. 45].
+*Referenced from:* <<read-all-the-code-in-one-hour>>.
 
 [[a.3.9-state]]
 ==== A.3.9 State
@@ -186,7 +186,7 @@ There are many patterns that are not specifically concerned with reengineering, 
 
 *Source:* _Design Patterns_ <<GHJV95>>.
 
-*Referenced from:* Factor out State [p. 266].
+*Referenced from:* <<factor-out-state>>.
 
 [[a.3.10-state-patterns]]
 ==== A.3.10 State Patterns
@@ -195,7 +195,7 @@ There are many patterns that are not specifically concerned with reengineering, 
 
 *Source:* _State Patterns_ <<DA97>>.
 
-*Referenced from:* Factor out State [p. 266].
+*Referenced from:* <<factor-out-state>>.
 
 [[a.3.11-strategy]]
 ==== A.3.11 Strategy
@@ -204,7 +204,7 @@ There are many patterns that are not specifically concerned with reengineering, 
 
 *Source:* _Design Patterns_ <<GHJV95>>.
 
-*Referenced from:* Factor out Strategy [p. 270].
+*Referenced from:* <<factor-out-strategy>>.
 
 [[a.3.12-template-method]]
 ==== A.3.12 Template Method
@@ -213,7 +213,7 @@ There are many patterns that are not specifically concerned with reengineering, 
 
 *Source:* _Design Patterns_ <<GHJV95>>.
 
-*Referenced from:* Look for the Contracts [p. 123].
+*Referenced from:* <<look-for-the-contracts>>.
 
 [[a.3.13-visitor]]
 ==== A.3.13 Visitor
@@ -222,4 +222,4 @@ There are many patterns that are not specifically concerned with reengineering, 
 
 *Source:* _Design Patterns_ <<GHJV95>>.
 
-*Referenced from:* Move Behavior Close to Data [p. 221].
+*Referenced from:* <<move-behavior-close-to-data>>.

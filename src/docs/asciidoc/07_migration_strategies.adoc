@@ -1,7 +1,7 @@
 [[migration-strategies]]
 == 7. Migration Strategies
 
-Your reengineering project is well underway. You have developed a good understanding of the legacy system and you have started to Write Tests to Enable Evolution [p. 139]. You have gone through a process of Setting Direction and have decided to tackle the Most Valuable First [p. 25].
+Your reengineering project is well underway. You have developed a good understanding of the legacy system and you have started to <<write-tests-to-enable-evolution>> You have gone through a process of Setting Direction and have decided to tackle the <<most-valuable-first>>.
 
 How can you be sure that the new system will be accepted by users? How do you migrate to the new system while the old system is being used? How can you test and evaluate the new system before it is finished?
 
@@ -36,7 +36,7 @@ It is very hard to Migrate Systems Incrementally unless you also adhere to the f
 
 * Prototype the Target Solution to test the new architecture and new technical risks. It is too easy to be tempted to think you don’t need a prototype since you already have a running system, but this is almost always a mistake.
 * Always Have a Running Version helps to keep changes in sync by ensuring that they are integrated frequently.
-* Regression Test After Every Change helps to you Always Have a Running Version by making sure that everything that used to run still runs. It presupposes that you Write Tests to Enable Evolution [p. 139].
+* Regression Test After Every Change helps to you Always Have a Running Version by making sure that everything that used to run still runs. It presupposes that you <<write-tests-to-enable-evolution>>
 
 Depending on the circumstances, there are various practices that may help you to Migrate Systems Incrementally:
 
@@ -48,7 +48,7 @@ Depending on the circumstances, there are various practices that may help you to
 Finally, the following two practices may help you avoid making radical, but unnecessary changes:
 
 * Conserve Familiarity warns you against introducing radical interface changes that may alienate users.
-* Use Profiler Before Optimizing [p. 198] reminds you to delay considering performance issues until you can demonstrate that you have a problem and can pinpoint the source of the problem.
+* Use <<use-profiler-before-optimizing>> reminds you to delay considering performance issues until you can demonstrate that you have a problem and can pinpoint the source of the problem.
 
 [[involve-the-users]]
 === 7.1 Involve the Users
@@ -82,11 +82,11 @@ Get the users directly involved in the new development, and support them closely
 [[steps-3]]
 ===== Steps
 
-Get the users to tell you where their priorities lie. Start with Most Valuable First [p. 25]. Break the priorities down into small steps that can be delivered in regular increments, so you can Build Confidence [p. 172].
+Get the users to tell you where their priorities lie. Start with <<most-valuable-first>>. Break the priorities down into small steps that can be delivered in regular increments, so you can <<build-confidence>>.
 
 Create an environment that will encourage contact between users and developers. Physical location is important.
 
-Establish simple procedures for delivering intermediate results on a regular basis and obtaining feedback. Early prototypes may help, especially to evaluate risky new technologies or approaches. A good strategy is to Migrate Systems Incrementally [p. 174] so that users can start using the new system as it is being built. You should Conserve Familiarity [p. 196] to avoid alienating users.
+Establish simple procedures for delivering intermediate results on a regular basis and obtaining feedback. Early prototypes may help, especially to evaluate risky new technologies or approaches. A good strategy is to <<migrate-systems-incrementally>> so that users can start using the new system as it is being built. You should <<conserve-familiarity>> to avoid alienating users.
 
 [[tradeoffs-19]]
 ==== Tradeoffs
@@ -260,13 +260,13 @@ _Migrating Legacy Systems_ <<BS95>> introduces this pattern under the name “Ch
 [[related-patterns-11]]
 ==== Related Patterns
 
-Apply Most Valuable First [p. 25] to select the legacy components to work on first. Appoint a Navigator [p. 23] to maintain architectural integrity.
+Apply <<most-valuable-first>> to select the legacy components to work on first. <<appoint-a-navigator>> to maintain architectural integrity.
 
-Write Tests to Enable Evolution [p. 139], and Grow Your Test Base Incrementally [p. 144] as you migrate. Be sure to Test the Interface, Not the Implementation [p. 155] so you do not always have to rewrite your tests as you reengineer or replace legacy components. Regression Test After Every Change [p. 182] so you can Always Have a Running Version [p. 180].
+<<write-tests-to-enable-evolution>>, and <<grow-your-test-base-incrementally>> as you migrate. Be sure to <<test-the-interface-not-the-implementation>> so you do not always have to rewrite your tests as you reengineer or replace legacy components. <<regression-test-after-every-change>> so you can <<always-have-a-running-version>>s.
 
 Consider applying Present the Right Interface for legacy components that you do not intend to reengineer or replace.
 
-You might consider to Make a Bridge to the New Town [p. 184] if you need to migrate data from legacy components that you are replacing.
+You might consider to <<make-a-bridge-to-the-new-town>> if you need to migrate data from legacy components that you are replacing.
 
 [[prototype-the-target-solution]]
 === 7.4 Prototype the Target Solution
@@ -436,7 +436,7 @@ Run your regression test suite every time you think you have reached a stable st
 [[difficulties-22]]
 ===== Difficulties
 
-* The legacy system may not have adequate regression tests defined. To enable evolution, you will have to Grow Your Test Base Incrementally [p. 144]
+* The legacy system may not have adequate regression tests defined. To enable evolution, you will have to <<grow-your-test-base-incrementally>>
 * Tests can only show that defects are present, not that they are absent. You may have failed to test precisely the aspect that you have broken.
 * Run the tests may be very time-consuming, so you might want to run only those tests that you think might be affected by your change. Categorize your tests to avoid “ad hoc” testing of changes, but run all the tests at least once a day.
 
@@ -450,11 +450,11 @@ Davis advocates “Regression Test After Every Change” <<Dav95>> as standard S
 [[related-patterns-14]]
 ==== Related Patterns
 
-You should have already started to Write Tests to Enable Evolution [p. 139].
+You should have already started to <<write-tests-to-enable-evolution>>
 
 A common practice in Extreme Programming is to write tests _before_ you implement new functionality <<JAH01>>. In the context of reengineering, you should consider writing tests that will fail before you make a change, and will pass if the change is correctly implemented. (Unfortunately it is not generally possible to design tests that will _only_ pass if the change is correct!)
 
-Regression tests should help you to Retest Persistent Problems [p. 290].
+Regression tests should help you to <<a.1.1-retest-persistent-problems>>.
 
 [[make-a-bridge-to-the-new-town]]
 === 7.7 Make a Bridge to the New Town
@@ -597,7 +597,7 @@ Present the Right Interface frees you from thinking in terms of the legacy desig
 [[related-patterns-16]]
 ==== Related Patterns
 
-Present the Right Interface superficially resembles an Adapter [p. 293], since both use wrappers as their implementation technique. An Adapter, however, adapts an incompatible interfaces to another interface expected by its clients. Present the Right Interface, on the other hand, introduces a new, more suitable interface to a legacy component.
+Present the Right Interface superficially resembles an <<a.3.2-adapter>>, since both use wrappers as their implementation technique. An Adapter, however, adapts an incompatible interfaces to another interface expected by its clients. Present the Right Interface, on the other hand, introduces a new, more suitable interface to a legacy component.
 
 Be sure to Deprecate Obsolete Interfaces.
 
@@ -846,4 +846,4 @@ See also Davis’ discussion of “Use Profiler Before Optimizing” <<Dav95>>.
 [[related-patterns-19]]
 ==== Related Patterns
 
-If you Refactor to Understand [p. 115], you will have started the second step to “do it right."
+If you <<refactor-to-understand>>, you will have started the second step to “do it right."

@@ -39,7 +39,7 @@ Finally, though you may be able to extract various design artifacts from the sou
 [[what-next-10]]
 === What Next
 
-Now that you have mastered the details of a part of your system, it is a good time to prepare for the actual reengineering by applying the patterns in Tests: Your Life Insurance!. In particular, as you Refactor to Understand, it is a good idea to Write Tests to Understand [p. 163], as this will give you confidence in your experiments. Also, patterns like Step Through the Execution, Look for the Contracts and Learn from the Past help you to see which components implement what functionality: this knowledge must be used to Test the Interface, Not the Implementation [p. 155] and to Record Business Rules as Tests [p. 159].
+Now that you have mastered the details of a part of your system, it is a good time to prepare for the actual reengineering by applying the patterns in Tests: Your Life Insurance!. In particular, as you Refactor to Understand, it is a good idea to <<write-tests-to-understand>>, as this will give you confidence in your experiments. Also, patterns like Step Through the Execution, Look for the Contracts and Learn from the Past help you to see which components implement what functionality: this knowledge must be used to <<test-the-interface-not-the-implementation>> and to <<record-business-rules-as-tests>>.
 
 [[tie-code-and-questions]]
 === 5.1 Tie Code and Questions
@@ -190,9 +190,9 @@ Iteratively rename and refactor the code to introduce meaningful names and to ma
 
 Your primary goal here is to _understand the system_, not to improve the code. The changes you make to the code should therefore be treated as “experiments” to test your understanding of the code. As a consequence, you should _make a copy of the code_ before you start. After you have refactored the code, it is possible that you release any of the changes you make, but you do not want to make that decision up front. Perhaps your refactoring experiments will actually improve the code, but it is just as likely that you will make a mess of things since you do not yet understand the code. It does not really matter at this stage. After a first experience you will be in a better position to do a proper job of refactoring.
 
-It is hard to do a good job of refactoring without having tests in place to verify that your changes have not broken anything. If adequate tests do not exist, you should _not_ seriously consider keeping the results of your refactoring experiments. However, consider applying Write Tests to Understand [p. 163] in tandem with Refactor to Understand.
+It is hard to do a good job of refactoring without having tests in place to verify that your changes have not broken anything. If adequate tests do not exist, you should _not_ seriously consider keeping the results of your refactoring experiments. However, consider applying <<write-tests-to-understand>> in tandem with Refactor to Understand.
 
-You should select refactoring operations that will make design decisions more explicit in the code. The typical refactorings applied during this iterative restructuring are Rename Attribute [p. 292], Rename Method [p. 292], and Extract Method [p. 291].
+You should select refactoring operations that will make design decisions more explicit in the code. The typical refactorings applied during this iterative restructuring are <<a.2.4-rename-attribute>>, <<a.2.5-rename-method>>, and <<a.2.2-extract-method>>.
 
 The following guidelines will help you to find out where and how to apply these refactorings to improve the readability of the code. Many of these guidelines are considered to be just good, standard practice in Smalltalk programming <<Bec97>>. They apply, however, equally well to other programming languages. They can be applied in any order; each of them participates in the understanding of the others.
 
@@ -209,7 +209,7 @@ The following guidelines will help you to find out where and how to apply these 
 [[pros-9]]
 ===== Pros
 
-* _Expose design._ Not only will the refactoring process improve your understanding of the code, but this understanding will also become explicit in the structure of the code. This will make it easier to further document that understanding by means of Tie Code and Questions or Write Tests to Understand [p. 163].
+* _Expose design._ Not only will the refactoring process improve your understanding of the code, but this understanding will also become explicit in the structure of the code. This will make it easier to further document that understanding by means of Tie Code and Questions or <<write-tests-to-understand>>.
 * _Incremental validation._ Normally, understanding does not arise as part of a single revelation, but as the result of an iterative process in which earlier understanding is the base for the next iteration. Refactor to Understand encourages such an approach, because of its emphasis on small steps and frequent verification (either by running tests or either by compiling often).
 
 [[cons-9]]
@@ -241,7 +241,7 @@ Harry Sneed reports several reengineering projects where a large Cobol program w
 [[what-next-11]]
 ==== What Next
 
-Refactor to Understand works well in tandem with Tie Code and Questions. Refactorings are more expensive to implement than simply annotating the code, so first annotate, and then refactor. Also, consider to Write Tests to Understand [p. 163] as you refactor. These two activities reinforce each other since tests document your understanding of how a software artifact works, and refactoring helps you to expose its design. Furthermore, tests will help you to verify that your refactorings didn’t break anything.
+Refactor to Understand works well in tandem with Tie Code and Questions. Refactorings are more expensive to implement than simply annotating the code, so first annotate, and then refactor. Also, consider to <<write-tests-to-understand>> as you refactor. These two activities reinforce each other since tests document your understanding of how a software artifact works, and refactoring helps you to expose its design. Furthermore, tests will help you to verify that your refactorings didn’t break anything.
 
 When you have finished a round of Refactor to Understand, you must decide what to do with your changes. If you discard the experimental code, you should consider applying Tie Code and Questions to annotate the code base with the knowledge you have acquired.
 
@@ -274,7 +274,7 @@ _Yet, solving this problem is feasible because:_
 
 Run each of the scenarios and use your debugger to step through the code.
 
-Observe which objects collaborate and how they are instantiated. Afterwards, generalize these observations and record your knowledge for future reference, possibly by means of Tie Code and Questions and Record Business Rules as Tests [p. 159].
+Observe which objects collaborate and how they are instantiated. Afterwards, generalize these observations and record your knowledge for future reference, possibly by means of Tie Code and Questions and <<record-business-rules-as-tests>>.
 
 [[hints-8]]
 ===== Hints
@@ -308,7 +308,7 @@ It is too time-consuming to step through every single statement of a running sys
 [[what-next-12]]
 ==== What Next
 
-You will need concrete scenarios in order to Step Through the Execution (possibly inferred from Interview During Demo [p. 59]). Consider encoding these scenarios as test cases. You can then iteratively Write Tests to Understand [p. 163] as you Step Through the Execution since the insights you gain into the states of collaborating objects can then be formulated as concrete tests.
+You will need concrete scenarios in order to Step Through the Execution (possibly inferred from <<interview-during-demo>>). Consider encoding these scenarios as test cases. You can then iteratively <<write-tests-to-understand>> as you Step Through the Execution since the insights you gain into the states of collaborating objects can then be formulated as concrete tests.
 
 As you Step Through the Execution, it is a good idea to keep an eye on the way collaborating objects use each other’s interface. Afterwards, you can exploit the knowledge you have gained to Look for the Contracts.
 
@@ -364,9 +364,9 @@ Pay particular attention to which parameters are passed to the constructor, and 
 
 Invocations of constructor methods may reveal a _part-whole relationship_. When a client stores the result of a constructor method in an attribute then this client will probably serve as the whole. On the other hand, when a client passes itself as an argument to a constructor method it is likely to act as a part.
 
-Invocations of a constructor method may also expose a Factory Method [p. 293] or even an Abstract Factory [p. 293]. If they do, then you know that you will be able extend the system by subclassing the class under study.
+Invocations of a constructor method may also expose a <<a.3.4-factory-method>> or even an <<a.3.1-abstract-factory>>. If they do, then you know that you will be able extend the system by subclassing the class under study.
 
-_Look for Template/Hook Methods._ To understand how to specialize a class, look for (protected) methods that are overridden by subclasses, and identify the public methods that call them. The public, calling method is almost certainly a Template Method [p. 296]. Check the class hierarchy to determine whether the overridden method is _abstract_, in which case subclasses must implement it, or whether a default implementation is provided. In the latter case, it is a _hook method_, and subclasses may choose to override it or be happy with the default.
+_Look for Template/Hook Methods._ To understand how to specialize a class, look for (protected) methods that are overridden by subclasses, and identify the public methods that call them. The public, calling method is almost certainly a <<a.3.12-template-method>>. Check the class hierarchy to determine whether the overridden method is _abstract_, in which case subclasses must implement it, or whether a default implementation is provided. In the latter case, it is a _hook method_, and subclasses may choose to override it or be happy with the default.
 
 For each template method check all other methods it invokes as these are likely to represent other hook methods.
 
@@ -446,7 +446,7 @@ _Mature and stable design._ A mature subsystem will exhibit some growth and refa
 ===== Pros
 
 * _Concentrates on important design artifacts,_ because the changes point you to those places where the design is expanding or consolidating and this in turn provides insight into the underlying design rationale.
-* _Provides an unbiased view of the system,_ because you do not have to formulate assumptions about what to expect in the software (in contrast to top-down techniques like Speculate about Design [p. 87]).
+* _Provides an unbiased view of the system,_ because you do not have to formulate assumptions about what to expect in the software (in contrast to top-down techniques like <<speculate-about-design>>).
 
 [[cons-12]]
 ===== Cons
@@ -477,6 +477,6 @@ Other researchers also report on examining changes to support the reverse engine
 [[what-next-14]]
 ==== What Next
 
-Now that you discovered some stable parts in the design, you will probably want to reuse them. In that case take some precautions: first document the interfaces of that part (see Look for the Contracts) and then write the corresponding test cases (see Test the Interface, Not the Implementation [p. 155]).
+Now that you discovered some stable parts in the design, you will probably want to reuse them. In that case take some precautions: first document the interfaces of that part (see Look for the Contracts) and then write the corresponding test cases (see <<test-the-interface-not-the-implementation>>).
 
-On the other hand, the unstable parts of the design should probably be dismissed. Nevertheless, if the unstable part seems crucial for your reengineering project, then you must seek which change requests caused the instability. In that case, Chat with the Maintainers [p. 38] or even Interview During Demo [p. 59] and based on this knowledge decide how to restructure that part so that it is better suited for the kind of change requests that come in.
+On the other hand, the unstable parts of the design should probably be dismissed. Nevertheless, if the unstable part seems crucial for your reengineering project, then you must seek which change requests caused the instability. In that case, <<chat-with-the-maintainers>> or even <<interview-during-demo>> and based on this knowledge decide how to restructure that part so that it is better suited for the kind of change requests that come in.

@@ -43,7 +43,7 @@ In certain situations we have experienced that some patterns are not applicable 
 
 Once you have the necessary information, it is time to compile the first project plan. Such a plan is very similar to the plans you normally use when launching a project and the standard document templates used in your company should therefore be used. When necessary, bend the rules to include at least the following items.
 
-* _Project Scope._ Prepare a short (half a page) description of the project, including its context, its goals and the criteria that will be used to verify whether you reached those goals. Involve the Users [p. 169] and Agree on Maxims [p. 22] to write this part of the plan.
+* _Project Scope._ Prepare a short (half a page) description of the project, including its context, its goals and the criteria that will be used to verify whether you reached those goals. <<involve-the-users>> and <<agree-on-maxims>> to write this part of the plan.
 * _Opportunities._ Identify those factors you expect will contribute to achieve the project goals. List the items that you have discovered during the first contact, such as the availability of skilled maintainers and power-users, the readability of the source code or the presence of up-to date documentation.
 * _Risks._ Consider elements that may cause problems during the course of the project. List those items that you did not find or where the quality was inferior, such as missing code libraries or the absence of test suites. If possible, include an assessment for the likelihood (unlikely, possible, likely) and the impact (high, moderate, low) for each risk. Special attention must be paid to the critical risks, i.e. the ones that are possible/likely and have a moderate/high impact or the ones that are likely but have a low impact.
 * _Go / No-go decision._ At some point you will have to decide whether the project should be continued or cancelled. Use the above opportunities and risks to argue that decision.
@@ -229,7 +229,7 @@ Below are some additional items you might add to your checklist because they pro
 * _Functional tests and unit tests_ convey important information about the functionality of a software system. They can help to verify whether the system is functioning as expected, which is very imported during reengineering (see Tests: Your Life Insurance!).
 * _Abstract classes and methods_ reveal design intentions.
 * Classes _high in the hierarchy_ often define domain abstractions; their subclasses introduce variations on a theme.
-* Occurrences of the Singleton [p. 295] pattern may represent information that is constant for the entire execution of a system.
+* Occurrences of the <<a.3.8-singleton>> pattern may represent information that is constant for the entire execution of a system.
 * Surprisingly _large structures_ often specify important chunks of functionality.
 * _Comments_ reveal a lot about the design intentions behind a particular piece of code, yet may often be misleading.
 
@@ -307,7 +307,7 @@ After you Read all the Code in One Hour you should Do a Mock Installation to eva
 
 At the end of your first contact with the system, you should decide on how to proceed with (or cancel) the project. Reading the code will influence this decision in various ways. First of all, you have assessed the quality of the code (_i.e._, the presence of coding idioms and suspicious coding styles) and thus of the feasibility of reengineering project. Second, you have identified some important entities, which are good starting points for further exploration.
 
-The list of the important entities (_i.e._, classes, packages, ···) resulting from Read all the Code in One Hour can be used to start Analyze the Persistent Data [p. 77] and Study the Exceptional Entities [p. 96]. This way you can refine your understanding of the source code, especially the way it represents the problem domain.
+The list of the important entities (_i.e._, classes, packages, ···) resulting from Read all the Code in One Hour can be used to start <<analyze-the-persistent-data>> and <<study-the-exceptional-entities>>. This way you can refine your understanding of the source code, especially the way it represents the problem domain.
 
 [[skim-the-documentation]]
 === 3.3 Skim the Documentation
@@ -435,7 +435,7 @@ The following anecdote reveals how documentation might mislead you. In one of th
 
 You may want to Read all the Code in One Hour immediately after Skim the Documentation to verify certain findings. It may also be worthwhile to Chat with the Maintainers and Interview During Demo to confirm certain suspicions.
 
-At the end of your first contact with the system, you should decide on how to proceed with (or cancel) the project. Once you have discovered relevant documentation you know that you at least do not have to reproduce this information. Even better, for those parts of the documentation that are relevant but seem inaccurate you have some good starting points for further exploration (for instance Analyze the Persistent Data [p. 77] and Speculate about Design [p. 87]).
+At the end of your first contact with the system, you should decide on how to proceed with (or cancel) the project. Once you have discovered relevant documentation you know that you at least do not have to reproduce this information. Even better, for those parts of the documentation that are relevant but seem inaccurate you have some good starting points for further exploration (for instance <<analyze-the-persistent-data>> and <<speculate-about-design>>).
 
 [[interview-during-demo]]
 === 3.4 Interview During Demo
@@ -566,7 +566,7 @@ A lot of good advice concerning how to interact with end users is embodied in th
 
 For optimum results, you should carry out several attempts of Interview During Demo with different kinds of people. Depending on your taste, you may perform these attempts before, after or interwoven with Read all the Code in One Hour and Skim the Documentation. Afterwards, consider to Chat with the Maintainers to verify some of your findings.
 
-At the end of your first contact with the system, you should decide on how to proceed with (or cancel) the project. By seeing the demonstrations, you get a feeling for how the people use the system and which features are appreciated. As such you know the valuable parts of the software system and these are probably the ones that must be reverse engineered. The usage scenarios will also serve as an input for patterns like Speculate about Design [p. 87] and Record Business Rules as Tests [p. 159].
+At the end of your first contact with the system, you should decide on how to proceed with (or cancel) the project. By seeing the demonstrations, you get a feeling for how the people use the system and which features are appreciated. As such you know the valuable parts of the software system and these are probably the ones that must be reverse engineered. The usage scenarios will also serve as an input for patterns like <<speculate-about-design>> and <<record-business-rules-as-tests>>.
 
 [[do-a-mock-installation]]
 === 3.5 Do a Mock Installation

@@ -25,7 +25,7 @@ Setting Direction is a cluster of patterns that can apply to any development pro
 
 You should Agree on Maxims in order to establish a common understanding within the reengineering team of what is at stake and how to achieve it. You should Appoint a Navigator to maintain the architectural vision. Everyone should Speak to the Round Table to maintain team awareness of the state of the project.
 
-To help you focus on the right problems and the critical decisions, it is wise to tackle the Most Valuable First. Note that this will help you to Involve the Users [p. 169] and Build Confidence [p. 172]. In order to decide whether to wrap, refactor or rewrite, you should Fix Problems, Not Symptoms. Change for change’s sake is not productive, so If It Ain’t Broke, Don’t Fix It. Although you may be tempted to make the new system very flexible and generic, it is almost always better to Keep It Simple.
+To help you focus on the right problems and the critical decisions, it is wise to tackle the Most Valuable First. Note that this will help you to <<involve-the-users>> and <<build-confidence>>. In order to decide whether to wrap, refactor or rewrite, you should Fix Problems, Not Symptoms. Change for change’s sake is not productive, so If It Ain’t Broke, Don’t Fix It. Although you may be tempted to make the new system very flexible and generic, it is almost always better to Keep It Simple.
 
 [[agree-on-maxims]]
 === 2.1 Agree on Maxims
@@ -96,9 +96,9 @@ _How do you tell what is valuable?_
 * Try to understand the customer’s business model. This will tell you how to assess the value of the various aspects of the system. Everything that does not relate directly to the business model is likely to be a purely technical side-issue.
 * Try to determine what _measurable goal_ the customer wants to obtain. This must be an external manifestation of some aspect of the system or its evolution, for example, better response time, faster time to market of new features, easier tailoring to individual clients needs.
 * Try to understand whether the primary goal is mainly to _protect an existing asset_, or rather to _add value_ in terms of new features or capabilities.
-* Examine the change logs and determine where the most activity has historically been in the system. The most valuable artifact is often the one which receives the most change requests (see Learn from the Past [p. 127]).
+* Examine the change logs and determine where the most activity has historically been in the system. The most valuable artifact is often the one which receives the most change requests (see <<learn-from-the-past>>).
 * If the customer is unwilling or unable to set priorities, then play the _Planning Game_ <<BF01>>: collect requirements from all the stakeholders, and make a ballpark estimate of the effort required for each identifiable task. Given an initial budget of effort for an early first milestone, ask the customer to select tasks that will fit in the budget. Repeat this exercise at each iteration.
-* Beware of _changing perceptions_. Initially the customer may draw your attention to certain symptoms of problems with the legacy system, rather than the problems themselves (see Fix Problems, Not Symptoms [p. 28]).
+* Beware of _changing perceptions_. Initially the customer may draw your attention to certain symptoms of problems with the legacy system, rather than the problems themselves (see <<fix-problems-not-symptoms>>).
 
 _Isn’t there a risk of raising expectations too high?_
 
@@ -114,7 +114,7 @@ _What if the most valuable part is a rat’s nest?_
 ** the chances are higher that you will fall flat on your face.
 * Determine whether to wrap, refactor or rewrite the problematic component by making sure you Fix Problems, Not Symptoms.
 
-Once you have decided what is the most valuable part of the system to work on, you should Involve the Users [p. 169] in the reengineering effort so you can Build Confidence [p. 172]. If you Migrate Systems Incrementally [p. 174], the users will be able to use the system as it is reengineered and provide continuous feedback.
+Once you have decided what is the most valuable part of the system to work on, you should <<involve-the-users>> in the reengineering effort so you can <<build-confidence>>. If you <<migrate-systems-incrementally>>, the users will be able to use the system as it is reengineered and provide continuous feedback.
 
 [[fix-problems-not-symptoms]]
 === 2.5 Fix Problems, Not Symptoms
@@ -127,9 +127,9 @@ Once you have decided what is the most valuable part of the system to work on, y
 
 A common difficulty during a reengineering effort is to decide whether to wrap, refactor or rewrite a legacy component. Most Valuable First will help you determine what priority to give to problems in the system, and will tell you which problems are on your critical path. Fix Problems, Not Symptoms tells you to focus on the source of a problem, and not its manifestation. For example:
 
-* If the code of a legacy component is basically stable, and problems mainly occur with changes to clients, then the problem is likely to be with the interface to the legacy component, rather than its implementation, no matter how nasty the code is. In such a case, you should consider applying Present the Right Interface [p. 187] to just fix the interface.
-* If the legacy component is largely defect-free, but is a major bottleneck for changes to the system, then it should probably be refactored to limit the effect of future changes. You might consider applying Split Up God Class [p. 239] to migrate towards a cleaner design.
-* If the legacy component suffers from large numbers of defects, consider applying Make a Bridge to the New Town [p. 184] as a strategy for migrating legacy data to the new implementation.
+* If the code of a legacy component is basically stable, and problems mainly occur with changes to clients, then the problem is likely to be with the interface to the legacy component, rather than its implementation, no matter how nasty the code is. In such a case, you should consider applying <<present-the-right-interface>> to just fix the interface.
+* If the legacy component is largely defect-free, but is a major bottleneck for changes to the system, then it should probably be refactored to limit the effect of future changes. You might consider applying <<split-up-god-class>> to migrate towards a cleaner design.
+* If the legacy component suffers from large numbers of defects, consider applying <<make-a-bridge-to-the-new-town>> as a strategy for migrating legacy data to the new implementation.
 
 This pattern may seem to conflict with If It Ain’t Broke, Don’t Fix It, but it doesn’t really. Something that is not really “broken” cannot really be the source of a problem. Wrapping, for example, may seem to be a workaround, but it may be the right solution if the real problem is just with the interface to a legacy component.
 
@@ -164,6 +164,6 @@ Flexibility is a double-edged sword. An important reengineering goal is to accom
 
 Some people argue that it is necessary to “plan for reuse”, hence to make an extra effort to make sure that every software entity that might conceivably by useful to somebody else is programmed in the most general way possible, with as many knobs and buttons as possible. This rarely works, since it is pretty well impossible to anticipate who will want to use something for what purpose. The same holds for end-user software.
 
-“Do the simplest thing that will work” is a maxim of Extreme Programming <<Bec00>> that applies to any reengineering effort. This strategy reinforces Involve the Users [p. 169] and Build Confidence [p. 172] since it encourages you to quickly introduce simple changes that users can evaluate and respond to.
+“Do the simplest thing that will work” is a maxim of Extreme Programming <<Bec00>> that applies to any reengineering effort. This strategy reinforces <<involve-the-users>> and <<build-confidence>> since it encourages you to quickly introduce simple changes that users can evaluate and respond to.
 
 When you do the complex thing, you will probably guess wrong (in terms of what you really need) and it will be harder to fix. If you keep things simple, you will be done faster, get feedback faster, and recover from errors more easily. Then you can make the next step.

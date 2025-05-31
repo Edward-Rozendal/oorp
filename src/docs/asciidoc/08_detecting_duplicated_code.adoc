@@ -26,7 +26,7 @@ Figure 8.1: Two patterns to support Detecting Duplicated Code.
 
 Detecting Duplicated Code consists of two patterns: Compare Code Mechanically, which describes how we can detect duplicated code, and Visualize Code as Dotplots, which shows how duplicated code can be better understood by simple matrix visualization.
 
-Once you have detected and understood duplication in the system, you may decide on a variety of tactics. Various refactoring patterns, such as Extract Method [p. 291] may help you to eliminate the duplication. Duplication may be a sign of misplaced responsibilities, in which you should may decide to Move Behavior Close to Data [p. 221].
+Once you have detected and understood duplication in the system, you may decide on a variety of tactics. Various refactoring patterns, such as <<a.2.2-extract-method>> may help you to eliminate the duplication. Duplication may be a sign of misplaced responsibilities, in which you should may decide to <<move-behavior-close-to-data>>.
 
 Complex conditional statements are also a form of duplication, and may indicate that multiple clients have to duplicate actions that should belong to the target class. The pattern cluster Transform Conditionals to Polymorphism can help you to resolve these problems.
 
@@ -85,7 +85,7 @@ This approach may fail to identify some instances of duplicated code due to rena
 [[example-12]]
 ==== Example
 
-Consider the case of a system written in C++ where you suspect duplicated code. However, you didn’t write to code yourself so you don’t know where the actual duplication occurs. How can you detect where the duplicated code fragments are? Consistent with Keep It Simple [p. 31] you do the simplest thing that may possibly work: you write a little script that first normalizes the code to remove all white space from the code and afterwards compares each line of code against itself.
+Consider the case of a system written in C++ where you suspect duplicated code. However, you didn’t write to code yourself so you don’t know where the actual duplication occurs. How can you detect where the duplicated code fragments are? Consistent with <<keep-it-simple>> you do the simplest thing that may possibly work: you write a little script that first normalizes the code to remove all white space from the code and afterwards compares each line of code against itself.
 
 The normalization would change the following code
 
@@ -377,8 +377,8 @@ The pattern has been applied in biological research to detect DNA sequences <<PK
 [[related-patterns-20]]
 ==== Related Patterns
 
-Once you have detected duplicated code, numerous refactoring patterns may apply, in particular Extract Method [p. 291].
+Once you have detected duplicated code, numerous refactoring patterns may apply, in particular <<a.2.2-extract-method>>.
 
-Very often duplicated code arises because clients assume too many responsibilities. In that case, Move Behavior Close to Data [p. 221] will help you to eliminate the duplication.
+Very often duplicated code arises because clients assume too many responsibilities. In that case, <<move-behavior-close-to-data>> will help you to eliminate the duplication.
 
 Dotplots also help to detect large conditional constructs. You should probably Transform Conditionals to Polymorphism to eliminate these conditionals and thereby achieve a more flexible design.

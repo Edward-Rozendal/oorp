@@ -36,7 +36,7 @@ God classes and data containers often occur together, with the god class assumin
 
 This cluster provides a number of patterns to eliminate data containers and god classes by redistributing responsibilities and thereby improving encapsulation.
 
-* Move Behavior Close to Data [p. 221] moves behavior defined in
+* <<move-behavior-close-to-data>> moves behavior defined in
 
 image:media/figure9-2.png[image,width=728,height=249]
 
@@ -44,8 +44,8 @@ Figure 9.2: Data containers are the clearest sign of misplaced responsibilities.
 
 indirect clients to an intermediate data container to make it more “object-like”. This pattern not only decouples indirect clients from the contents of the data container, but also typically eliminates duplicated code occurring in multiple clients of the data container.
 
-* Eliminate Navigation Code [p. 230] is technically very similar to Move Behavior Close to Data in terms of the reengineering steps, but is rather different in its intent. This pattern focusses on redistributing responsibilities down chains of data containers to eliminate navigation code.
-* Split Up God Class [p. 239] refactors a procedural god class into a number of simple, more cohesive classes by moving all data to external data containers, applying Move Behavior Close to Data to promote the data containers to objects, and finally removing or deprecating the facade that remains.
+* <<eliminate-navigation-code>> is technically very similar to Move Behavior Close to Data in terms of the reengineering steps, but is rather different in its intent. This pattern focusses on redistributing responsibilities down chains of data containers to eliminate navigation code.
+* <<split-up-god-class>> refactors a procedural god class into a number of simple, more cohesive classes by moving all data to external data containers, applying Move Behavior Close to Data to promote the data containers to objects, and finally removing or deprecating the facade that remains.
 
 [[move-behavior-close-to-data]]
 === 9.1 Move Behavior Close to Data
@@ -82,13 +82,13 @@ image:media/figure9-3.png[image,width=732,height=424]
 
 Figure 9.3: Classes that were mere data containers are transformed into real service providers.
 
-* Duplicated client code that manipulates data of separate provider classes. If multiple clients implement _different_ behavior, consider instead applying Transform Client Type Checks [p. 257].
+* Duplicated client code that manipulates data of separate provider classes. If multiple clients implement _different_ behavior, consider instead applying <<transform-self-type-checks>>.
 * Methods in client classes that invoke a sequence of accessor methods (see Eliminate Navigation Code).
 
 [[steps-12]]
 ===== Steps
 
-Move Behavior Close to Data makes use of the refactorings Extract Method [p. 291] and Move Method [p. 291], since the behavior in question will have to be extracted from a client method and then moved to a provider class.
+Move Behavior Close to Data makes use of the refactorings <<a.2.2-extract-method>> and <<a.2.3-move-method>>, since the behavior in question will have to be extracted from a client method and then moved to a provider class.
 
 1.  _Identify the client behavior that you want to move_, _i.e._, the complete method or a part of a method that accesses provider data.
 * Look for the invocations of the accessor methods of the data container.
@@ -101,7 +101,7 @@ Move Behavior Close to Data makes use of the refactorings Extract Method [p. 291
 4.  In the client _invoke the new provider method_ with the correct parameters.
 5.  _Clean up the client code._ In the case the moved functionality was a complete method of the client class:
 * check all the methods that invoke the old, moved method and ensure that they now call the new provider method instead, and
-* remove the old method from the client or deprecate it. (Deprecate Obsolete Interfaces [p. 193]).
+* remove the old method from the client or deprecate it. (<<deprecate-obsolete-interfaces>>).
 
 It may be the case that the calling methods defined on the same object have to be also moved to the provider. In such a case repeat the steps for the methods.
 1.  _Repeat_ for multiple clients. Note that duplicated code in multiple clients will be removed in step 2, since there is no need to move code that has already been transferred to the provider. In case many similar, but not identical methods are introduced to the provider, consider factoring out the duplicated fragments as protected helper methods.
@@ -135,11 +135,11 @@ It may be the case that the calling methods defined on the same object have to b
 [[when-the-legacy-solution-is-the-solution]]
 ===== When the legacy solution is the solution
 
-Data containers may have been automatically generated from a database schema to provide an object interface to an existing database. It is almost always a bad idea to modify generated classes, since you will lose your changes if the code ever needs to be regenerated. In this case, you may decide to implement wrapper classes to hold the behavior that should be associated with the generated classes. Such a wrapper would function as an Adapter [p. 293] that converts the generated data container to a real service provider.
+Data containers may have been automatically generated from a database schema to provide an object interface to an existing database. It is almost always a bad idea to modify generated classes, since you will lose your changes if the code ever needs to be regenerated. In this case, you may decide to implement wrapper classes to hold the behavior that should be associated with the generated classes. Such a wrapper would function as an <<a.3.2-adapter>> that converts the generated data container to a real service provider.
 
 Sometimes you know that a class defined in a library is missing crucial functionality. For example, an operation convertToCapitals that is missing for class String. In such a case it is typically impossible to add code to the library, so you may have to define it in client class. In C++ for example, it may be the only way to avoid recompilation or to extend a class when the code is not available <<ABW98>> (p. 378). In Smalltalk you have the possibility to extend or modify the library, however you should pay particular attention to separate the additional code so you can easily merge it with future releases of the library, and quickly detect any conflicts.
 
-The intent of the Visitor [p. 296] design pattern states: _“Represent an operation to be performed on the elements of an object structure in a class separate from the elements themselves. Visitor lets you define a new operation without changing the classes of the elements on which it operates”_ <<GHJV95>>. The Visitor pattern is one of the few cases where you want to have classes access the data of a separate provider class. Visitor allows one to dynamically add new operations to a set of stable classes without having to change them.
+The intent of the <<a.3.13-visitor>> design pattern states: _“Represent an operation to be performed on the elements of an object structure in a class separate from the elements themselves. Visitor lets you define a new operation without changing the classes of the elements on which it operates”_ <<GHJV95>>. The Visitor pattern is one of the few cases where you want to have classes access the data of a separate provider class. Visitor allows one to dynamically add new operations to a set of stable classes without having to change them.
 
 _Configuration classes_ are classes that represent the configuration of a system (_e.g._, global parameters, language dependent representation, policies in place). For example, in a graphic tool the default size of the boxes, edges, width of the lines can be stored in a such class and other classes refer to it when needed.
 
@@ -285,7 +285,7 @@ Data containers impede evolution because they expose structure and force clients
 [[related-patterns-21]]
 ==== Related Patterns
 
-Encapsulate Field [p. 291] offers heuristics that help determine where methods should be defined during a design phase. The text offers rationale for applying Move Behavior Close to Data.
+<<a.2.1-encapsulate-field>> offers heuristics that help determine where methods should be defined during a design phase. The text offers rationale for applying Move Behavior Close to Data.
 
 [[eliminate-navigation-code]]
 === 9.2 Eliminate Navigation Code
@@ -436,7 +436,7 @@ _Caution._ It is important to note that the refactoring process relies on pushin
 [[difficulties-30]]
 ===== Difficulties
 
-* Deciding when to apply Eliminate Navigation Code can be difficult. Defining methods that merely delegate requests to class collaborators may not always be the solution. It may happen that giving away internal information can reduce the interface of a class. For example, if a class implements some well-defined behaviors but also serves as a Facade [p. 293] to other collaborators, it may be simpler to give access to the collaborator directly to reduce the interface of the class.
+* Deciding when to apply Eliminate Navigation Code can be difficult. Defining methods that merely delegate requests to class collaborators may not always be the solution. It may happen that giving away internal information can reduce the interface of a class. For example, if a class implements some well-defined behaviors but also serves as a <<a.3.3-facade>> to other collaborators, it may be simpler to give access to the collaborator directly to reduce the interface of the class.
 
 [[when-the-legacy-solution-is-the-solution-1]]
 ===== When the legacy solution is the solution
@@ -568,7 +568,7 @@ Navigation code is a well-known symptom of misplaced behavior <<LK94>> <<Sha97>>
 [[related-patterns-22]]
 ==== Related Patterns
 
-Eliminate Navigation Code and Compare Code Mechanically [p. 204] reinforce each other: Navigation code that is spread across different clients spreads duplicated code over the system. Compare Code Mechanically helps to detect this phenomenon. Eliminate Navigation Code brings the duplicated code together, where it is easier to refactor and eliminate.
+Eliminate Navigation Code and <<compare-code-mechanically>> reinforce each other: Navigation code that is spread across different clients spreads duplicated code over the system. Compare Code Mechanically helps to detect this phenomenon. Eliminate Navigation Code brings the duplicated code together, where it is easier to refactor and eliminate.
 
 [[split-up-god-class]]
 === 9.3 Split Up God Class
@@ -627,13 +627,13 @@ image:media/figure9-8.png[image,width=578,height=594]
 
 Figure 9.8: A god class is refactored in two stages, first by redistributing responsibilities to data containers, or by spawning off new classes, until there is nothing left but a facade, and second by removing the facade.
 
-The following steps describe how this process ideally works. Note, however, that god classes can vary greatly in terms of their internal structure, so different techniques may be used to implement the transformation steps. Furthermore, it should be clear that a god class cannot be cured in one shot, so a safe way to proceed is to first transform a god class into a lightweight god class, then into a Facade [p. 293] that delegates behavior to its acquaintances. Finally, clients are redirected to the refactored data containers and the other new objects, and the Facade can be removed. The process is illustrated in figure 39.
+The following steps describe how this process ideally works. Note, however, that god classes can vary greatly in terms of their internal structure, so different techniques may be used to implement the transformation steps. Furthermore, it should be clear that a god class cannot be cured in one shot, so a safe way to proceed is to first transform a god class into a lightweight god class, then into a <<a.3.3-facade>> that delegates behavior to its acquaintances. Finally, clients are redirected to the refactored data containers and the other new objects, and the Facade can be removed. The process is illustrated in figure 39.
 
-The following steps are applied iteratively. Be sure to apply Regression Test After Every Change [p. 182]:
+The following steps are applied iteratively. Be sure to apply <<regression-test-after-every-change>>:
 
 1.  Identify cohesive subsets of instance variables of the god class, and convert them to external data containers. Change the initialization methods of the god class to refer to instances of the new data containers.
 2.  Identify all classes used as data containers by the god class (including those created in step 1) and apply Move Behavior Close to Data to promote the data containers into service providers. The original methods of the god class will simply delegate behavior to the moved methods.
-3.  After iteratively applying steps 1 and 2, there will be nothing left of the god class except a facade with a big initialization method. Shift the responsibility for initialization to a separate class, so only a pure facade is left. Iteratively redirect clients to the objects for which the former god class is now a facade, and either deprecate the facade (see Deprecate Obsolete Interfaces [p. 193]), or simply remove it.
+3.  After iteratively applying steps 1 and 2, there will be nothing left of the god class except a facade with a big initialization method. Shift the responsibility for initialization to a separate class, so only a pure facade is left. Iteratively redirect clients to the objects for which the former god class is now a facade, and either deprecate the facade (see <<deprecate-obsolete-interfaces>>), or simply remove it.
 
 [[tradeoffs-35]]
 ==== Tradeoffs
@@ -665,7 +665,7 @@ What is riskier? To Split Up God Class or to leave it alone? A real god class is
 
 The key issue is whether the god class needs to be _maintained_. If the god class consists of stable, legacy code that rarely needs to be extended or modified, then refactoring it is a questionable investment of effort.
 
-Suppose, on the other hand, that it is the _clients_ of the god class that are unstable, and need to be frequently adapted to changing requirements. Then the clients should be shielded from the god class since it is not presenting a clean interface. Consider instead applying Present the Right Interface [p. 187], which will introduce a layer of clean, object-oriented abstractions between the clients and the god class, and may make it easier to evolve the clients.
+Suppose, on the other hand, that it is the _clients_ of the god class that are unstable, and need to be frequently adapted to changing requirements. Then the clients should be shielded from the god class since it is not presenting a clean interface. Consider instead applying <<present-the-right-interface>>, which will introduce a layer of clean, object-oriented abstractions between the clients and the god class, and may make it easier to evolve the clients.
 
 [[rationale-29]]
 ==== Rationale
@@ -683,4 +683,4 @@ Foote and Yoder in “Big Ball of Mud” <<FY00>> note that god classes (and wor
 _“People build BIG BALLS OF MUD because they work. In many domains, they are the only things that have been shown to work. Indeed, they work where loftier approaches have yet to demonstrate that they can compete.
 It is not our purpose to condemn BIG BALLS OF MUD. Casual architecture is natural during the early stages of a system’s evolution. The reader must surely suspect, however, that our hope is that we can aspire to do better. By recognizing the forces and pressures that lead to architectural malaise, and how and when they might be confronted, we hope to set the stage for the emergence of truly durable artifacts that can put architects in dominant positions for years to come. The key is to ensure that the system, its programmers, and, indeed the entire organization, learn about the domain, and the architectural opportunities looming within it, as the system grows and matures.”— Foote & Yoder <<FY00>>_
 
-Present the Right Interface [p. 187] is a competing pattern that should be applied when the god class itself rarely needs to be modified or extended.
+<<present-the-right-interface>> is a competing pattern that should be applied when the god class itself rarely needs to be modified or extended.

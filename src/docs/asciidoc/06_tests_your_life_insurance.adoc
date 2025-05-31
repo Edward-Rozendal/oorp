@@ -55,7 +55,7 @@ The testing framework should support you in designing certain styles of tests. I
 
 Tests may be introduced at various times for various reasons. Write Tests to Understand advocates investing testing effort in those parts of the system that you need to understand in order to implement changes. More specifically, it is a good idea to Test Fuzzy Features, to Test Old Bugs, and especially to Retest Persistent Problems.
 
-The patterns in this cluster directly support Migration Strategies [p. 165] for reengineering: Regression Test After Every Change [p. 182] helps you build confidence by ensuring that everything still runs after every incremental change to the system. In effect, tests are a necessary precondition to Always Have a Running Version [p. 180], and they enable you to Migrate Systems Incrementally [p. 174].
+The patterns in this cluster directly support <<migration-strategies>> for reengineering: <<regression-test-after-every-change>> helps you build confidence by ensuring that everything still runs after every incremental change to the system. In effect, tests are a necessary precondition to <<always-have-a-running-version>>, and they enable you to <<migrate-systems-incrementally>>.
 
 [[write-tests-to-enable-evolution]]
 === 6.1 Write Tests to Enable Evolution
@@ -181,7 +181,7 @@ Systematic testing is heavily promoted by Extreme Programming <<Bec00>> one of t
 [[related-patterns-4]]
 ==== Related Patterns
 
-Write Tests to Enable Evolution is a prerequisite to Always Have a Running Version [p. 180]. Only with a comprehensive test program in place can you Migrate Systems Incrementally [p. 174].
+Write Tests to Enable Evolution is a prerequisite to <<always-have-a-running-version>>]. Only with a comprehensive test program in place can you <<migrate-systems-incrementally>>.
 
 Grow Your Test Base Incrementally and Test the Interface, Not the Implementation introduce a way to incrementally build a test suite while a system is evolving.
 
@@ -218,8 +218,8 @@ Introduce tests incrementally for parts of the system you are working on.
 * Carefully assess your priorities and initially develop tests only for the most critical components. As you reengineer the system, introduce tests for the new features, parts of the legacy that may be affected, and any bugs you identify along the way.
 * Keep a snapshot of the old system handy so you can later introduce tests that should run against both the original system and its new incarnation.
 * Focus on business values. Start to write tests for the parts of your system that have the most important artifacts. Try to Record Business Rules as Tests.
-* If you have the history of bug fixes or problems, apply Test Old Bugs [p. 290] as a starting point.
-* If you have acceptable documentation and some original developers of the system at hand, consider applying Test Fuzzy Features [p. 290].
+* If you have the history of bug fixes or problems, apply <<a.1.3-test-old-bugs>> as a starting point.
+* If you have acceptable documentation and some original developers of the system at hand, consider applying <<a.1.2-test-fuzzy-features>>.
 * Apply Test the Interface, Not the Implementation, start to test big abstractions and then refine tests if time allows. For example, if you have a pipeline architecture, start to write tests that ensure you that the output of the full pipeline is right given the right input. Then write tests for the individual pipeline components.
 * Black-box test parts (subsystems, classes, methods) that are likely to change their implementation in the future.
 
@@ -317,7 +317,7 @@ Unit testing frameworks, like JUnit and SUnit <<BG98>>, and various commercial t
 [[cons-15]]
 ===== Cons
 
-* Testing requires commitment, discipline and support. You must convince your team of the need and benefits of disciplined testing, and you must integrate testing into your daily process. One way of supporting this discipline is to have one testing coach in your team; consider this when you Appoint a Navigator [p. 23].
+* Testing requires commitment, discipline and support. You must convince your team of the need and benefits of disciplined testing, and you must integrate testing into your daily process. One way of supporting this discipline is to have one testing coach in your team; consider this when you <<appoint-a-navigator>>.
 
 [[example-10]]
 ==== Example
@@ -720,4 +720,4 @@ By writing automated tests, you exercise parts of the system you want to underst
 [[related-patterns-8]]
 ==== Related Patterns
 
-Before writing any tests, you might want to Refactor to Understand [p. 115]. As you write your tests, be sure to Tie Code and Questions [p. 109].
+Before writing any tests, you might want to <<refactor-to-understand>>. As you write your tests, be sure to <<tie-code-and-questions>>.
