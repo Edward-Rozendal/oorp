@@ -19,7 +19,7 @@ ____
 This book is more than its title advertises. Effective reengineering is really about purposeful and efficient reading of someone else’s code in order to produce predictable change. The same processes the authors highlight as patterns of skillful reengineering behavior can easily be cast as the skills you need to create readable, maintainable software systems.
 ____
 
-[quote, ]Linda Rising, Independent Consultant]
+[quote, Linda Rising, Independent Consultant]
 ____
 If a guy named Dave brought a large box to my office that contained a lot of documentation and two CDs-installation disks for software that my company wanted to reengineer — I’d be happy to have the authors of this book by my side. Barring that, having their book is the next best thing. No silver bullets, no hype, no promises that this will be easy — just a down-toearth, easy-to-read, extremely useful book of helpful guidelines to tackle the project. Buy this book and browse it before Dave arrives in your office! It just might save you and your company a lot of grief.
 ____

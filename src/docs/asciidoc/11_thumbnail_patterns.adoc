@@ -108,7 +108,7 @@ There are many patterns that are not specifically concerned with reengineering, 
 [[a.3.1-abstract-factory]]
 ==== A.3.1 Abstract Factory
 
-*Intent* _Provide an interface for creating families of related or dependent objects without specifying their concrete classes.
+*Intent* _Provide an interface for creating families of related or dependent objects without specifying their concrete classes._
 
 *Source:* _Design Patterns_ <<GHJV95>>.
 

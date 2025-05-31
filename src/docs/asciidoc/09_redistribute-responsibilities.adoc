@@ -36,12 +36,11 @@ God classes and data containers often occur together, with the god class assumin
 
 This cluster provides a number of patterns to eliminate data containers and god classes by redistributing responsibilities and thereby improving encapsulation.
 
-* <<move-behavior-close-to-data>> moves behavior defined in
-
 image:media/figure9-2.png[image,width=728,height=249]
 
 Figure 9.2: Data containers are the clearest sign of misplaced responsibilities. These three patterns redistribute responsibilities by moving behavior close to data.
 
+* <<move-behavior-close-to-data>> moves behavior defined in
 indirect clients to an intermediate data container to make it more “object-like”. This pattern not only decouples indirect clients from the contents of the data container, but also typically eliminates duplicated code occurring in multiple clients of the data container.
 
 * <<eliminate-navigation-code>> is technically very similar to Move Behavior Close to Data in terms of the reengineering steps, but is rather different in its intent. This pattern focusses on redistributing responsibilities down chains of data containers to eliminate navigation code.

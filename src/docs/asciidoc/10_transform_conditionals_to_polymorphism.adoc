@@ -88,12 +88,11 @@ enumerates all the files in a directory tree with extension .cxx that contain a 
 
 In C++ it is fairly common to find classes with data members that are declared as void pointers. Look for conditional statements that cast such pointers to a given type based on the value of some other data member. The type information may be encoded as an enum or (more commonly) as a constant integer value.
 
-* _Ada:_ Because Ada 83 did not support polymorphism (or subprogram access types), discriminated record types are often used to simulate
-
 image:media/figure10-2.png[image,width=724,height=357]
 
 Figure 10.2: Transformation of explicit type check into self polymorphic method calls.
 
+* _Ada:_ Because Ada 83 did not support polymorphism (or subprogram access types), discriminated record types are often used to simulate
 polymorphism. Typically an enumeration type provides the set of variants and the conversion to polymorphism is straightforward in Ada95.
 
 * _Smalltalk:_ Smalltalk provides only a few ways to manipulate types. Look for applications of the methods isMemberOf: and isKindOf:, which signal explicit type-checking. Type checks might also be made with tests like self class = anotherClass, or with property tests throughout the hierarchy using methods like isSymbol, isString, isSequenceable, isInteger.
