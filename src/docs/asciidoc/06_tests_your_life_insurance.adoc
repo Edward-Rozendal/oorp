@@ -450,10 +450,8 @@ Hierarchically organizing tests makes it easier to run just the tests that conce
 ==== Known Uses
 
 Testing frameworks exist for a vast number of languages, including Ada,
-
 ANT, C, C++, Delphi, .Net (all languages), Eiffel, Forte 4GL, GemStone/S,
-
-Jade, JUnit Java, JavaScript, k language (ksql, from kbd), Objective C, Open Road (CA), Oracle, PalmUnit, Perl, PhpUnit, PowerBuilder, Python, Rebol, ‘Ruby, Smalltalk, Visual Objects and UVisual Basic.
+Jade, JUnit Java, JavaScript, k language (ksql, from kbd), Objective C, Open Road (CA), Oracle, PalmUnit, Perl, PhpUnit, PowerBuilder, Python, Rebol, Ruby, Smalltalk, Visual Objects and Visual Basic.
 
 Beck and Gamma give a good overview in the context of JUnit <<BG98>>.
 
