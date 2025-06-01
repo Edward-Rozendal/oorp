@@ -159,12 +159,11 @@ _Refactoring_ is restructuring within an object-oriented context. Martin Fowler 
 It may be hard to tell the difference between software “reengineering” and software “maintenance”. IEEE has made several attempts to define software maintenance, including this one:
 
 “the modification of a software product after delivery to correct faults, to improve performance or other attributes, or to adapt
+the product to a changed environment.”
 
-the product to a changed environment”
-Most people would probably consider that “maintenance” is routine whereas “reengineering” is a drastic, major effort to recast a system, as suggested by figure 1.
+Most people would probably consider that “maintenance” is routine whereas “reengineering” is a drastic, major effort to recast a system, as suggested by figure 1.1.
 
 Others, however, might argue that reengineering is just a way of life.
-
 You develop a little, reengineer a little, develop a little more, and so on <<Bec00>>. In fact, there is good evidence to support the notion that a culture of _continuous_ reengineering is necessary to obtain healthy, maintainable software systems.
 
 Continuous reengineering, however, is not yet common practice, and for this reason we present the patterns in this book in the context of a major reengineering effort. Nevertheless, the reader should keep in mind that most of the techniques we present will apply just as well when you reengineer in small iterations.
