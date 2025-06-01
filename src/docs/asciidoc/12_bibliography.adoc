@@ -85,6 +85,7 @@
 | [[Lov93]] [Lov93] |Tom Love. _Object Lessons — Lessons Learned in Object-Oriented Development Projects_. SIGS Books, New York, 1993.
 | [[LPM97]] [LPM^+^97] |Bruno Laguë, Daniel Proulx, Ettore M. Merlo, Jean Mayrand, and John Hudepohl. Assessing the benefits of incorporating function clone detection in a development process. In _Proceedings of ICSM (International Conference on Software Maintenance)_. IEEE, 1997.
 | [[Mar82]] [Mar82] |Tom De Marco. _Controlling Software Projects_. Yourdon Press, 1982.
+| [[Mart11]] [Mart11] |Robert C. Martin. _The Clean Coder_. Addison Wesley, 2011.
 | [[Mey96]] [Mey96] |Scott Meyers. _More Effective C++_. Addison Wesley, 1996.
 | [[Mey98]] [Mey98] |Scott Meyers. _Effective C++_. Addison Wesley, second edition, 1998.
 | [[MJS00]] [MJS^+^00] |Hausi A. Müller, Jens H. Janhke, Dennis B. Smith, MargaretAnne Storey, Scott R. Tilley, and Kenny Wong. Reverse engineering: A roadmap. In A. Finkelstein, editor, _The Future of Software Engineering 2000_. ACM Press, 2000.
