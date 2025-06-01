@@ -192,6 +192,10 @@ Reengineering patterns entail more than code refactorings. A reengineering patte
 
 In Figure 1.2 we see an example of a simple pattern that illustrates the format we use in this book. The actual format used may vary slightly from pattern to pattern, since they deal with different kinds of issues, but generally we will see the same kind of headings.
 
+image:media/figure1-2.png[image,width=725,height=898]
+
+Figure 1.2: The format of a typical reengineering pattern
+
 The name of a pattern, if well-chosen, should make it easy to remember the pattern and to discuss it with colleagues. (”I think we should Refactor to Understand or we will never figure out what’s going on here.”) The intent should communicate very compactly the essence of a pattern, and tell you whether it applies to your current situation.
 
 Many of the reengineering patterns are concerned with code transformation, in which case a diagram may be used to illustrate the kind of transformation that takes place. Typically such patterns will additionally include steps to detect the problem to be resolved, as well as code fragments illustrating the situation before and after the transformation.
@@ -199,18 +203,14 @@ Many of the reengineering patterns are concerned with code transformation, in wh
 [[a-map-of-reengineering-patterns]]
 === 1.5 A Map of Reengineering Patterns
 
-The patterns in this book are organized according to the reengineering lifecycle presented earlier. In figure 3 we can see the chapters in this book represented as clusters of patterns along the lifecycle. The diagram suggests that the patterns may be applied in sequence. Though this may well be the case, in practice you are more likely to iterate between reverse engineering and reengineering tasks. The diagram is simplistic in the same sense that the “waterfall” lifeycle is simplistic: it may be a useful way to keep track of the different software engineering activities and their relationships, even though we know that they are not carried out sequentially but iteratively.
-
-Each cluster of patterns is presented as a simple “pattern language” — a set of related patterns that may be combined to address a common set of problems. As such, each chapter will typically start with an overview and a map of the patterns in that chapter, suggesting how they may be related.
-
-Setting Direction contains several patterns to help you determine where to focus your reengineering efforts, and make sure you stay on track. First Contact consists of a set of patterns that may be useful when you encounter a legacy system for the first time. Initial Understanding helps you to develop a first simple model of a legacy system, mainly in the form of class diagrams. Detailed Model Capture helps you to develop a more detailed model of a particular component of the system.
-
-image:media/figure1-2.png[image,width=725,height=898]
-
-Figure 1.2: The format of a typical reengineering pattern
+The patterns in this book are organized according to the reengineering lifecycle presented earlier. In figure 1.3 we can see the chapters in this book represented as clusters of patterns along the lifecycle. The diagram suggests that the patterns may be applied in sequence. Though this may well be the case, in practice you are more likely to iterate between reverse engineering and reengineering tasks. The diagram is simplistic in the same sense that the “waterfall” lifeycle is simplistic: it may be a useful way to keep track of the different software engineering activities and their relationships, even though we know that they are not carried out sequentially but iteratively.
 
 image:media/figure1-3.png[image,width=735,height=453]
 
 Figure 1.3: A map of reengineering pattern clusters
 
-Tests: Your Life Insurance! focusses on the use of testing not only to help you understand a legacy system, but also to prepare it for a reengineering effort. Migration Strategies help you keep a system running while it is being reengineered, and increase the chances that the new system will be accepted by its users. Detecting Duplicated Code can help you identify locations where code may have been copied and pasted, or merged from different versions of the software. Redistribute Responsibilities helps you discover and reengineer classes with too many responsibilities. Transform Conditionals to Polymorphism will help you to redistribute responsibilities when an object-oriented design has been compromised over time.
+Each cluster of patterns is presented as a simple “pattern language” — a set of related patterns that may be combined to address a common set of problems. As such, each chapter will typically start with an overview and a map of the patterns in that chapter, suggesting how they may be related.
+
+<<setting-direction>> contains several patterns to help you determine where to focus your reengineering efforts, and make sure you stay on track. <<first-contact>> consists of a set of patterns that may be useful when you encounter a legacy system for the first time. <<initial-understanding>> helps you to develop a first simple model of a legacy system, mainly in the form of class diagrams. <<detailed-model-capture>> helps you to develop a more detailed model of a particular component of the system.
+
+<<tests-your-life-insurance>> focusses on the use of testing not only to help you understand a legacy system, but also to prepare it for a reengineering effort. <<migration-strategies>> help you keep a system running while it is being reengineered, and increase the chances that the new system will be accepted by its users. <<detecting-duplicated-code>> can help you identify locations where code may have been copied and pasted, or merged from different versions of the software. <<redistribute-responsibilities>> helps you discover and reengineer classes with too many responsibilities. <<transform-conditionals-to-polymorphism>> will help you to redistribute responsibilities when an object-oriented design has been compromised over time.
