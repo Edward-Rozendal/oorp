@@ -14,18 +14,18 @@ When you start a reengineering project, you will be pulled in many different dir
 * It can be difficult to decide whether to wrap, refactor or rewrite a problematic component of a legacy system. Each of these options will address different risks, and will have different consequences for the effort required, the speed with which results can be evaluated, and the kinds of changes that can be accommodated in the future.
 * When you are reengineering the system, you may be tempted to over-engineer the new solution to deal with every possible eventuality.
 
-image:media/figure2-1.png[image,width=731,height=362]
-
-Figure 2.1: Principles and guidelines to set and maintain direction in reengineering project.
-
 [[overview]]
 === Overview
 
 Setting Direction is a cluster of patterns that can apply to any development project, but also have special relevance to a reengineering effort. As such, we have chosen a _streamlined pattern format_ to describe them (Problem, Solution and Discussion).
 
-You should Agree on Maxims in order to establish a common understanding within the reengineering team of what is at stake and how to achieve it. You should Appoint a Navigator to maintain the architectural vision. Everyone should Speak to the Round Table to maintain team awareness of the state of the project.
+image:media/figure2-1.png[image,width=731,height=362]
 
-To help you focus on the right problems and the critical decisions, it is wise to tackle the Most Valuable First. Note that this will help you to <<involve-the-users>> and <<build-confidence>>. In order to decide whether to wrap, refactor or rewrite, you should Fix Problems, Not Symptoms. Change for change’s sake is not productive, so If It Ain’t Broke, Don’t Fix It. Although you may be tempted to make the new system very flexible and generic, it is almost always better to Keep It Simple.
+Figure 2.1: Principles and guidelines to set and maintain direction in reengineering project.
+
+You should <<agree-on-maxims>> in order to establish a common understanding within the reengineering team of what is at stake and how to achieve it. You should <<appoint-a-navigator>> to maintain the architectural vision. Everyone should <<speak-to-the-round-table>> to maintain team awareness of the state of the project.
+
+To help you focus on the right problems and the critical decisions, it is wise to tackle the <<most-valuable-first>>. Note that this will help you to <<involve-the-users>> and <<build-confidence>>. In order to decide whether to wrap, refactor or rewrite, you should <<fix-problems-not-symptoms>>. Change for change’s sake is not productive, so <<if-it-aint-broke-dont-fix-it>>. Although you may be tempted to make the new system very flexible and generic, it is almost always better to <<keep-it-simple>>.
 
 [[agree-on-maxims]]
 === 2.1 Agree on Maxims
