@@ -37,7 +37,7 @@ To help you focus on the right problems and the critical decisions, it is wise t
 *Discussion* Any reengineering project must cope with a large number of conflicting interests. Management wants to protect its legacy by improving competitiveness of its product and reducing maintenance costs. Users want improved functionality without disrupting their established work patterns. Developers and maintainers would like their jobs to become simpler without being made obsolete. Your team members may each have their own ideas about what a new system should look like.
 
 Unless there is a clear understand about certain fundamental questions, such as _What is our business model?_ or _Who is responsible for what?_ you risk that the team will be pulled apart by conflicting interests, and you will not achieve your goal. Maxims are rules of conduct that can help steer a project that is pulled in many directions. Goldberg and Rubin <<GR95>> give numerous examples of maxims, such as _“Everyone is responsible for testing and debugging”_ and _“You cannot do it right the first time.”_
-All of the patterns in this chapter can be read as maxims (rather than as patterns), since they are intended to guide a team and keep it on track. A maxim like Most Valuable First, for example, is intended to prevent a team from squandering reengineering effort on technically interesting, but marginal aspects that neither protect nor add value to the legacy system. Agree on Maxims is itself a maxim, that can help a team detect when it is rudderless.
+All of the patterns in this chapter can be read as maxims (rather than as patterns), since they are intended to guide a team and keep it on track. A maxim like <<most-valuable-first>>, for example, is intended to prevent a team from squandering reengineering effort on technically interesting, but marginal aspects that neither protect nor add value to the legacy system. Agree on Maxims is itself a maxim, that can help a team detect when it is rudderless.
 
 A key point to remember is that any maxim may only have a limited lifetime. It is important to periodically reevaluate the validity of any maxims that have been adopted. A project can get completely off track if you agree on the wrong maxims, or the right ones but at the wrong time.
 
@@ -50,9 +50,9 @@ A key point to remember is that any maxim may only have a limited lifetime. It i
 
 *Discussion* The architecture of any system tends to degrade with time as it becomes less relevant to new, emerging requirements. The challenge of a reengineering project is to develop a new architectural vision that will allow the legacy system to continue to live and evolve for several more years. Without a navigator, the design and architecture of the old system will tend to creep into and take over the new one.
 
-You should tackle the Most Valuable First so you can determine what are the most critical issues that the new architecture should address, and test those aspects early in the reengineering project.
+You should tackle the <<most-valuable-first>> so you can determine what are the most critical issues that the new architecture should address, and test those aspects early in the reengineering project.
 
-A sound architecture will help you to Fix Problems, Not Symptoms.
+A sound architecture will help you to <<fix-problems-not-symptoms>>.
 Alan O’Callaghan also refers to the navigator as the “Keeper of the Flame” <<ODF99>>.
 
 [[section]]
@@ -86,7 +86,9 @@ Beck and Fowler recommend “Stand Up Meetings” (meetings without chairs) as a
 
 By concentrating first on a part of the system that is valuable to the client, you also maximize the commitment that you, your team members and your customers will have in the project. You furthermore increase your chances of having early positive results that demonstrate that the reengineering effort is worthwhile and necessary.
 
-Nevertheless there are a number of difficulties in applying this pattern: _Who is your customer?_
+Nevertheless there are a number of difficulties in applying this pattern:
+
+_Who is your customer?_
 
 * There are many stakeholders in any legacy system, but only one of these is your customer. You can only set priorities if you have a clear understanding who should be calling the shots.
 
@@ -112,7 +114,7 @@ _What if the most valuable part is a rat’s nest?_
 ** it may be hard to demonstrate early, positive results,
 ** you are tackling the most complicated part of the system with little information,
 ** the chances are higher that you will fall flat on your face.
-* Determine whether to wrap, refactor or rewrite the problematic component by making sure you Fix Problems, Not Symptoms.
+* Determine whether to wrap, refactor or rewrite the problematic component by making sure you <<fix-problems-not-symptoms>>.
 
 Once you have decided what is the most valuable part of the system to work on, you should <<involve-the-users>> in the reengineering effort so you can <<build-confidence>>. If you <<migrate-systems-incrementally>>, the users will be able to use the system as it is reengineered and provide continuous feedback.
 
@@ -125,13 +127,13 @@ Once you have decided what is the most valuable part of the system to work on, y
 
 *Discussion* Although this is a very general principle, it has a particular relevance for reengineering. Each stakeholder has a different viewpoint of the system, and may only see part of it. The problems they want you to fix may just be manifestations of deeper problems in the system. For example, the fact that you do not get immediate feedback for certain user actions may be a consequence of a dataflow architecture. Implementing a workaround may just aggravate the problem and lead to more workarounds. If this is a real problem, you should migrate to a proper architecture.
 
-A common difficulty during a reengineering effort is to decide whether to wrap, refactor or rewrite a legacy component. Most Valuable First will help you determine what priority to give to problems in the system, and will tell you which problems are on your critical path. Fix Problems, Not Symptoms tells you to focus on the source of a problem, and not its manifestation. For example:
+A common difficulty during a reengineering effort is to decide whether to wrap, refactor or rewrite a legacy component. <<most-valuable-first>> will help you determine what priority to give to problems in the system, and will tell you which problems are on your critical path. Fix Problems, Not Symptoms tells you to focus on the source of a problem, and not its manifestation. For example:
 
 * If the code of a legacy component is basically stable, and problems mainly occur with changes to clients, then the problem is likely to be with the interface to the legacy component, rather than its implementation, no matter how nasty the code is. In such a case, you should consider applying <<present-the-right-interface>> to just fix the interface.
 * If the legacy component is largely defect-free, but is a major bottleneck for changes to the system, then it should probably be refactored to limit the effect of future changes. You might consider applying <<split-up-god-class>> to migrate towards a cleaner design.
 * If the legacy component suffers from large numbers of defects, consider applying <<make-a-bridge-to-the-new-town>> as a strategy for migrating legacy data to the new implementation.
 
-This pattern may seem to conflict with If It Ain’t Broke, Don’t Fix It, but it doesn’t really. Something that is not really “broken” cannot really be the source of a problem. Wrapping, for example, may seem to be a workaround, but it may be the right solution if the real problem is just with the interface to a legacy component.
+This pattern may seem to conflict with <<if-it-aint-broke-dont-fix-it>>, but it doesn’t really. Something that is not really “broken” cannot really be the source of a problem. Wrapping, for example, may seem to be a workaround, but it may be the right solution if the real problem is just with the interface to a legacy component.
 
 [[if-it-aint-broke-dont-fix-it]]
 === 2.6 If It Ain’t Broke, Don’t Fix It
