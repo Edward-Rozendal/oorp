@@ -372,7 +372,7 @@ The fact that you are limited in time should force you to think how you can extr
 ===== Difficulties
 
 * _Targets a different audience._ Documentation is costly to produce, hence is written for the end users (_e.g._, user manuals) or the development team (_e.g._, design). Documentation is also costly to maintain, hence only the stable parts of the system are documented. Consequently, the information you find may not be directly relevant, hence will require careful interpretation.
-* _Documentation contains inconsistencies._ Documentation is almost always out of date with respect to the actual situation. This is quite dangerous during the early phases of a reengineering project, because you lack the knowledge to recognize such inconsistencies. Consequently, avoid to make important decisions based on documentation only — first verify your findings by other means (in particular, Read all the Code in One Hour and Interview During Demo).
+* _Documentation contains inconsistencies._ Documentation is almost always out of date with respect to the actual situation. This is quite dangerous during the early phases of a reengineering project, because you lack the knowledge to recognize such inconsistencies. Consequently, avoid to make important decisions based on documentation only — first verify your findings by other means (in particular, <<read-all-the-code-in-one-hour>> and <<interview-during-demo>>).
 
 [[example-2]]
 ==== Example
@@ -413,7 +413,7 @@ Documentation, as opposed to source code, is intended to explain the software sy
 
 First of all, the documentation is likely to be out of sync with respect to the actual situation. For the five case-studies we investigated during the FAMOOS project, “insufficient documentation” was the only problem all maintainers complained about. Nevertheless, even outdated information may be useful, because at least it tells you how the system was supposed to behave in the past. This is a good starting point to infer how it is used today.
 
-“The documentation that exists for these systems usually describes isolated parts but not the overall architecture. Moreover, the documentation is often scattered throughout the system and on different media”
+“The documentation that exists for these systems usually describes isolated parts but not the overall architecture. Moreover, the documentation is often scattered throughout the system and on different media” — 
 Kenny Wong, _et al._, <<WTMS95>>
 
 Second, documentation is normally produced in a forward engineering context, hence not intended for reengineering purposes. Generated design documentation (_e.g._, database schemas, Javadoc) for instance, is typically quite up-to date, yet too fine-grained to be useful during the initial phases of a reengineering project. User manuals are black box descriptions of the software system, and thus cannot serve as blueprints of what’s inside the boxes. Here as well you should see the documentation as a good starting point to infer what you’re really interested in.
@@ -433,7 +433,7 @@ The following anecdote reveals how documentation might mislead you. In one of th
 [[what-next-3]]
 ==== What Next
 
-You may want to Read all the Code in One Hour immediately after Skim the Documentation to verify certain findings. It may also be worthwhile to Chat with the Maintainers and Interview During Demo to confirm certain suspicions.
+You may want to <<read-all-the-code-in-one-hour>> immediately after <<skim-the-documentation>> to verify certain findings. It may also be worthwhile to <<chat-with-the-maintainers>> and <<interview-during-demo>> to confirm certain suspicions.
 
 At the end of your first contact with the system, you should decide on how to proceed with (or cancel) the project. Once you have discovered relevant documentation you know that you at least do not have to reproduce this information. Even better, for those parts of the documentation that are relevant but seem inaccurate you have some good starting points for further exploration (for instance <<analyze-the-persistent-data>> and <<speculate-about-design>>).
 
