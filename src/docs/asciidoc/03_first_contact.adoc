@@ -588,7 +588,7 @@ _Yet, solving this problem is feasible because:_
 
 * You have access to the _source code_ and the necessary build tools (_i.e._, the makefiles, compilers, linkers).
 * You have the ability to _re-install_ the system in an environment that is similar to that of the running system (_i.e._, the installation CD and a computer with the right operating system).
-* Maybe the system includes some kind of _self test_ (see Tests: Your Life Insurance!), which you can use to verify whether the build or install succeeded.
+* Maybe the system includes some kind of _self test_ (see <<tests-your-life-insurance>>), which you can use to verify whether the build or install succeeded.
 
 [[solution-4]]
 ==== Solution
@@ -625,7 +625,7 @@ After this build and install experiment, prepare a report containing:
 [[cons-4]]
 ===== Cons
 
-* _Tedious activity._ You will feel very unproductive while you are busy tracking down the causes behind your failures to install the system, especially since most of the problems depend on trivial details that do not interest you now. You can counter this effect to some extent by limiting the amount of time you devote to Do a Mock Installation, but then you will feel even more unproductive because you will not have succeeded in building or installing the system.
+* _Tedious activity._ You will feel very unproductive while you are busy tracking down the causes behind your failures to install the system, especially since most of the problems depend on trivial details that do not interest you now. You can counter this effect to some extent by limiting the amount of time you devote to <<do-a-mock-installation>>, but then you will feel even more unproductive because you will not have succeeded in building or installing the system.
 * _No certainty._ Although this pattern demands precision, there is no guarantee that you will actually succeed to build the system after you have reengineered some of its components. Especially when a reliable self-test is missing you cannot verify whether your build or install was complete.
 
 [[difficulties-4]]
@@ -636,7 +636,7 @@ After this build and install experiment, prepare a report containing:
 [[example-4]]
 ==== Example
 
-You have carried out an Interview During Demo with some end users, and consequently have a feeling for the important features that should be preserved during your reengineering project. However, before accepting the project you still must verify whether you will be able to change the system. Hence, you decide to do a quick experiment to see whether you carry out a clean build of the system.
+You have carried out an <<interview-during-demo>> with some end users, and consequently have a feeling for the important features that should be preserved during your reengineering project. However, before accepting the project you still must verify whether you will be able to change the system. Hence, you decide to do a quick experiment to see whether you carry out a clean build of the system.
 
 From the box that Dave has left in your office, you take the second CD containing all the source code. Browsing the directories you notice one top-level makefile and you decide to give it a try. You copy all the files to the Linux partition of your system and type the command make all at the prompt. Everything goes smoothly for a while and the system reports numerous successful java compilations. Unfortunately, after a few minutes the make fails due to a missing library java.sql. You realize that you still have a JDK1.1 installed, while you remember that the documentation mentioned that it should have been JDK1.3. Reluctantly, you trash the whole directory structure, uninstall JDK1.1, download and install a JDK1.3 (downloading takes forever so you fetch yourself a cup of real coffee), and then start again. This time the make proceeds smoothly until the compiling of the C-code starts. The first compilation immediately fails due to a missing library file and you open the C-file to see what exactly is causing this failure. Apparently something must be wrong with the search paths, because assert.h is a standard library you know is available in your system. By then it is almost lunch-time and since you planned to finish this build experiment today, you decide to leave the whole C-compilation for later. Dave is here anyway, and since he wrote this C-code he will surely be able to show you how to compile it.
 
@@ -655,13 +655,13 @@ You put the installation-CD in the CD-drive of your Macintosh to see whether you
 
 In one of the FAMOOS case studies, we had to reengineer a distributed system that was communicating over sockets with a central server by means of a little command language. We received a tape containing a tarfile which — according to the letter attached — “contains everything that is required”. Rebuilding and reinstalling the system proved to be difficult, however, and we had to dive into the installation scripts and ask the maintainers for clarification. In the end, we could not communicate with the central server due to security and connection problems, but we were able to test the system in simulation mode. Although the experiment did not succeed completely, it gave us insights into the system’s architecture. In particular, the way the simulation mode mimicked the central server and the way this was encoded in the source code and the makefiles provided us with information that turned out to be crucial during the rest of the project.
 
-Towards the end of the first day of an auditing project we carried out, we requested to see a clean install the following morning. We considered this to be an innocent request meant to prepare things for an Interview During Demo, but during the installation we discovered that one maintainer had to stay overnight to prepare the installation CD. From the subsequent discussion we learned that the system wasn’t meant to be installed: the user base was fixed and the system was designed to download weekly updates over the internet. This explained many peculiarities we observed during a previous effort to Read all the Code in One Hour and helped us a lot to expose the design issues during the remainder of the auditing project.
+Towards the end of the first day of an auditing project we carried out, we requested to see a clean install the following morning. We considered this to be an innocent request meant to prepare things for an <<interview-during-demo>>, but during the installation we discovered that one maintainer had to stay overnight to prepare the installation CD. From the subsequent discussion we learned that the system wasn’t meant to be installed: the user base was fixed and the system was designed to download weekly updates over the internet. This explained many peculiarities we observed during a previous effort to <<read-all-the-code-in-one-hour>> and helped us a lot to expose the design issues during the remainder of the auditing project.
 
 When working with a configuration management system, it is a good idea to first try to import the code into a clean configuration before recompiling it. In case of a Smalltalk system for instance, one general piece of advice is to first try to load the Envy configuration maps that compose the system and then load the code into a clean image <<PK01>>.
 
 [[what-next-5]]
 ==== What Next
 
-It can be a good idea to Chat with the Maintainers before you report your conclusions. They may be able to confirm your findings and clear up some misconceptions. Concrete suggestions for improvement are best discussed with the maintainers, because it is the best way to convince them that you really mean to help them.
+It can be a good idea to <<chat-with-the-maintainers>> before you report your conclusions. They may be able to confirm your findings and clear up some misconceptions. Concrete suggestions for improvement are best discussed with the maintainers, because it is the best way to convince them that you really mean to help them.
 
-When the build or installation fails completely, you may want to combine Interview During Demo with Do a Mock Installation. In that case, invite a maintainer to demonstrate the build or installation process and ask questions about those steps you have found unclear.
+When the build or installation fails completely, you may want to combine <<interview-during-demo>> with <<do-a-mock-installation>>. In that case, invite a maintainer to demonstrate the build or installation process and ask questions about those steps you have found unclear.
