@@ -10,7 +10,7 @@ A first evaluation of _XDoctor_ has revealed that a few components should someho
 
 Situations similar to this one occur frequently in reengineering projects. After the <<first-contact>> with the system and its users, it is clear what kind of functionality is valuable and why it must be recovered. However, you lack knowledge about the overall design of the software system, so you cannot predict whether this functionality can be lifted out of the legacy system and how much effort that will cost you. Such initial understanding is crucial for the success of a reengineering project and this chapter will explain how to obtain it.
 
-The patterns in First Contact should have helped you to get some first ideas about the software system. Now is the right time to refine those ideas into an initial understanding and to document that understanding in order to support further reverse engineering activities. The main priority at this stage of reverse engineering is to set up a reliable foundation for the rest of your project, thus you must make sure that your discoveries are correct and properly documented.
+The patterns in <<first-contact>> should have helped you to get some first ideas about the software system. Now is the right time to refine those ideas into an initial understanding and to document that understanding in order to support further reverse engineering activities. The main priority at this stage of reverse engineering is to set up a reliable foundation for the rest of your project, thus you must make sure that your discoveries are correct and properly documented.
 
 How to properly document your discoveries depends largely on the scope of your project and the size of the your team. A complicated reverse engineering project involving more than ten developers, demands some standard document templates and a configuration management system. At the other extreme, a run-of-the-mill project involving less than three persons may be able to manage just fine with some loosely structured files shared on a central server. However, there are a few inherent forces that apply to any situation.
 
@@ -26,9 +26,9 @@ How to properly document your discoveries depends largely on the scope of your p
 
 When developing your initial understanding of a software system, incorrect information is your biggest concern. Therefore these patterns rely mainly on source-code because this is the only trustworthy information source.
 
-In principle, there are two approaches for studying source-code: one is top-down, the other is bottom-up. In practice, every reverse engineering approach must incorporate a little bit of both, still it is worthwhile to make the distinction. With the top-down approach, you start from a high-level representation and verify it against the source-code (as for instance described in <<speculate-about-design>>). In the bottom-up approach, you start from the source-code, filter out what’s relevant and cast the relevant entities into a higher-level representation. This is the approach used in Analyze the Persistent Data and Study the Exceptional Entities.
+In principle, there are two approaches for studying source-code: one is top-down, the other is bottom-up. In practice, every reverse engineering approach must incorporate a little bit of both, still it is worthwhile to make the distinction. With the top-down approach, you start from a high-level representation and verify it against the source-code (as for instance described in <<speculate-about-design>>). In the bottom-up approach, you start from the source-code, filter out what’s relevant and cast the relevant entities into a higher-level representation. This is the approach used in <<analyze-the-persistent-data>> and <<study-the-exceptional-entities>>.
 
-There is no preferred order in which to apply each of these patterns. It may be natural to first Analyze the Persistent Data, then refine the resulting model via <<speculate-about-design>> and finally exploit this knowledge to Study the Exceptional Entities. Therefore the patterns are presented in that order. However, large parts of your system won’t have anything to do with a database (some systems lack any form of persistent data) and then <<speculate-about-design>> must be done without having studied the database. And when you lack the inspiration to start with <<speculate-about-design>>, then Study the Exceptional Entities will surely provide you with an initial hypothesis.
+There is no preferred order in which to apply each of these patterns. It may be natural to first <<analyze-the-persistent-data>>, then refine the resulting model via <<speculate-about-design>> and finally exploit this knowledge to <<study-the-exceptional-entities>>. Therefore the patterns are presented in that order. However, large parts of your system won’t have anything to do with a database (some systems lack any form of persistent data) and then <<speculate-about-design>> must be done without having studied the database. And when you lack the inspiration to start with <<speculate-about-design>>, then <<study-the-exceptional-entities>> will surely provide you with an initial hypothesis.
 
 The amount of time you should devote to each of these patterns depends largely on the goal of your reengineering project. In principle, none of these patterns will take long, but each of them should be applied several times. You cannot predict how many cycles will be necessary, because the assessment whether your team understands enough to proceed with the rest of the project can only be done after the patterns have been applied.
 
@@ -41,7 +41,7 @@ Figure 4.1: Obtain an Initial Understanding of a software system and cast it int
 [[what-next-6]]
 === What Next
 
-You should make sure to reflect your increased understanding in the project plan. For instance, Analyze the Persistent Data and <<speculate-about-design>> will document parts of the system, and this documentation must be added to the Opportunities. On the other hand, Study the Exceptional Entities will reveal some suspicious components and these must be added to the Risks.
+You should make sure to reflect your increased understanding in the project plan. For instance, <<analyze-the-persistent-data>> and <<speculate-about-design>> will document parts of the system, and this documentation must be added to the Opportunities. On the other hand, <<study-the-exceptional-entities>> will reveal some suspicious components and these must be added to the Risks.
 
 Once you have obtained a solid foundation for your understanding, you should fill in the details for those components that are important for the rest of your project. Activities described in <<detailed-model-capture>> may help you to fill in those details.
 
@@ -66,7 +66,7 @@ _Yet, solving this problem is feasible because:_
 * The software system employs some form of a database to make its data persistent. Thus there exists some form of database schema providing a static description of the data inside the database.
 * The database comes with the necessary tools to inspect the actual objects inside the database, so you can exploit the presence of legacy data to fine-tune your findings.
 * You have some expertise with mapping data-structures from your implementation language onto a database schema, enough to reconstruct a class diagram from the database schema.
-* You have a rough understanding of the system’s functionality and the goals of your project (for example obtained via First Contact), so you can assess which parts of the database are valuable for your project.
+* You have a rough understanding of the system’s functionality and the goals of your project (for example obtained via <<first-contact>>), so you can assess which parts of the database are valuable for your project.
 
 [[solution-5]]
 ==== Solution
@@ -80,28 +80,31 @@ The steps below assume that the system makes use of a _relational database_, whi
 
 _Preparation._ To derive a class diagram from a relational database schema, first prepare an initial model representing the tables as classes. You may do this by means of a software tool, but a set of index cards may serve just as well.
 
-1.  Enumerate all table names and for each one, create a class with the same name.
-2.  For each table, collect all column names and add these as attributes to the corresponding class.
-3.  For each table, determine candidate keys. Some of them may be read directly from the database schema, but usually a more detailed analysis is required. Certainly check all (unique) indexes as they often suggest candidate keys. Naming conventions (names including ID or #) may also indicate candidate keys. In case of doubt, collect data samples and verify whether the candidate key is indeed unique within the database population.
-4.  Collect all foreign keys relationships between tables and create an association between the corresponding classes. Foreign key relationships may not be maintained explicitly in the database schema and then you must infer these from column types and naming conventions. Careful analysis is required here, as homonyms (= identical column name and type, yet different semantics) and synonyms (= different column name or type, yet identical semantics) may exist. To cope with such difficulties, at least verify the indexes and view declarations as these point to frequent traversal paths. If possible, verify the join clauses in the SQL statements executed against the database. Finally, confirm or refute certain foreign key relationships by inspecting data samples.
+.  Enumerate all table names and for each one, create a class with the same name.
+.  For each table, collect all column names and add these as attributes to the corresponding class.
+.  For each table, determine candidate keys. Some of them may be read directly from the database schema, but usually a more detailed analysis is required. Certainly check all (unique) indexes as they often suggest candidate keys. Naming conventions (names including ID or #) may also indicate candidate keys. In case of doubt, collect data samples and verify whether the candidate key is indeed unique within the database population.
+.  Collect all foreign keys relationships between tables and create an association between the corresponding classes. Foreign key relationships may not be maintained explicitly in the database schema and then you must infer these from column types and naming conventions. Careful analysis is required here, as homonyms (= identical column name and type, yet different semantics) and synonyms (= different column name or type, yet identical semantics) may exist. To cope with such difficulties, at least verify the indexes and view declarations as these point to frequent traversal paths. If possible, verify the join clauses in the SQL statements executed against the database. Finally, confirm or refute certain foreign key relationships by inspecting data samples.
+
+_Incorporate inheritance._ After the above steps, you will have a set of classes that represents the tables being stored in the relational database. However, because relational databases cannot represent inheritance relationships, you have to infer these from the foreign keys. (The terminology for the three representations of inheritance relations in steps 5-7 stems from <<Fro94>>.)
 
 image:media/figure4-2.png[image,width=731,height=502]
 
 Figure 4.2: Mapping a series of relational tables onto an inheritance hierarchy. (a) one to one; (b) rolled down; (c) rolled up
 
-_Incorporate inheritance._ After the above steps, you will have a set of classes that represents the tables being stored in the relational database. However, because relational databases cannot represent inheritance relationships, you have to infer these from the foreign keys. (The terminology for the three representations of inheritance relations in steps 5-7 stems from <<Fro94>>.)
-
-1.  _One to one_ (Figure 4.2 (a)). Check tables where the primary key also serves as a foreign key to another table, as such foreign keys may represent inheritance relationships. Examine the SELECT statements that are executed against these tables to see whether they usually involve a join over this foreign key. If this is the case, analyze the table names and the corresponding source code to verify whether this foreign key indeed represents an inheritance relationship. If it does, transform the association that corresponds with the foreign key into an inheritance relationship.
-2.  _Rolled down_ (Figure 4.2 (b)). Check tables with common sets of column definitions, as these probably indicate a situation where the class hierarchy is spread over several tables, each table representing one non-abstract class. Define a common superclass for each cluster of duplicated column definitions and move the corresponding attributes inside the new class. Check the source code for the name applicable for the newly created classes.
-3.  _Rolled up_ (Figure 4.2 (c)). Check tables with many columns and lots of optional attributes as these may indicate a situation where a complete class hierarchy is represented in a single table. If you have found such a table, examine all the SELECT statements that are executed against this table. If these SELECT statements explicitly request for subsets of the columns, then you may break this one class into several classes depending on the subsets requested. For the names of these classes, check for an encoding of subtype information like for instance a “kind” column holding an enumeration type number.
+[start=5]
+.  _One to one_ (Figure 4.2 (a)). Check tables where the primary key also serves as a foreign key to another table, as such foreign keys may represent inheritance relationships. Examine the SELECT statements that are executed against these tables to see whether they usually involve a join over this foreign key. If this is the case, analyze the table names and the corresponding source code to verify whether this foreign key indeed represents an inheritance relationship. If it does, transform the association that corresponds with the foreign key into an inheritance relationship.
+.  _Rolled down_ (Figure 4.2 (b)). Check tables with common sets of column definitions, as these probably indicate a situation where the class hierarchy is spread over several tables, each table representing one non-abstract class. Define a common superclass for each cluster of duplicated column definitions and move the corresponding attributes inside the new class. Check the source code for the name applicable for the newly created classes.
+.  _Rolled up_ (Figure 4.2 (c)). Check tables with many columns and lots of optional attributes as these may indicate a situation where a complete class hierarchy is represented in a single table. If you have found such a table, examine all the SELECT statements that are executed against this table. If these SELECT statements explicitly request for subsets of the columns, then you may break this one class into several classes depending on the subsets requested. For the names of these classes, check for an encoding of subtype information like for instance a “kind” column holding an enumeration type number.
 
 _Incorporate associations._ Note that the class diagram extracted from the database may be too small: it is possible that classes in the actual inheritance hierarchy have been omitted in the database because they did not define any new attributes. Also, table- and column-names may sound bizarre. Therefore, consider to verify the class diagram against the source code (see <<speculate-about-design>>) as this may provide extra insight. Afterwards, refine the remaining associations.
 
-1.  Determinate association classes, _i.e._, classes that represent the fact that two objects are associated. The most common example is a many-to-many association, which is represented by a table having a candidate key consisting of two foreign keys. In general, all tables where the candidate keys are concatenations of multiple foreign keys are potential cases of an association class.
-2.  Merge complementary associations. Sometimes a class A will have a foreign key association to class B and class B an inverse foreign key to class A. In that case, merge the two associations into a single association navigable in both directions.
-3.  Resolve foreign key targets. When inheritance hierarchies have been rolled up or down in the database, foreign key targets may become ambiguous after the table has been decomposed in its constituting classes. Foreign key targets may be too high or too low in the hierarchy, in which case the corresponding association will have too little or too many participating classes. Resolving such situation typically requires analyzing data-samples and SQL statements to see which classes actually participate in the association.
-4.  Identify qualified associations, _i.e._, associations that can be navigated by providing a certain look-up key (the qualifier). Common examples are ordered one-to-many associations, where the ordering number serves as the qualifier. In general, all tables where the candidate key combines a foreign key with extra columns are potential qualified associations; the extra columns then represent the qualifier.
-5.  Note multiplicities for the associations. Since all associations are derived from foreign key relationships, all associations are by construction optional 1-to-many associations. However, by inspecting nonnull declarations, indices and data samples one can often determine the minimum and maximum multiplicities for each of the roles in the association.
+[start=8]
+.  Determinate association classes, _i.e._, classes that represent the fact that two objects are associated. The most common example is a many-to-many association, which is represented by a table having a candidate key consisting of two foreign keys. In general, all tables where the candidate keys are concatenations of multiple foreign keys are potential cases of an association class.
+.  Merge complementary associations. Sometimes a class A will have a foreign key association to class B and class B an inverse foreign key to class A. In that case, merge the two associations into a single association navigable in both directions.
+.  Resolve foreign key targets. When inheritance hierarchies have been rolled up or down in the database, foreign key targets may become ambiguous after the table has been decomposed in its constituting classes. Foreign key targets may be too high or too low in the hierarchy, in which case the corresponding association will have too little or too many participating classes. Resolving such situation typically requires analyzing data-samples and SQL statements to see which classes actually participate in the association.
+.  Identify qualified associations, _i.e._, associations that can be navigated by providing a certain look-up key (the qualifier). Common examples are ordered one-to-many associations, where the ordering number serves as the qualifier. In general, all tables where the candidate key combines a foreign key with extra columns are potential qualified associations; the extra columns then represent the qualifier.
+.  Note multiplicities for the associations. Since all associations are derived from foreign key relationships, all associations are by construction optional 1-to-many associations. However, by inspecting nonnull declarations, indices and data samples one can often determine the minimum and maximum multiplicities for each of the roles in the association.
+
 _Verification._ Note the recurring remark that the database schema alone is too weak as a basis to derive a complete class diagram. Fortunately, a legacy system has a populated database and programs manipulating that database. Hence, data samples and embedded SQL statements can be used to verify the reconstructed classes.
 
 * _Data samples._ Database schemas only specify the constraints allowed by the underlying database system and model. However, the problem domain may involve other constraints not expressed in the schema. By inspecting samples of the actual data stored in the database you can infer other constraints.
@@ -129,7 +132,7 @@ _Incorporate operations._ It should be clear that the class diagram you extract 
 [[difficulties-5]]
 ===== Difficulties
 
-* _Polluted database schema._ The database schema itself is not always the best source of information to reconstruct a class diagram for the valuable objects. Many projects must optimize database access and as such often sacrifice a clean database schema. Also, the database schema itself evolves over time, and as such will slowly deteriorate. _Therefore, it is quite important to refine the class diagram via analysis of data samples and embedded SQL statements.
+* _Polluted database schema._ The database schema itself is not always the best source of information to reconstruct a class diagram for the valuable objects. Many projects must optimize database access and as such often sacrifice a clean database schema. Also, the database schema itself evolves over time, and as such will slowly deteriorate. _Therefore, it is quite important to refine the class diagram via analysis of data samples and embedded SQL statements._
 
 [[example-5]]
 ==== Example
@@ -139,19 +142,18 @@ While taking over _XDoctor_, your company has promised to continue to support th
 You start by browsing all table names looking for a table named Patient, but unfortunately you don’t find one. However, there is a close match in a table named Person, where column names like insuranceID suggest that at least some patient information is stored. Nevertheless, many column names are optional, so you suspect a rolled up representation where
 patient information is mixed with information from other kinds of persons. Therefore, you check the source-code and look for all embedded SQL statements querying the table Person (_i.e._,grep "SELECT * Person"). Indeed, there are two classes where such a query is used, namely Patient and Salesman and from the subsets of columns queried in each class, you infer the inheritance hierarchy depicted in Figure 4.2.
 
+Now that you recovered the Patient, you start looking for the table that stores the treatments a patient received. And indeed there is a table Treatment which has a foreign key to the table Person. However, since you have decomposed Person into the classes Patient and Salesman, it is necessary to resolve the target of the foreign key. You join the tables Person and Treatment over patientID (SELECT DISTINCT name, kind FROM Person, Treatment WHERE Person.id = Treatment.patientID) and see that all selected persons indeed have a kind which corresponds to a Patient. Therefore, you set the target of the foreign key leaving from Treatment to
+Patient (see left side of Figure 4.3). Next, you verify the indices defined on Treatment and notice that there is a unique index on the columns patientID - date - nr, which makes you conclude that these columns serve as a candidate key. Since the candidate key on Treatment consists of a foreign key combined with two extra columns, you suspect a qualified association. To confirm this assumption you analyze a data sample (SELECT name, date, nr FROM Person, Treatment WHERE Person.id = Treatment.patientID ORDER BY name, date, nr) and see that the date and the number uniquely identify a treatment for a given patient. As a consequence, you transform the foreign key into a qualified association had-treatment with a multiplicity of one on each role.
+
 image:media/figure4-3.png[image,width=731,height=12260]
 
 Figure 4.3: Identify a qualified association via a key consisting of a foreign key (patientID) and two extra columns (date, nr).
-
-Now that you recovered the Patient, you start looking for the table that stores the treatments a patient received. And indeed there is a table Treatment which has a foreign key to the table Person. However, since you have decomposed Person into the classes Patient and Salesman, it is necessary to resolve the target of the foreign key. You join the tables Person and Treatment over patientID (SELECT DISTINCT name, kind FROM Person, Treatment WHERE Person.id = Treatment.patientID) and see that all selected persons indeed have a kind which corresponds to a Patient. Therefore, you set the target of the foreign key leaving from Treatment to
-
-Patient (see left side of Figure 4.2). Next, you verify the indices defined on Treatment and notice that there is a unique index on the columns patientID - date - nr, which makes you conclude that these columns serve as a candidate key. Since the candidate key on Treatment consists of a foreign key combined with two extra columns, you suspect a qualified association. To confirm this assumption you analyze a data sample (SELECT name, date, nr FROM Person, Treatment WHERE Person.id = Treatment.patientID ORDER BY name, date, nr) and see that the date and the number uniquely identify a treatment for a given patient. As a consequence, you transform the foreign key into a qualified association had-treatment with a multiplicity of one on each role.
 
 [[rationale-4]]
 ==== Rationale
 
 _The object model is important for database applications because it concisely describes data structure and captures structural constraints.
-— Michael Blaha, et al. <<Fro94>>_
+— Michael Blaha, et al. <<BLM98>>_
 
 Having a well-defined central database schema is a common practice in larger software projects that deal with persistent data. Not only does it specify common rules on how to access certain data structures, it is also a great aid in dividing the work between team members. Therefore, it is a good idea to extract an accurate model of the database before proceeding with other reverse engineering activities.
 
@@ -212,7 +214,7 @@ Use your development expertise to conceive a hypothetical class diagram represen
 a.  _renaming_, when you discover that the names chosen in the source code do not match with your hypothesis;
 b.  _remodelling_, when you find out that the source-code representation of the design concept does not correspond with what you have in your model. For instance, you may transform an operation into a class, or an attribute into an operation.
 c.  _extending_, when you detect important elements in the source-code that do not appear in your class diagram;
-d.  _seeking alternatives_, when you do not find the design concept in the source- code. This may entail trying synonyms when there are few mismatches but may also entail defining a completely different class diagram when there are lots of mismatches.
+d.  _seeking alternatives_, when you do not find the design concept in the source code. This may entail trying synonyms when there are few mismatches but may also entail defining a completely different class diagram when there are lots of mismatches.
 5.  Repeat steps 2-4 until you obtain a class diagram that is satisfactory.
 
 [[variants-1]]
@@ -220,7 +222,7 @@ d.  _seeking alternatives_, when you do not find the design concept in the sourc
 
 _Speculate about Business Objects._ A crucial part of the system design is the way concepts of the problem domain are represented as classes in the source code. You can use a variant of this pattern to extract those so-called “business objects”.
 
-One way to build an initial hypothesis is to use the noun phrases in the requirements as the initial class names and the verb phrases as the initial method names (See <<WBWW90>> <<BS97>> <<Boo94>> for in-depth treatments of finding classes and their responsibilities).You should probably augment this information via the usage scenarios that you get out of <<interview-during-demo>> which may help you to find out which objects fulfil which roles. (See <<JCJO92>> <<SW98>> for scenarios and use cases and <<Ree96>> <<RG98>> for role modeling.)
+One way to build an initial hypothesis is to use the noun phrases in the requirements as the initial class names and the verb phrases as the initial method names (See <<WBWW90>> <<BS97>> <<Boo94>> for in-depth treatments of finding classes and their responsibilities). You should probably augment this information via the usage scenarios that you get out of <<interview-during-demo>> which may help you to find out which objects fulfil which roles. (See <<JCJO92>> <<SW98>> for scenarios and use cases and <<Ree96>> <<RG98>> for role modeling.)
 
 _Speculate about Patterns._ Patterns are “recurring solutions to a common design problem in a given context”. Once you know where a certain pattern has been applied, it reveals a lot about the underlying system design. This variant verifies a hypothesis about occurrences of architectural <<BMR96>>, analysis <<Fow97>> or design patterns <<GHJV95>>.
 
@@ -253,17 +255,13 @@ This variant builds and refines a hypothesis about which components and connecto
 
 While taking over _XDoctor_, your company has promised to continue to support the existing customer base. And since Switzerland will be joining the Euro-region within six months, the marketing department wants to make sure that Euro conversions will be supported properly. A first evaluation has revealed that the Euro is supported to some degree (_i.e._, it was described in the user manual and there exists a class named Currency). Now, your boss asks you to investigate whether they can meet the legal obligations, and if not, how long it will take to adapt the software.
 
-From a previous code review, you learned that the design is reasonably good, so you suspect that the designers have applied some variant of the <<a.3.7-quantity>> pattern. Therefore, you define an initial hypothesis in the form of the class diagram depicted in Figure 4.4 (a). There is one class Money holding two attributes; one for the amount of money (a floating point number) and one for the currency being used (an instance of the Currency class). You assume operations on the Money class to perform the standard calculations like addition, substraction, multiplication, ··· plus one operation for converting to another currency. Currency should have subclasses for every currency supported and then operations to support the conversion from one currency into another. Of course, some questions are left unanswered and you note them down on your class diagram.
-
-a.  Initial hypothesis where the open questions are inserted as Notes
+From a previous code review, you learned that the design is reasonably good, so you suspect that the designers have applied some variant of the <<a.3.7-quantity>> pattern. Therefore, you define an initial hypothesis in the form of the class diagram depicted in Figure 4.4 (a).
 
 image:media/figure4-4a.png[image,width=729,height=243]
 
-a.  Refined hypothesis after verification against the source code; the modificationsare shown as Notes
+Figure 4.4 (a): Refining the hypotheses concerning the Euro representation. Initial hypothesis where the open questions are inserted as Notes.
 
-image:media/figure4-4b.png[image,width=727,height=265]
-
-Figure 4.4: Refining the hypotheses concerning the Euro representation. (a) subclasses for the different currencies; (b) flyweight approach for the currencies
+There is one class Money holding two attributes; one for the amount of money (a floating point number) and one for the currency being used (an instance of the Currency class). You assume operations on the Money class to perform the standard calculations like addition, substraction, multiplication, ··· plus one operation for converting to another currency. Currency should have subclasses for every currency supported and then operations to support the conversion from one currency into another. Of course, some questions are left unanswered and you note them down on your class diagram.
 
 1.  What is the precision for an amount of Money?
 2.  Which calculations are allowed on an instance of Money?
@@ -275,7 +273,10 @@ To answer these questions you verify your hypothesis against the source code and
 
 Looking inside the Price class reveals that the amount of money is represented as a fixed point number. There is a little comment-line stating:
 
+[source,]
+----
 Michael (Oct 1999) ---- Bug Report #324 ---- Replaced Float by BigDecimal due to rounding errors in the floating point representation. Trimmed down the permitted calculation operations as well.
+----
 
 Checking the interface of the Price class you see that the calculation operations are indeed quite minimal. Only addition and negation (apparently substraction must be done via an addition with a negated operand) and some extra operations to take percentages and multiply with other numbers. However, you also spot a convert operation which confirms your hypothesis concerning the conversion of prices.
 
@@ -284,7 +285,13 @@ Euro and Belgian Francs.
 
 Finally, you study the actual conversion in a bit more detail by looking at the Price.convert operation and the contents of the Currency class. After some browsing, you discover that each Currency has a single conversion factor. This makes you wonder: isn’t conversion supposed to work in two ways and between all possible currencies? But then you check all invocations of the conversionFactor method and you deduce that the conversion is designed around the notion of a default currency (_i.e._, the Currencies.default() operation) and that the conversionFactor is the one that converts the given currency to the default one. Checking the Price.convert operation, you see that there is indeed a test for default currency in which case the conversion corresponds to a simple multiplication. In the other case, the conversion is done via a two step calculation involving an intermediate conversion to the default currency.
 
-You’re quite happy with your findings and you adapt your class diagram to the one depicted in figure 10(b). That model is annotated with the modifications you made to the original hypothesis, thus you store both the original and refined model into the configuration management system so that your colleagues can reconstruct your deduction process. You also file the following report summarizing your findings.
+You’re quite happy with your findings and you adapt your class diagram to the one depicted in figure 4.4 (b).
+
+image:media/figure4-4b.png[image,width=727,height=265]
+
+Figure 4.4 (b): Refining the hypotheses concerning the Euro representation. Refined hypothesis after verification against the source code; the modificationsare shown as Notes (b) flyweight approach for the currencies
+
+That model is annotated with the modifications you made to the original hypothesis, thus you store both the original and refined model into the configuration management system so that your colleagues can reconstruct your deduction process. You also file the following report summarizing your findings.
 
 _Conversion to Euro._ Facilities for Euro conversion are available, but extra work is required. One central class (Currencies) maintains a list of supported currencies including one default currency (Currencies.default). To convert to Euro, the initialization of this class must be changed so that the default becomes Euro. All prices stored in the database must also be converted, but this is outside the scope of my study.
 
@@ -321,7 +328,7 @@ It has been shown that such an approach can be used to map an object-oriented de
 [[what-next-8]]
 ==== What Next
 
-After this pattern, you will have a class diagram representing a part of the design. You may want to Study the Exceptional Entities to get an impression of the design quality. If you need a more refined model, consider the patterns in <<detailed-model-capture>>. When your reverse engineering efforts are part of a migration or reengineer project, you should cast your understanding of design in a test suite as explained in <<tests-your-life-insurance>>
+After this pattern, you will have a class diagram representing a part of the design. You may want to <<study-the-exceptional-entities>> to get an impression of the design quality. If you need a more refined model, consider the patterns in <<detailed-model-capture>>. When your reverse engineering efforts are part of a migration or reengineer project, you should cast your understanding of design in a test suite as explained in <<tests-your-life-insurance>>
 
 [[study-the-exceptional-entities]]
 === 4.3 Study the Exceptional Entities
@@ -341,7 +348,7 @@ _This problem is difficult because:_
 _Yet, solving this problem is feasible because:_
 
 * You have a _metrics tool_ at your disposal, so you can quickly collect a number of measurements about the entities in the source-code.
-* You have a _rough understanding_ of the system’s functionality (for example obtained via First Contact), so you can assess the quality of the design in the system context.
+* You have a _rough understanding_ of the system’s functionality (for example obtained via <<first-contact>>), so you can assess the quality of the design in the system context.
 * You have the necessary _tools to browse_ the source-code, so you can verify manually whether certain entities are indeed a problem.
 
 [[solution-7]]
@@ -355,25 +362,28 @@ Measure the structural entities forming the software system (_i.e._, the inherit
 Identifying problematic designs in a software system via measurements is a delicate activity which requires expertise in both data collection and interpretation. Below are some hints you might consider to get the best out of the raw numbers.
 
 * _Which tool to use?_ There are many tools — commercial as well as public domain — which measure various attributes of source code entities. Nevertheless, few development teams make regular use of such tools and therefore it is likely that you will have to look for a metrics tool before applying this pattern.
-
++
 In principle, start by looking at the tools used by the development team and see whether they can be used to collect data about the code. For instance, a code verification tool such as lint can serve as basis for your measurements. Start looking for a metrics tool only when none of the development tools currently in use may collect data for you. If that’s the case, simplicity should be your main tool adoption criterion as you do not want to spend your precious time on installing and learning. The second tool adoption criterion is how easy the metrics tool integrates with the other development tools in use.
 
 * _Which metrics to collect?_ In general, it is better to stick to the simple metrics, as the more complex ones involve more computation, yet will rarely perform better.
-
++
 For instance, to identify large methods it is sufficient to count the lines of code by counting all carriage returns or new-lines. Most other method size metrics require some form of parsing and this effort is usually not worth the gain.
 
 * _Which metric variants to use?_ Usually, it does not make a lot of difference which metric variant is chosen, as long as the choice is clearly stated and applied consistently. Here as well, it is preferable to choose the most simple variant, unless you have a good reason to do otherwise.
-
++
 For instance, while counting the lines of code, you should decide whether to include or exclude comment lines, or whether you count the lines after the source code has been normalized via pretty printing. However, when looking for potential design problems it usually does not pay off to do the extra effort of excluding comment lines or normalizing the source code.
 
 * _Which thresholds to apply?_ Due to the need for reliability, it is better _not_
 to apply thresholds.footnote:[Most metric tools allow you to focus on special entities by specifying some threshold interval and then only displaying those entities where the measurements fall into that interval.] First of all, because selecting threshold values must be done based on the coding standards applied in the development team and these you do not necessarily have access to. Second, thresholds will distort your perspective on the anomalies inside the system as you will not know how many normal entities there are.
-* _How to interpret the results?_ An anomaly is not necessarily problematic, so care must be taken when interpreting the measurement data. To assess whether an entity is indeed problematic, it is a good idea to simultaneously inspect different measurements for the same entity. For instance, do not limit yourself to the study of large classes, but combine the size of the class with the number of subclasses and the number of superclasses, because this says something about where the class is located in the class hierarchy.
 
+* _How to interpret the results?_ An anomaly is not necessarily problematic, so care must be taken when interpreting the measurement data. To assess whether an entity is indeed problematic, it is a good idea to simultaneously inspect different measurements for the same entity. For instance, do not limit yourself to the study of large classes, but combine the size of the class with the number of subclasses and the number of superclasses, because this says something about where the class is located in the class hierarchy.
++
 However, formulas that combine different measurements in a single number should be avoided as you loose the sense for the constituting elements. Therefore it is better to present the results in a table, where the first column shows the name of the entity, and the remaining columns show the different measurement data. Sorting these tables according to the different measurement columns will help you to identify exceptional values.
 
 * _How to identify anomalies quickly?_ Although it is possible to identify exceptional values in a tabular representations of measurement data, such an approach is tedious and error-prone. Most metric tools include some visualization features (histograms, scatter plots, ···) to help you scan large volumes of measurements and this is usually a better way to quickly focus on potential design problems.
+
 * _Should I browse the code afterwards?_ Measurements alone cannot determine whether a entity is truly problematic: some human assessment is always necessary. Metrics are a great aid in quickly identifying entities that are potential problems but code browsing is necessary for confirmation. Note that large entities are usually quite complicated, thus understanding the corresponding source code may prove to be difficult.
+
 * _What about normal entities?_ Experienced programmers tend to distribute important functionality over a number of well- designed components. Conversely, exceptional entities are quite often irrelevant as truly important code would have been refactored. Therefore, you should be aware that you are only applying a heuristic: its possible that you are studying code which does not represent a design problem simply because it is deemed unimportant.
 
 [[tradeoffs-7]]
@@ -397,10 +407,6 @@ However, formulas that combine different measurements in a single number should 
 * _Data is tedious to interpret._ To measure the quality of a piece of code, you must collect several measurements. Interpreting and comparing such multi-valued tuples is quite tedious especially when dealing with large software systems. Therefore, use visualizations which allow you to analyze different measurements simultaneously.
 * _Requires expertise._ The interpretation of measurement data is difficult and requires a lot of expertise. Fortunately, part of this expertise is documented in the form of design heuristics (see among others <<Rie96>> <<LK94>>) and the rest can be acquired on the job.
 
-image:media/figure4-6.png[image,width=443,height=229]
-
-Figure 4.6: Class size overview with node size showing the lines of code and gray value showing the number of instance variables.
-
 [[example-7]]
 ==== Example
 
@@ -410,14 +416,18 @@ _Class Size Overview._ As a starter, you get an impression of the raw physical s
 
 Figure 4.6 shows the checker graph for _XDoctor_. The picture reveals that the class size is distributed quite evenly — which is reassuring — with a few noteworthy exceptions. For instance, there is the class B (with 1495 it is the largest in terms of lines of code) and class L (has most instance variables and second most lines of code). The classes in row Z are exceptional in the sense that they are very small, some of them even empty.
 
+image:media/figure4-6.png[image,width=443,height=229]
+
+Figure 4.6: Class size overview with node size showing the lines of code and gray value showing the number of instance variables.
+
 _Class Inheritance._ Next, you get a feeling for the way inheritance is used by studying the various subtrees in the inheritance hierarchy. Therefore, you measure the classes in terms of hierarchy nesting level (HNL) and number of descendant classes (NDC). You include size measurements as well to assess the magnitude of the classes within the inheritance tree. Therefore, you collect the number of methods (NOM), number of instance variables (NIV) and number of lines of code (LOC) as well. 
 You use an _inheritance tree_ to visualize the various subtrees and the proportion of class sizes inside each of them. All nodes in such a tree have a rectangular shape where the height, width and gray value of each node show three measurements.
+
+Figure 4.7 shows such an inheritance tree for _XDoctor_, where the height, width and gray value of each node represent NOM, NIV and LOC. To the left, you observe several normal inheritance trees, namely small ones where the size of the classes is quite similar. One exceptional value is the same B you noticed earlier, however you now see that it also has a large superclass A (defining 70 methods), making it even more suspicious. The L you’ve seen before appears here as a solitary class. The hierarchies rooted in K, F and G seem quite interesting: they go deep (4 levels of inheritance) and have one large root class plus many smaller subclasses. H and I, plus M and N are both cases of large sibling classes, which may imply that too little is inherited from the common superclass. This must be verified via code browsing however.
 
 image:media/figure4-7.png[image,width=729,height=258]
 
 Figure 4.7: Inheritance tree focussing on class size. The node width shows the number of instance variables, the node height shows the number of methods and the gray value shows the number of code lines.
-
-Figure 4.7 shows such an inheritance tree for _XDoctor_, where the height, width and gray value of each node represent NOM, NIV and LOC. To the left, you observe several normal inheritance trees, namely small ones where the size of the classes is quite similar. One exceptional value is the same B you noticed earlier, however you now see that it also has a large superclass A (defining 70 methods), making it even more suspicious. The L you’ve seen before appears here as a solitary class. The hierarchies rooted in K, F and G seem quite interesting: they go deep (4 levels of inheritance) and have one large root class plus many smaller subclasses. H and I, plus M and N are both cases of large sibling classes, which may imply that too little is inherited from the common superclass. This must be verified via code browsing however.
 
 _Method Inheritance._ To analyze particular inheritance trees in further detail, you investigate how methods in a subclass relate to methods in their superclass. Therefore, you produce a table showing for each class the number of methods overriding a method defined in a superclass (NMO), the number of methods added to the superclass (NMA) and the number of methods extending a method defined in a superclass (NME). Here as well you use an inheritance tree to identify exceptional values in the measurements.
 
