@@ -1,9 +1,9 @@
 [[detailed-model-capture]]
 == 5. Detailed Model Capture
 
-The patterns in First Contact should have helped you to get acquainted with the software system, while those in Initial Understanding should have helped you to understand which are the most important entities in the system. Your main priority now is to build up a detailed model of those parts of the system that will be important for your reengineering effort.
+The patterns in <<first-contact>> should have helped you to get acquainted with the software system, while those in <<initial-understanding>> should have helped you to understand which are the most important entities in the system. Your main priority now is to build up a detailed model of those parts of the system that will be important for your reengineering effort.
 
-Most of the patterns concerned with Detailed Model Capture entail considerably more technical knowledge, use of tools and investment of effort than the patterns we have applied up to now. This is only natural, since only after you have built up your Initial Understanding can you determine whether more intensive investment of effort will pay off.
+Most of the patterns concerned with <<detailed-model-capture>> entail considerably more technical knowledge, use of tools and investment of effort than the patterns we have applied up to now. This is only natural, since only after you have built up your <<initial-understanding>> can you determine whether more intensive investment of effort will pay off.
 
 [[forces-3]]
 === Forces
@@ -12,34 +12,33 @@ Although you already have an impression of the system, there are several forces 
 
 * _Details matter._ As argued by Brooks <<Bro87>>, software engineering is different from other engineering disciplines because of the inherent lack of abstraction barriers. Other engineering disciplines rely on the laws of nature to hide irrelevant details, but software engineering must build on less solid foundations. _Consequently, it is essential to pay attention to the details._ The only question is how to filter out those details that do not matter, because you cannot possible investigate everything.
 * _Design remains implicit._ As you read the code, many design decisions will become apparent to you, but it will not be clear why and how these decisions were made. In particular, it will be hard to tell which design decisions were easy to make, and which of them created a lot of grief. Nevertheless, such knowledge is crucial during a reengineering project because you want to avoid making the same mistakes over and over again. _Consequently, once you discover the underlying design rationale, make sure that it is properly recorded._ This way, your successors will be able to build on your discoveries rather than be forced to reinvent the wheel.
-* _Design does evolve._ Change is an essential ingredient of a successful system, certainly in object-oriented development processes with their emphasis on iterative development. As a consequence, design documents will always be out-of date with respect to the actual situation. However, this also implies that change itself is the key to understand how and why the design of a system has evolved the way it is. _Consequently, assume that important design issues will be reflected in the source code and in the way this code has changed over time.
+* _Design does evolve._ Change is an essential ingredient of a successful system, certainly in object-oriented development processes with their emphasis on iterative development. As a consequence, design documents will always be out-of date with respect to the actual situation. However, this also implies that change itself is the key to understand how and why the design of a system has evolved the way it is. _Consequently, assume that important design issues will be reflected in the source code and in the way this code has changed over time._
 * _Static structure versus Dynamic behavior._ Object-oriented source code tells you which classes are defined, and how they are arranged in a class hierarchy. It is much harder to see which objects are instantiated at run-time, and how they collaborate to support the system. On a fine-grained level however, the latter is much more relevant than the former, especially due to the use of polymorphism. _Consequently, to extract the detailed design one must inevitably study the dynamic behavior._
 
 [[overview-3]]
 === Overview
 
-The patterns of Detailed Model Capture propose a series of activities that help you to expose design artifacts that are hidden in the code. Although some of these patterns, in particular Tie Code and Questions, are lightweight, most of them entail considerable effort, so you should evaluate carefully how much you expect to get out of applying them.
+The patterns of <<detailed-model-capture>> propose a series of activities that help you to expose design artifacts that are hidden in the code. Although some of these patterns, in particular <<tie-code-and-questions>>, are lightweight, most of them entail considerable effort, so you should evaluate carefully how much you expect to get out of applying them.
 
-Figure 5.1 suggests some possible relationships between the patterns. Tie Code and Questions is perhaps the most fundamental of these patterns, and the easiest to apply. As you work through the source code, keep track of comments, questions, hypotheses and possible actions to perform by directly annotating the source code _at the point where the comment applies_. This pattern works well with the other patterns in this cluster, and can be productively applied throughout a reengineering project.
-
-Refactor to Understand helps you to expose the design of cryptic code.
+Figure 5.1 suggests some possible relationships between the patterns. <<tie-code-and-questions>> is perhaps the most fundamental of these patterns, and the easiest to apply. As you work through the source code, keep track of comments, questions, hypotheses and possible actions to perform by directly annotating the source code _at the point where the comment applies_. This pattern works well with the other patterns in this cluster, and can be productively applied throughout a reengineering project.
 
 image:media/figure5-1.png[image,width=720,height=599]
 
-Figure 5.1: The patterns of Detailed Model Capture help you to expose the design of the software system and keep track of your understanding.
+Figure 5.1: The patterns of <<detailed-model-capture>> help you to expose the design of the software system and keep track of your understanding.
 
+<<refactor-to-understand>> helps you to expose the design of cryptic code.
 It is important to understand that the intent of this pattern is _not_ to improve the code base itself, but only to improve your understanding. It might well be that you decide to keep the results of your refactorings, but this should not be your goal at this point. Your refactorings should instead be treated as experiments to tests various hypotheses concerning the code.
 
-Since the source code gives you only a very static view of the class hierarchy, it is useful to Step Through the Execution to learn what objects are instantiated and run time and how they interact.
+Since the source code gives you only a very static view of the class hierarchy, it is useful to <<step-through-the-execution>> to learn what objects are instantiated and run time and how they interact.
 
-Although it is very easy to extract the interfaces of the classes in the system, this will not tell you very much about how these interfaces can or should be used. What you really need is to do is Look for the Contracts supported by each class. The contracts tell you which client-supplier relationships exist, and how the public interface of a class supports that relationship. Idiomatic coding practices and design patterns typically express such contracts in direct way, so you should train yourself to recognize them.
+Although it is very easy to extract the interfaces of the classes in the system, this will not tell you very much about how these interfaces can or should be used. What you really need is to do is <<look-for-the-contracts>> supported by each class. The contracts tell you which client-supplier relationships exist, and how the public interface of a class supports that relationship. Idiomatic coding practices and design patterns typically express such contracts in direct way, so you should train yourself to recognize them.
 
-Finally, though you may be able to extract various design artifacts from the source code, you will not necessarily be able to get an insight into how the system evolved that way. In particular, you may wonder whether certain design decisions were really justified, or whether they were arbitrary, and you may wonder how stable parts of the design are. By comparing different versions of the code base and focusing on places where functionality was _removed_ or refactored, you will be able to Learn from the Past.
+Finally, though you may be able to extract various design artifacts from the source code, you will not necessarily be able to get an insight into how the system evolved that way. In particular, you may wonder whether certain design decisions were really justified, or whether they were arbitrary, and you may wonder how stable parts of the design are. By comparing different versions of the code base and focusing on places where functionality was _removed_ or refactored, you will be able to <<learn-from-the-past>>.
 
 [[what-next-10]]
 === What Next
 
-Now that you have mastered the details of a part of your system, it is a good time to prepare for the actual reengineering by applying the patterns in Tests: Your Life Insurance!. In particular, as you Refactor to Understand, it is a good idea to <<write-tests-to-understand>>, as this will give you confidence in your experiments. Also, patterns like Step Through the Execution, Look for the Contracts and Learn from the Past help you to see which components implement what functionality: this knowledge must be used to <<test-the-interface-not-the-implementation>> and to <<record-business-rules-as-tests>>.
+Now that you have mastered the details of a part of your system, it is a good time to prepare for the actual reengineering by applying the patterns in <<tests-your-life-insurance>>. In particular, as you <<refactor-to-understand>>, it is a good idea to <<write-tests-to-understand>>, as this will give you confidence in your experiments. Also, patterns like <<step-through-the-execution>>, <<look-for-the-contracts>> and <<learn-from-the-past>> help you to see which components implement what functionality: this knowledge must be used to <<test-the-interface-not-the-implementation>> and to <<record-business-rules-as-tests>>.
 
 [[tie-code-and-questions]]
 === 5.1 Tie Code and Questions
@@ -68,29 +67,27 @@ _Yet, solving this problem is feasible because:_
 
 While you are working on the code annotate it directly and immediately with the questions you are facing.
 
-_In principle there are two ways to annotate the code._
-
+In principle there are two ways to annotate the code.
 
 * _Comment-based Annotations._ This approach uses the commenting conventions of the programming language and as such is bettersuited for a text-oriented environment. A few conventions are needed to distinguish the normal comments from the annotations.
-
++
 [source, java]
 ----
 /* #to: John #by: SD #on: 3/12/99
 Screws up when we have nested IFs. */
 ----
-
-
++
 Basic tools part of your program environment can then be used to search and modify annotations. With a little bit of extra effort one can easily build tools to query, extract and cross-index all commentbased annotations.
 
 * _Method-based annotations._ This approach exploits the possibility to query which method invokes a given method, a feature provided by many of today’s programming environments. The idea is to declare a global method accepting a few strings as an argument and having an empty method body. Each time you want to annotate a particular piece of code, you invoke that method passing your annotations as a parameter.
-
++
 [source, java]
 ----
 this.annotateCode("#to: John #by: SD #on: 3/12/99", "Screws up when we have nested IFs.");
 ----
-
++
 You can then use the querying and browsing facilities of your programming environment to identify the locations where this special method is invoked, thus where the annotations occur. Most programming environments can be extended by means of little scripts, in which case it is possible to develop tools to generate reports about all annotations.
-
++
 Note that the less you change the code, the less likely it is that you will introduce errors. This makes the comment-based version safer than the method-based version.
 
 [[hints-6]]
@@ -109,14 +106,14 @@ Note that the less you change the code, the less likely it is that you will intr
 ===== Pros
 
 * _Natural Synchronization._ You keep the code and the annotations in close physical proximity, and you thereby improve your chances of keeping them in sync. While modifying the code, you will more naturally modify the annotations, or remove them if they become obsolete.
-* _Improves Team Communication._ Tie Code and Questions avoids that team members must open an extra communication channel (e-mail, bulletin boards, ···). They must read the code they work with anyhow so you can multiplex the code as a communication channel.
+* _Improves Team Communication._ <<tie-code-and-questions>> avoids that team members must open an extra communication channel (e-mail, bulletin boards, ···). They must read the code they work with anyhow so you can multiplex the code as a communication channel.
 * _Minimize Context Description._ When you annotate the code you are immediately in context. This way you will minimize the need to describe the context of your questions and keep your effort low while documenting your questions and annotations.
 
 [[cons-8]]
 ===== Cons
 
 * _Passive in Nature._ Questions that you enter are not necessarily directed to anyone and even if they are, it is not certain that the addressee will read them or answer them in time. Additional tools are needed to collect the annotations and maybe even notify the appropriate persons.
-* _Process Incompatibility._ Many companies are organized around a hierarchical reporting structure. Tie Code and Questions may be rejected by these organizations because it circumvents the normal communication channels. Also, some corporate practices impose strong constraints on what programmers are allowed to do with the code, which may limit the potential if this pattern. For instance, if annotations cannot be removed when they become obsolete, they will create too much noise to be useful.
+* _Process Incompatibility._ Many companies are organized around a hierarchical reporting structure. <<tie-code-and-questions>> may be rejected by these organizations because it circumvents the normal communication channels. Also, some corporate practices impose strong constraints on what programmers are allowed to do with the code, which may limit the potential of this pattern. For instance, if annotations cannot be removed when they become obsolete, they will create too much noise to be useful.
 
 [[difficulties-8]]
 ===== Difficulties
@@ -124,7 +121,7 @@ Note that the less you change the code, the less likely it is that you will intr
 * _Finding the Right Granularity._ As with any kind of comments, you should take care to introduce just the right amount of detail. Terse or cryptic annotations quickly lose their value, and verbose annotations will distract the reader from the code itself.
 * _Motivating the Programmers to Write Comments._ Programmers generally do not like to write comments or documentation. One way of motivating them is to use the annotations during code reviews or status meetings: this way the comments have an immediate benefit.
 * _Quality of the Answers._ As with any other kinds of documentation, it may happen that wrong answers are given. One way to deal with this situation is to review the annotations regularly within the team.
-* _Eliminating the Annotations._ On certain occasions you may wish the remove the annotations. For instance, if you must deliver a “clean” version of the source-code to your customer, or if your compiler isn’t smart enough to remove an invocation of an empty method body. In that case, make sure that you have the proper tools to filter out the annotations.
+* _Eliminating the Annotations._ On certain occasions you may wish to remove the annotations. For instance, if you must deliver a “clean” version of the source-code to your customer, or if your compiler isn’t smart enough to remove an invocation of an empty method body. In that case, make sure that you have the proper tools to filter out the annotations.
 
 [[rationale-7]]
 ==== Rationale
@@ -157,7 +154,7 @@ Figure 5.2: Finding all senders of a message in Squeak.
 [[related-patterns-2]]
 ==== Related Patterns
 
-Tie Code and Questions works well in tandem with Refactor to Understand. Questions in the code may often be resolved by refactoring it. Conversely, as you Refactor to Understand, new questions will be raised and can be entered as annotations.
+<<tie-code-and-questions>> works well in tandem with <<refactor-to-understand>>. Questions in the code may often be resolved by refactoring it. Conversely, as you <<refactor-to-understand>>, new questions will be raised and can be entered as annotations.
 
 [[refactor-to-understand]]
 === 5.2 Refactor to Understand
@@ -167,7 +164,7 @@ Tie Code and Questions works well in tandem with Refactor to Understand. Questio
 [[problem-9]]
 ==== Problem
 
-How can you understand a cryptic piece code?
+How can you understand a cryptic piece of code?
 
 _This problem is difficult because:_
 
@@ -190,7 +187,7 @@ Iteratively rename and refactor the code to introduce meaningful names and to ma
 
 Your primary goal here is to _understand the system_, not to improve the code. The changes you make to the code should therefore be treated as “experiments” to test your understanding of the code. As a consequence, you should _make a copy of the code_ before you start. After you have refactored the code, it is possible that you release any of the changes you make, but you do not want to make that decision up front. Perhaps your refactoring experiments will actually improve the code, but it is just as likely that you will make a mess of things since you do not yet understand the code. It does not really matter at this stage. After a first experience you will be in a better position to do a proper job of refactoring.
 
-It is hard to do a good job of refactoring without having tests in place to verify that your changes have not broken anything. If adequate tests do not exist, you should _not_ seriously consider keeping the results of your refactoring experiments. However, consider applying <<write-tests-to-understand>> in tandem with Refactor to Understand.
+It is hard to do a good job of refactoring without having tests in place to verify that your changes have not broken anything. If adequate tests do not exist, you should _not_ seriously consider keeping the results of your refactoring experiments. However, consider applying <<write-tests-to-understand>> in tandem with <<refactor-to-understand>>.
 
 You should select refactoring operations that will make design decisions more explicit in the code. The typical refactorings applied during this iterative restructuring are <<a.2.4-rename-attribute>>, <<a.2.5-rename-method>>, and <<a.2.2-extract-method>>.
 
@@ -209,13 +206,13 @@ The following guidelines will help you to find out where and how to apply these 
 [[pros-9]]
 ===== Pros
 
-* _Expose design._ Not only will the refactoring process improve your understanding of the code, but this understanding will also become explicit in the structure of the code. This will make it easier to further document that understanding by means of Tie Code and Questions or <<write-tests-to-understand>>.
-* _Incremental validation._ Normally, understanding does not arise as part of a single revelation, but as the result of an iterative process in which earlier understanding is the base for the next iteration. Refactor to Understand encourages such an approach, because of its emphasis on small steps and frequent verification (either by running tests or either by compiling often).
+* _Expose design._ Not only will the refactoring process improve your understanding of the code, but this understanding will also become explicit in the structure of the code. This will make it easier to further document that understanding by means of <<tie-code-and-questions>> or <<write-tests-to-understand>>.
+* _Incremental validation._ Normally, understanding does not arise as part of a single revelation, but as the result of an iterative process in which earlier understanding is the base for the next iteration. <<refactor-to-understand>> encourages such an approach, because of its emphasis on small steps and frequent verification (either by running tests or either by compiling often).
 
 [[cons-9]]
 ===== Cons
 
-* _Risk of introducing errors._ The less you change the code, the smaller your chances of introducing errors. Small refactorings should be behavior-preserving, but it may be non-trivial to verify that even simple refactorings do not break the code. If you do not have adequate regression tests in place, it can be risky to introduce changes, or costly to develop the needed tests. For these reasons it is important to attempt to Refactor to Understand only on a working copy of the software.
+* _Risk of introducing errors._ The less you change the code, the smaller your chances of introducing errors. Small refactorings should be behavior-preserving, but it may be non-trivial to verify that even simple refactorings do not break the code. If you do not have adequate regression tests in place, it can be risky to introduce changes, or costly to develop the needed tests. For these reasons it is important to attempt to <<refactor-to-understand>> only on a working copy of the software.
 
 [[difficulties-9]]
 ===== Difficulties
@@ -227,7 +224,7 @@ The following guidelines will help you to find out where and how to apply these 
 [[known-uses-9]]
 ==== Known Uses
 
-Don Roberts and John Brant coined the term Refactor to Understand at ESUG ’97 and Smalltalk Solutions ’97 during a demonstration of the _Refactoring Browser_. They showed how they gradually understood an algorithm by renaming and refactoring its code. During the subsequent iterations of the pattern, the code slowly started to make sense and the design gradually became explicit in the code.
+Don Roberts and John Brant coined the term <<refactor-to-understand>> at ESUG ’97 and Smalltalk Solutions ’97 during a demonstration of the _Refactoring Browser_. They showed how they gradually understood an algorithm by renaming and refactoring its code. During the subsequent iterations of the pattern, the code slowly started to make sense and the design gradually became explicit in the code.
 
 We applied this pattern ourselves during a FAMOOS case study. We had to understand a single method of about 3000 lines of C++, which was a deeply nested conditional. We first replaced the leaf condition branches by methods, gradually working our way up the nesting structure. After several iterations, we discovered that this method was actually implementing a complete parser for a small command language.
 
@@ -241,9 +238,9 @@ Harry Sneed reports several reengineering projects where a large Cobol program w
 [[what-next-11]]
 ==== What Next
 
-Refactor to Understand works well in tandem with Tie Code and Questions. Refactorings are more expensive to implement than simply annotating the code, so first annotate, and then refactor. Also, consider to <<write-tests-to-understand>> as you refactor. These two activities reinforce each other since tests document your understanding of how a software artifact works, and refactoring helps you to expose its design. Furthermore, tests will help you to verify that your refactorings didn’t break anything.
+<<refactor-to-understand>> works well in tandem with <<tie-code-and-questions>>. Refactorings are more expensive to implement than simply annotating the code, so first annotate, and then refactor. Also, consider to <<write-tests-to-understand>> as you refactor. These two activities reinforce each other since tests document your understanding of how a software artifact works, and refactoring helps you to expose its design. Furthermore, tests will help you to verify that your refactorings didn’t break anything.
 
-When you have finished a round of Refactor to Understand, you must decide what to do with your changes. If you discard the experimental code, you should consider applying Tie Code and Questions to annotate the code base with the knowledge you have acquired.
+When you have finished a round of <<refactor-to-understand>>, you must decide what to do with your changes. If you discard the experimental code, you should consider applying <<tie-code-and-questions>> to annotate the code base with the knowledge you have acquired.
 
 [[step-through-the-execution]]
 === 5.3 Step Through the Execution
@@ -274,7 +271,7 @@ _Yet, solving this problem is feasible because:_
 
 Run each of the scenarios and use your debugger to step through the code.
 
-Observe which objects collaborate and how they are instantiated. Afterwards, generalize these observations and record your knowledge for future reference, possibly by means of Tie Code and Questions and <<record-business-rules-as-tests>>.
+Observe which objects collaborate and how they are instantiated. Afterwards, generalize these observations and record your knowledge for future reference, possibly by means of <<tie-code-and-questions>> and <<record-business-rules-as-tests>>.
 
 [[hints-8]]
 ===== Hints
@@ -303,14 +300,14 @@ It is too time-consuming to step through every single statement of a running sys
 [[difficulties-10]]
 ===== Difficulties
 
-* _Dependency on Tools._ You need to have good debugger to Step Through the Execution. Not only must it allow to set and remove breakpoints dynamically, it also should provide the means to examine the state of the objects involved. And to easily verify alternative paths, the debugger should allow you to change the internal state of an object, or even restart a method currently on the execution stack.
+* _Dependency on Tools._ You need to have good debugger to <<step-through-the-execution>>. Not only must it allow to set and remove breakpoints dynamically, it also should provide the means to examine the state of the objects involved. And to easily verify alternative paths, the debugger should allow you to change the internal state of an object, or even restart a method currently on the execution stack.
 
 [[what-next-12]]
 ==== What Next
 
-You will need concrete scenarios in order to Step Through the Execution (possibly inferred from <<interview-during-demo>>). Consider encoding these scenarios as test cases. You can then iteratively <<write-tests-to-understand>> as you Step Through the Execution since the insights you gain into the states of collaborating objects can then be formulated as concrete tests.
+You will need concrete scenarios in order to <<step-through-the-execution>> (possibly inferred from <<interview-during-demo>>). Consider encoding these scenarios as test cases. You can then iteratively <<write-tests-to-understand>> as you <<step-through-the-execution>> since the insights you gain into the states of collaborating objects can then be formulated as concrete tests.
 
-As you Step Through the Execution, it is a good idea to keep an eye on the way collaborating objects use each other’s interface. Afterwards, you can exploit the knowledge you have gained to Look for the Contracts.
+As you <<step-through-the-execution>>, it is a good idea to keep an eye on the way collaborating objects use each other’s interface. Afterwards, you can exploit the knowledge you have gained to <<look-for-the-contracts>>.
 
 [[look-for-the-contracts]]
 === 5.4 Look for the Contracts
@@ -329,7 +326,7 @@ _This problem is difficult because:_
 
 _Yet, solving this problem is feasible because:_
 
-* You have a _good understanding_ of the system’s structure (for example obtained via Initial Understanding), so you can distinguish key classes from less important ones.
+* You have a _good understanding_ of the system’s structure (for example obtained via <<initial-understanding>>), so you can distinguish key classes from less important ones.
 * You trust that the class is being used properly by its clients and its subclasses.
 
 [[solution-11]]
@@ -395,9 +392,9 @@ Many researchers have investigated ways to analyze how clients use a class inter
 [[what-next-13]]
 ==== What Next
 
-One way to validate the contracts you have identified is to Step Through the Execution. Conversely, as you Step Through the Execution you will uncover collaborations between various objects. At that point you may Look for the Contracts that govern those collaborations.
+One way to validate the contracts you have identified is to <<step-through-the-execution>>. Conversely, as you <<step-through-the-execution>> you will uncover collaborations between various objects. At that point you may <<look-for-the-contracts>> that govern those collaborations.
 
-If the code is hard to read, you may wish to Refactor to Understand before you Look for the Contracts. To understand how the contracts evolved to their current state, you might Learn from the Past.
+If the code is hard to read, you may wish to <<refactor-to-understand>> before you <<look-for-the-contracts>>. To understand how the contracts evolved to their current state, you might <<learn-from-the-past>>.
 
 [[learn-from-the-past]]
 === 5.5 Learn from the Past
@@ -417,7 +414,7 @@ _This problem is difficult because:_
 
 _Yet, solving this problem is feasible because:_
 
-* You have a _good understanding_ of the system’s structure (for example obtained via Initial Understanding), so you’re able to focus on appropriate subsystems.
+* You have a _good understanding_ of the system’s structure (for example obtained via <<initial-understanding>>), so you’re able to focus on appropriate subsystems.
 * You have access to the _subsequent releases_ of the system, so you can reconstruct the changes by comparing the source code of the versions.
 * You have the means to examine what happened with individual source code entities. For instance, you have a _metrics tool_ at your disposal, which allows you to quantify the size of entities in the sourcecode and use these numbers as a basis for comparison. As an alternative, you have a _configuration management_ system that can provide you with information about particular changes to source-code entities.
 * You have enough _expertise with refactorings_ in the implementation language being used, so you are able to recognize refactorings from their effects on source-code. Moreover, once you know which refactorings have been applied, you can use this expertise to make an educated guess at the underlying design rationale.
@@ -477,6 +474,6 @@ Other researchers also report on examining changes to support the reverse engine
 [[what-next-14]]
 ==== What Next
 
-Now that you discovered some stable parts in the design, you will probably want to reuse them. In that case take some precautions: first document the interfaces of that part (see Look for the Contracts) and then write the corresponding test cases (see <<test-the-interface-not-the-implementation>>).
+Now that you discovered some stable parts in the design, you will probably want to reuse them. In that case take some precautions: first document the interfaces of that part (see <<look-for-the-contracts>>) and then write the corresponding test cases (see <<test-the-interface-not-the-implementation>>).
 
 On the other hand, the unstable parts of the design should probably be dismissed. Nevertheless, if the unstable part seems crucial for your reengineering project, then you must seek which change requests caused the instability. In that case, <<chat-with-the-maintainers>> or even <<interview-during-demo>> and based on this knowledge decide how to restructure that part so that it is better suited for the kind of change requests that come in.
