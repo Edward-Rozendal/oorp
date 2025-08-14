@@ -24,16 +24,16 @@ Figure 8.1: Two patterns to support Detecting Duplicated Code.
 [[overview-6]]
 === Overview
 
-Detecting Duplicated Code consists of two patterns: Compare Code Mechanically, which describes how we can detect duplicated code, and Visualize Code as Dotplots, which shows how duplicated code can be better understood by simple matrix visualization.
+<<detecting-duplicated-code>> consists of two patterns: <<compare-code-mechanically>>, which describes how we can detect duplicated code, and <<visualize-code-as-dotplots>>, which shows how duplicated code can be better understood by simple matrix visualization.
 
 Once you have detected and understood duplication in the system, you may decide on a variety of tactics. Various refactoring patterns, such as <<a.2.2-extract-method>> may help you to eliminate the duplication. Duplication may be a sign of misplaced responsibilities, in which you should may decide to <<move-behavior-close-to-data>>.
 
-Complex conditional statements are also a form of duplication, and may indicate that multiple clients have to duplicate actions that should belong to the target class. The pattern cluster Transform Conditionals to Polymorphism can help you to resolve these problems.
+Complex conditional statements are also a form of duplication, and may indicate that multiple clients have to duplicate actions that should belong to the target class. The pattern cluster <<transform-conditionals-to-polymorphism>> can help you to resolve these problems.
 
 [[compare-code-mechanically]]
 === 8.1 Compare Code Mechanically
 
-*Intent* _Discover duplicated code by comparing all the source code files line-byline._
+*Intent* _Discover duplicated code by comparing all the source code files line-by-line._
 
 [[problem-31]]
 ==== Problem
@@ -62,7 +62,9 @@ Textually compare each line of the software source code with all the other lines
 * Remove lines that contain uninteresting code elements (_e.g._, just else or })
 * Compare each line with all the other lines. Reduce search complexity by hashing:
 ** Preprocessing: Compute the hash value for each line
-** Actual Comparison: Compare all lines in the same hash bucket *Variants*
+** Actual Comparison: Compare all lines in the same hash bucket
+
+===== Variants
 
 This approach may fail to identify some instances of duplicated code due to renaming of variables. By deleting all variable identifiers, or by mapping them to a common symbol, you can detect similar code patterns, while abstracting from the details of the specific identifiers. This variant, however, requires some syntactic processing of the code.
 
@@ -136,7 +138,7 @@ Locations:
 
 Below is a sample of a perl script that will do the trick.
 
-[source,cpp]
+[source,perl]
 ----
 #! /usr/bin/env perl --w
 # duplocForCPP.pl -- detect duplicated lines of code (algorithm only) 
@@ -272,7 +274,7 @@ In the context of software reengineering, the pattern has been applied to detect
 [[visualize-code-as-dotplots]]
 === 8.2 Visualize Code as Dotplots
 
-*Intent* _Gain insight into the nature of the duplication by studying the patterns in the dotplots.
+*Intent* _Gain insight into the nature of the duplication by studying the patterns in the dotplots._
 [[problem-32]]
 ==== Problem
 
@@ -303,14 +305,14 @@ If you want to analyze two files A and B:
 
 To analyze the duplication inside a single file, plot the elements of that file on both axes.
 
-image:media/figure8-2.png[image,width=729,height=240]
-
-Figure 8.2: Possible sequences of dot and their associated interpretations.
-
 [[interpretations]]
 ===== Interpretations
 
 The interpretation of the obtained matrices are illustrated in Figure 8.2:
+
+image:media/figure8-2.png[image,width=729,height=240]
+
+Figure 8.2: Possible sequences of dot and their associated interpretations.
 
 Some interesting configurations formed by the dots in the matrices are the following:
 
@@ -327,13 +329,7 @@ Some interesting configurations formed by the dots in the matrices are the follo
 
 * The approach is largely language-independent, since only the code normalization depends on the language syntax.
 * The approach works well when reverse engineering large amounts of unknown code, because the dotplots attract your eye to certain parts of the code to be studied more closely.
-* The idea is simple yet works surprisingly well.
-
-_image:media/figure8-3.png[image,width=584,height=516]
-
-Figure 8.3: Code duplication before and after refactoring.
-
-A simple version of the approach can be implemented by a good programmer using a appropriate tools in a couple of days. (One of our better students made a small dotplot browser in Delphi in two days.)
+* The idea is simple yet works surprisingly well. A simple version of the approach can be implemented by a good programmer using a appropriate tools in a couple of days. (One of our better students made a small dotplot browser in Delphi in two days.)
 
 [[cons-26]]
 ===== Cons
@@ -350,24 +346,34 @@ A simple version of the approach can be implemented by a good programmer using a
 [[example-13]]
 ==== Example
 
-In Figure 8.3 we see a dotplot of two versions of a piece of software, before and after the duplication has been removed. The first version is compared to itself in the top left square. The line down the diagonal simply shows us that every line of code is being compared to itself. What is more interesting is that several other diagonal lines occur in the dotplot, which means that code has been duplicated within this file. A second version of the same file is compared to itself in the lower right square. Here we see no significant duplication aside from the main diagonal, which reflects the fact that all the duplicated code has been successfully refactored.
+In Figure 8.3 we see a dotplot of two versions of a piece of software, before and after the duplication has been removed.
+
+_image:media/figure8-3.png[image,width=584,height=516]
+
+Figure 8.3: Code duplication before and after refactoring.
+
+The first version is compared to itself in the top left square. The line down the diagonal simply shows us that every line of code is being compared to itself. What is more interesting is that several other diagonal lines occur in the dotplot, which means that code has been duplicated within this file. A second version of the same file is compared to itself in the lower right square. Here we see no significant duplication aside from the main diagonal, which reflects the fact that all the duplicated code has been successfully refactored.
+
+The bottom left and top right squares are mirror images of each other. They tell us how the before and after files have been reorganized. Since there is no strong diagonal, this tells us that significant reorganization has taken place. The diagonal stripes show us which parts of the old version have survived and where they appear in the new version.
+From the dotplot alone, we can guess that about half of the code has survived, and another half of the code has been significantly rewritten.
+
+Dotplots are also useful to detect duplication across multiple files. Figure 8.4 shows a dotplot comparing two Python files.
 
 image:media/figure8-4.png[image,width=728,height=331]
 
 Figure 8.4: A Python file A being compared to itself and to a second file B.
 
-The bottom left and top right squares are mirror images of each other. They tell us how the before and after files have been reorganized. Since there is no strong diagonal, this tells us that significant reorganization has taken place. The diagonal stripes show us which parts of the old version have survived and where they appear in the new version.
-From the dotplot alone, we can guess that about half of the code has survived, and another half of the code has been significantly rewritten.
+The comparison of A vs. A shows that there is essentially no internal duplication. Very likely there are some switch statements in the bottom half of the file, indicated by the matrix pattern.
+
+When we compare file A to file B, however, we detect a staggering amount of duplication. It looks very much like file B is just a copy of file A that has been extended in various ways. Closer investigation showed this to be the case. In fact, file A was just an older version of file B that had inadvertently been left in the release.
+
+Dotplots can also be useful to detect other problems. Figure 8.5 presents four clones that represent a switch statement over a type variable that is used to call individual construction code.
 
 image:media/figure8-5.png[image,width=545,height=546]
 
 Figure 8.5: Dotplots produced by four switch statements.
 
-Dotplots are also useful to detect duplication across multiple files. Figure 8.4 shows a dotplot comparing two Python files. The comparison of A vs. A shows that there is essentially no internal duplication. Very likely there are some switch statements in the bottom have of the file, indicated by the matrix pattern.
-
-When we compare file A to file B, however, we detect a staggering amount of duplication. It looks very much like file B is just a copy of file A that has been extended in various ways. Closer investigation showed this to be the case. In fact, file A was just an older version of file B that had inadvertently been left in the release.
-
-Dotplots can also be useful to detect other problems. Figure 8.5 presents four clones that represent a switch statement over a type variable that is used to call individual construction code. The duplicated code could perhaps be eliminated by applying Transform Conditionals to Polymorphism.
+The duplicated code could perhaps be eliminated by applying <<transform-conditionals-to-polymorphism>>.
 
 [[known-uses-19]]
 ==== Known Uses
@@ -381,4 +387,4 @@ Once you have detected duplicated code, numerous refactoring patterns may apply,
 
 Very often duplicated code arises because clients assume too many responsibilities. In that case, <<move-behavior-close-to-data>> will help you to eliminate the duplication.
 
-Dotplots also help to detect large conditional constructs. You should probably Transform Conditionals to Polymorphism to eliminate these conditionals and thereby achieve a more flexible design.
+Dotplots also help to detect large conditional constructs. You should probably <<transform-conditionals-to-polymorphism>> to eliminate these conditionals and thereby achieve a more flexible design.
