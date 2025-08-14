@@ -1,7 +1,7 @@
 [[migration-strategies]]
 == 7. Migration Strategies
 
-Your reengineering project is well underway. You have developed a good understanding of the legacy system and you have started to <<write-tests-to-enable-evolution>> You have gone through a process of Setting Direction and have decided to tackle the <<most-valuable-first>>.
+Your reengineering project is well underway. You have developed a good understanding of the legacy system and you have started to <<write-tests-to-enable-evolution>> You have gone through a process of <<setting-direction>> and have decided to tackle the <<most-valuable-first>>.
 
 How can you be sure that the new system will be accepted by users? How do you migrate to the new system while the old system is being used? How can you test and evaluate the new system before it is finished?
 
@@ -24,30 +24,30 @@ image:media/figure7-1.png[image,width=732,height=431]
 
 Figure 7.1: How, why and whither to migrate legacy systems.
 
-The central message of this cluster is to Migrate Systems Incrementally. This is, however, easier said than done. In figure 25 we can see that in order to Migrate Systems Incrementally, we should consider a large number of other patterns. Since there exists a vast literature on system migration, we do not attempt to cover the topic in great detail. We have selected, however, the patterns that we consider to be most important for reengineering object-oriented legacy systems, and summarized the main points. Where appropriate, we point the reader to further sources of information.
+The central message of this cluster is to <<migrate-systems-incrementally>>. This is, however, easier said than done. In figure 7.1 we can see that in order to <<migrate-systems-incrementally>>, we should consider a large number of other patterns. Since there exists a vast literature on system migration, we do not attempt to cover the topic in great detail. We have selected, however, the patterns that we consider to be most important for reengineering object-oriented legacy systems, and summarized the main points. Where appropriate, we point the reader to further sources of information.
 
-Although the central pattern of this cluster is Migrate Systems Incrementally, the key motivation is provided by Involve the Users and Build Confidence. These first three patterns are fundamental patterns for minimizing risk and increasing the chances of success:
+Although the central pattern of this cluster is <<migrate-systems-incrementally>>, the key motivation is provided by <<involve-the-users>> and <<build-confidence>>. These first three patterns are fundamental patterns for minimizing risk and increasing the chances of success:
 
-* Involve the Users increases the chance that users will accept the new system by involving them closely in the entire reengineering process, getting them to use intermediate results, and providing them with strong support. It is easier to achieve if you Migrate Systems Incrementally and Build Confidence step by step.
-* Build Confidence helps you overcome skepticism and doubt by regularly delivering results that are of value to the users.
-* Migrate Systems Incrementally recommends that the old system be gradually and incrementally replaced by the new system. New results can then be integrated as you proceed, thus helping you to Build Confidence and Involve the Users.
+* <<involve-the-users>> increases the chance that users will accept the new system by involving them closely in the entire reengineering process, getting them to use intermediate results, and providing them with strong support. It is easier to achieve if you <<migrate-systems-incrementally>> and <<build-confidence>> step by step.
+* <<build-confidence>> helps you overcome skepticism and doubt by regularly delivering results that are of value to the users.
+* <<migrate-systems-incrementally>> recommends that the old system be gradually and incrementally replaced by the new system. New results can then be integrated as you proceed, thus helping you to <<build-confidence>> and <<involve-the-users>>.
 
-It is very hard to Migrate Systems Incrementally unless you also adhere to the following practices:
+It is very hard to <<migrate-systems-incrementally>> unless you also adhere to the following practices:
 
-* Prototype the Target Solution to test the new architecture and new technical risks. It is too easy to be tempted to think you don’t need a prototype since you already have a running system, but this is almost always a mistake.
-* Always Have a Running Version helps to keep changes in sync by ensuring that they are integrated frequently.
-* Regression Test After Every Change helps to you Always Have a Running Version by making sure that everything that used to run still runs. It presupposes that you <<write-tests-to-enable-evolution>>
+* <<prototype-the-target-solution>> to test the new architecture and new technical risks. It is too easy to be tempted to think you don’t need a prototype since you already have a running system, but this is almost always a mistake.
+* <<always-have-a-running-version>> helps to keep changes in sync by ensuring that they are integrated frequently.
+* <<regression-test-after-every-change>> helps to you <<always-have-a-running-version>> by making sure that everything that used to run still runs. It presupposes that you <<write-tests-to-enable-evolution>>
 
-Depending on the circumstances, there are various practices that may help you to Migrate Systems Incrementally:
+Depending on the circumstances, there are various practices that may help you to <<migrate-systems-incrementally>>:
 
-* Make a Bridge to the New Town introduces the metaphor of a (data) “bridge” to allow you to gradually migrate data from a legacy component to its replacement, while the two run in tandem. When all the data have been transferred, the legacy component can be retired.
-* Present the Right Interface helps you to develop the target system in increments by wrapping the old functionality to export the abstractions you really want.
-* Distinguish Public from Published Interface distinguishes between stable (public) and unstable (published) interfaces to facilitate parallel development within a reengineering team.
-* Deprecate Obsolete Interfaces lets you gracefully retire obsolete interfaces without immediately invalidating clients.
+* <<make-a-bridge-to-the-new-town>> introduces the metaphor of a (data) “bridge” to allow you to gradually migrate data from a legacy component to its replacement, while the two run in tandem. When all the data have been transferred, the legacy component can be retired.
+* <<present-the-right-interface>> helps you to develop the target system in increments by wrapping the old functionality to export the abstractions you really want.
+* <<distinguish-public-from-published-interface>> distinguishes between stable (public) and unstable (published) interfaces to facilitate parallel development within a reengineering team.
+* <<deprecate-obsolete-interfaces>> lets you gracefully retire obsolete interfaces without immediately invalidating clients.
 
 Finally, the following two practices may help you avoid making radical, but unnecessary changes:
 
-* Conserve Familiarity warns you against introducing radical interface changes that may alienate users.
+* <<conserve-familiarity>> warns you against introducing radical interface changes that may alienate users.
 * Use <<use-profiler-before-optimizing>> reminds you to delay considering performance issues until you can demonstrate that you have a problem and can pinpoint the source of the problem.
 
 [[involve-the-users]]
@@ -107,7 +107,7 @@ Establish simple procedures for delivering intermediate results on a regular bas
 [[difficulties-17]]
 ===== Difficulties
 
-* It can be hard to involve the users initially, before you have shown any results.
+* It can be hard to <<involve-the-users>> initially, before you have shown any results.
 * You can’t involve everybody, and the users who are left out might feel neglected.
 
 [[rationale-15]]
@@ -120,9 +120,9 @@ Coplien points out: _“Note that ‘maintaining product quality’ is not the p
 [[related-patterns-9]]
 ==== Related Patterns
 
-Virtually all of the patterns in this cluster support Involve the Users. Migrate Systems Incrementally to get the users working with the system as it is being reengineered and thereby Build Confidence.
+Virtually all of the patterns in this cluster support <<involve-the-users>>. <<migrate-systems-incrementally>> to get the users working with the system as it is being reengineered and thereby <<build-confidence>>.
 
-The Planning Game <<BF01>> is an effective technique to Involve the Users by iteratively identifying stories, estimating costs, and committing to the stories to be released.
+The Planning Game <<BF01>> is an effective technique to <<involve-the-users>> by iteratively identifying stories, estimating costs, and committing to the stories to be released.
 
 [[build-confidence]]
 === 7.2 Build Confidence
@@ -179,14 +179,14 @@ Pick short intervals for delivering new results. At each step, try to agree toge
 [[rationale-16]]
 ==== Rationale
 
-By taking smaller steps, you reduce the risk that an individual step will fail. Frequent, positive results help to build confidence. By the same token, Extreme Programming advocates Small Releases <<Bec00>>. Even negative results help you to monitor progress and understand better the situation, and so help to build up confidence.
+By taking smaller steps, you reduce the risk that an individual step will fail. Frequent, positive results help to <<build-confidence>>. By the same token, Extreme Programming advocates Small Releases <<Bec00>>. Even negative results help you to monitor progress and understand better the situation, and so help to build up confidence.
 
 [[related-patterns-10]]
 ==== Related Patterns
 
-Prototype the Target Solution and Make a Bridge to the New Town can make it easier to demonstrate results in small steps.
+<<prototype-the-target-solution>> and <<make-a-bridge-to-the-new-town>> can make it easier to demonstrate results in small steps.
 
-It is easier to Build Confidence if you Involve the Users.
+It is easier to <<build-confidence>> if you <<involve-the-users>>.
 [[migrate-systems-incrementally]]
 === 7.3 Migrate Systems Incrementally
 
@@ -230,7 +230,7 @@ Deploy a first _update_ of the legacy system as soon as you can, and migrate inc
 [[pros-20]]
 ===== Pros
 
-* You get user feedback early and Build Confidence.
+* You get user feedback early and <<build-confidence>>.
 * You see immediately when things break.
 * Users learn the new system as it’s being built.
 * The system is always deployed.
@@ -244,8 +244,8 @@ Deploy a first _update_ of the legacy system as soon as you can, and migrate inc
 [[difficulties-19]]
 ===== Difficulties
 
-* It can be difficult to migrate to a new architecture. You may want to Prototype the Target Solution to get the new architecture in place, and Present the Right Interface to the old system to hide the legacy interfaces while you migrate the underlying components.
-* It is risky to change a running system. Be sure to Regression Test After Every Change.
+* It can be difficult to migrate to a new architecture. You may want to <<prototype-the-target-solution>> to get the new architecture in place, and <<present-the-right-interface>> to the old system to hide the legacy interfaces while you migrate the underlying components.
+* It is risky to change a running system. Be sure to <<regression-test-after-every-change>>.
 
 [[rationale-17]]
 ==== Rationale
@@ -264,7 +264,7 @@ Apply <<most-valuable-first>> to select the legacy components to work on first. 
 
 <<write-tests-to-enable-evolution>>, and <<grow-your-test-base-incrementally>> as you migrate. Be sure to <<test-the-interface-not-the-implementation>> so you do not always have to rewrite your tests as you reengineer or replace legacy components. <<regression-test-after-every-change>> so you can <<always-have-a-running-version>>s.
 
-Consider applying Present the Right Interface for legacy components that you do not intend to reengineer or replace.
+Consider applying <<present-the-right-interface>> for legacy components that you do not intend to reengineer or replace.
 
 You might consider to <<make-a-bridge-to-the-new-town>> if you need to migrate data from legacy components that you are replacing.
 
@@ -323,7 +323,7 @@ Develop a prototype of the new concept and evaluate it with respect to the new, 
 ===== Difficulties
 
 * It may be hard to convince yourself or your customer of the need for a prototype — after all, you already have a running system.
-* It can take too much time to get an evolutionary prototype up to speed. Consider applying Present the Right Interface to legacy components to provide a good interface for legacy services to the prototype.
+* It can take too much time to get an evolutionary prototype up to speed. Consider applying <<present-the-right-interface>> to legacy components to provide a good interface for legacy services to the prototype.
 
 [[rationale-18]]
 ==== Rationale
@@ -335,7 +335,7 @@ Love <<Lov93>> takes this one step further and warns us that, for objectoriented
 [[related-patterns-12]]
 ==== Related Patterns
 
-You might consider applying Make a Bridge to the New Town to migrate legacy data to an evolutionary prototype.
+You might consider applying <<make-a-bridge-to-the-new-town>> to migrate legacy data to an evolutionary prototype.
 
 [[always-have-a-running-version]]
 === 7.5 Always Have a Running Version
@@ -375,7 +375,7 @@ Institute a discipline of integrating new changes and developments on a daily ba
 
 * You always have a working version to demo.
 * You can always have a working version to run your regression tests.
-* You can quickly validate your changes, thereby helping you to Build Confidence.
+* You can quickly validate your changes, thereby helping you to <<build-confidence>>.
 
 *Cons*
 
@@ -395,14 +395,14 @@ Many practitioners advocate a process of continuous integration as a way to avoi
 [[related-patterns-13]]
 ==== Related Patterns
 
-Regression Test After Every Change minimizes the risk of defects creeping in during integration.
+<<regression-test-after-every-change>> minimizes the risk of defects creeping in during integration.
 
-Continuous Integration <<Boo94>> <<Bec00>> is a proven way to Always Have a Running Version.
+Continuous Integration <<Boo94>> <<Bec00>> is a proven way to <<always-have-a-running-version>>.
 
 [[regression-test-after-every-change]]
 === 7.6 Regression Test After Every Change
 
-*Intent* _Build confidence by making sure that whatever worked before still works._
+*Intent* _<<build-confidence>> by making sure that whatever worked before still works._
 [[problem-24]]
 ==== Problem
 
@@ -426,8 +426,8 @@ Run your regression test suite every time you think you have reached a stable st
 
 ===== Pros
 
-* It is easier to Always Have a Running Version.
-* It is easier to Build Confidence as you proceed.
+* It is easier to <<always-have-a-running-version>>.
+* It is easier to <<build-confidence>> as you proceed.
 
 ===== Cons
 
@@ -532,7 +532,7 @@ A bridge between the old and new systems allows you to let users start using fea
 [[related-patterns-15]]
 ==== Related Patterns
 
-A bridge helps you Migrate Systems Incrementally and thereby Build Confidence.
+A bridge helps you <<migrate-systems-incrementally>> and thereby <<build-confidence>>.
 
 [[present-the-right-interface]]
 === 7.8 Present the Right Interface
@@ -592,16 +592,16 @@ Alan O’Callaghan <<OC00>> presents this pattern as “Semantic Wrapper” brie
 [[rationale-22]]
 ==== Rationale
 
-Present the Right Interface frees you from thinking in terms of the legacy design and makes it easier to consider alternative approaches.
+<<present-the-right-interface>> frees you from thinking in terms of the legacy design and makes it easier to consider alternative approaches.
 
 [[related-patterns-16]]
 ==== Related Patterns
 
-Present the Right Interface superficially resembles an <<a.3.2-adapter>>, since both use wrappers as their implementation technique. An Adapter, however, adapts an incompatible interfaces to another interface expected by its clients. Present the Right Interface, on the other hand, introduces a new, more suitable interface to a legacy component.
+<<present-the-right-interface>> superficially resembles an <<a.3.2-adapter>>, since both use wrappers as their implementation technique. An Adapter, however, adapts an incompatible interfaces to another interface expected by its clients. <<present-the-right-interface>>, on the other hand, introduces a new, more suitable interface to a legacy component.
 
-Be sure to Deprecate Obsolete Interfaces.
+Be sure to <<deprecate-obsolete-interfaces>>.
 
-If the new interface implemented by the Present the Right Interface is not stable, you should Distinguish Public from Published Interface.
+If the new interface implemented by the <<present-the-right-interface>> is not stable, you should <<distinguish-public-from-published-interface>>.
 
 [[distinguish-public-from-published-interface]]
 === 7.9 Distinguish Public from Published Interface
@@ -638,7 +638,7 @@ Since “published” interfaces are not supported by any programming language, 
 * In Java, consider declaring such interfaces as protected, or giving them package scope (undeclared). When the interfaces stabilize, you may redeclare them as being public.
 * In C++, consider declaring components with published interfaces private or protected, and declare as friends the clients that are permitted to use them. When the interfaces stabilize, redeclare the components as public, and delete the declarations of friends.
 * In Smalltalk, consider declaring categories of published components. Also consider declaring published message categories to distinguish stable and unstable messages.
-* Consider decorating the names of unstable components or interfaces to indicate their “published” status. When the component becomes public, rename it and patch all its clients or deprecate the version with the old name (Deprecate Obsolete Interfaces).
+* Consider decorating the names of unstable components or interfaces to indicate their “published” status. When the component becomes public, rename it and patch all its clients or deprecate the version with the old name (<<deprecate-obsolete-interfaces>>).
 
 [[tradeoffs-27]]
 ==== Tradeoffs
@@ -672,9 +672,9 @@ Clients are in a better position to evaluate the risk of using a component if th
 [[related-patterns-17]]
 ==== Related Patterns
 
-When you Present the Right Interface to a legacy component, the new interface may not be stable, so be careful to Distinguish Public from Published Interface. When the new interface stabilizes, or is substituted by a stable replacement component, the interface may become public.
+When you <<present-the-right-interface>> to a legacy component, the new interface may not be stable, so be careful to <<distinguish-public-from-published-interface>>. When the new interface stabilizes, or is substituted by a stable replacement component, the interface may become public.
 
-Upgrading an interface to public may entail a change to the way it is accessed. Be sure to Deprecate Obsolete Interfaces.
+Upgrading an interface to public may entail a change to the way it is accessed. Be sure to <<deprecate-obsolete-interfaces>>.
 
 [[deprecate-obsolete-interfaces]]
 === 7.10 Deprecate Obsolete Interfaces
@@ -790,7 +790,7 @@ Lehman and Belady’s “Law of Conservation of Familiarity” suggests that the
 [[related-patterns-18]]
 ==== Related Patterns
 
-To Conserve Familiarity you must Migrate Systems Incrementally. Involve the Users to understand what changes will be acceptable. Prototype the Target Solution to evaluate the potential impact of changes.
+To <<conserve-familiarity>> you must <<migrate-systems-incrementally>>. <<involve-the-users>> to understand what changes will be acceptable. <<prototype-the-target-solution>> to evaluate the potential impact of changes.
 
 [[use-profiler-before-optimizing]]
 === 7.12 Use Profiler Before Optimizing
@@ -828,7 +828,7 @@ If you decide to go ahead, prepare benchmarks that will demonstrate the performa
 
 * You do not waste time optimizing something that will not make a difference to overall performance.
 
-*Cons*
+===== Cons
 
 * Naive algorithms will survive longer in the system.
 
