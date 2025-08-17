@@ -4,6 +4,8 @@ This site is a migrated version of the freely available book http://scg.unibe.ch
 === Current Version
 Actually, this site is generated from a fork as the original hasn't been
 updated since August 2022. Even two pull requests from May 2024 aren't merged.
+The original https://oorp.github.io/[site] shows last updated January 2017, but that only reflects the last time the file index.adoc was touched.
+
 Version 1.0 contains the text from the book (that is the pdf-file) as closely as possible.
 Version 2.0 will contain additions and changes that might not reflect the opinion of the original authors.
 
