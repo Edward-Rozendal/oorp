@@ -22,11 +22,13 @@ Although there are sometimes borderlines cases where data containers and god cla
 
 Data containers lead to violations of the _Law of Demeter_ (LOD) <<LHR88>>. In a nutshell, the Law of Demeter provides a number of design guidelines to reduce coupling between distantly-related classes. Although the Law of Demeter has various forms, depending on whether one focusses on objects or classes, and depending on which programming language is being used, the law essentially states that methods should only send messages to instance variables, method arguments, self, super, and the receiver class.
 
-Violations of the Law of Demeter typically take the form of _navigation code_ in which an _indirect client_ accesses an _indirect provider_ by accessing either an instance variable or an acquaintance of an _intermediate provider_. The indirect client and provider are thereby unnecessarily coupled, making future enhancements more difficult to realize (Figure 9.2). The intermediate provider may take the form of a data container or opens its encapsulation by providing accessor methods. Designs with many data containers present often suffer from complex navigation code in which indirect clients may have to navigate through a chain of intermediates to reach the indirect provider.
+Violations of the Law of Demeter typically take the form of _navigation code_ in which an _indirect client_ accesses an _indirect provider_ by accessing either an instance variable or an acquaintance of an _intermediate provider_. The indirect client and provider are thereby unnecessarily coupled, making future enhancements more difficult to realize (Figure 9.1).
 
 image:media/figure9-1.png[image,width=732,height=186]
 
 Figure 9.1: An indirect client violates the Law of Demeter by navigating through an intermediate provider to an indirect provider, unnecessarily coupling the two.
+
+The intermediate provider may take the form of a data container or opens its encapsulation by providing accessor methods. Designs with many data containers present often suffer from complex navigation code in which indirect clients may have to navigate through a chain of intermediates to reach the indirect provider.
 
 Whereas data containers have too few responsibilities, god classes assume too many. A god class can be a single class that implements an entire subsystem, consisting of thousands of lines of code and hundreds of methods and instance variables. Particularly vicious god classes consist of only static instance variables and methods, _i.e._, all data and behavior have class scope, and the god class is never instantiated. Such god classes are purely procedural beasts, and are object-oriented in name only.
 
@@ -43,8 +45,8 @@ Figure 9.2: Data containers are the clearest sign of misplaced responsibilities.
 * <<move-behavior-close-to-data>> moves behavior defined in
 indirect clients to an intermediate data container to make it more “object-like”. This pattern not only decouples indirect clients from the contents of the data container, but also typically eliminates duplicated code occurring in multiple clients of the data container.
 
-* <<eliminate-navigation-code>> is technically very similar to Move Behavior Close to Data in terms of the reengineering steps, but is rather different in its intent. This pattern focusses on redistributing responsibilities down chains of data containers to eliminate navigation code.
-* <<split-up-god-class>> refactors a procedural god class into a number of simple, more cohesive classes by moving all data to external data containers, applying Move Behavior Close to Data to promote the data containers to objects, and finally removing or deprecating the facade that remains.
+* <<eliminate-navigation-code>> is technically very similar to <<move-behavior-close-to-data>> in terms of the reengineering steps, but is rather different in its intent. This pattern focusses on redistributing responsibilities down chains of data containers to <<eliminate-navigation-code>>.
+* <<split-up-god-class>> refactors a procedural god class into a number of simple, more cohesive classes by moving all data to external data containers, applying <<move-behavior-close-to-data>> to promote the data containers to objects, and finally removing or deprecating the facade that remains.
 
 [[move-behavior-close-to-data]]
 === 9.1 Move Behavior Close to Data
@@ -82,12 +84,12 @@ image:media/figure9-3.png[image,width=732,height=424]
 Figure 9.3: Classes that were mere data containers are transformed into real service providers.
 
 * Duplicated client code that manipulates data of separate provider classes. If multiple clients implement _different_ behavior, consider instead applying <<transform-self-type-checks>>.
-* Methods in client classes that invoke a sequence of accessor methods (see Eliminate Navigation Code).
+* Methods in client classes that invoke a sequence of accessor methods (see <<eliminate-navigation-code>>).
 
 [[steps-12]]
 ===== Steps
 
-Move Behavior Close to Data makes use of the refactorings <<a.2.2-extract-method>> and <<a.2.3-move-method>>, since the behavior in question will have to be extracted from a client method and then moved to a provider class.
+<<move-behavior-close-to-data>> makes use of the refactorings <<a.2.2-extract-method>> and <<a.2.3-move-method>>, since the behavior in question will have to be extracted from a client method and then moved to a provider class.
 
 1.  _Identify the client behavior that you want to move_, _i.e._, the complete method or a part of a method that accesses provider data.
 * Look for the invocations of the accessor methods of the data container.
@@ -99,11 +101,14 @@ Move Behavior Close to Data makes use of the refactorings <<a.2.2-extract-method
 3.  _Give an intention-revealing name to the new method._ Among others, intention revealing names do not contain references to the class they belong to, because this makes the method less reusable. For instance, instead of defining a method addToSet() on a class Set, it is better to name it simply add(). Similarly, it is not such a good idea to define a method binarySearch() on a class Array, because the method name implies a sorted random access collection, while the name search() does not have such implications.
 4.  In the client _invoke the new provider method_ with the correct parameters.
 5.  _Clean up the client code._ In the case the moved functionality was a complete method of the client class:
++
+--
 * check all the methods that invoke the old, moved method and ensure that they now call the new provider method instead, and
 * remove the old method from the client or deprecate it. (<<deprecate-obsolete-interfaces>>).
-
+--
++
 It may be the case that the calling methods defined on the same object have to be also moved to the provider. In such a case repeat the steps for the methods.
-1.  _Repeat_ for multiple clients. Note that duplicated code in multiple clients will be removed in step 2, since there is no need to move code that has already been transferred to the provider. In case many similar, but not identical methods are introduced to the provider, consider factoring out the duplicated fragments as protected helper methods.
+6.  _Repeat_ for multiple clients. Note that duplicated code in multiple clients will be removed in step 2, since there is no need to move code that has already been transferred to the provider. In case many similar, but not identical methods are introduced to the provider, consider factoring out the duplicated fragments as protected helper methods.
 
 [[tradeoffs-33]]
 ==== Tradeoffs
@@ -126,9 +131,9 @@ It may be the case that the calling methods defined on the same object have to b
 ===== Difficulties
 
 * It may not be clear whether client code really should be moved to the data provider. Some classes like Stream or Set are really designed as data providers. Consider moving the code to the provider if:
-
-*–* the functionality represents a _responsibility_ of the provider. For example, a class Set should provide mathematical operations like union and intersection. On the other hand, a generic Set should not be responsible for operations on sets of Employees. *–* the functionality accesses the attributes of the provider, *–* the functionality is defined by multiple clients.
-
+** the functionality represents a _responsibility_ of the provider. For example, a class Set should provide mathematical operations like union and intersection. On the other hand, a generic Set should not be responsible for operations on sets of Employees.
+** the functionality accesses the attributes of the provider,
+** the functionality is defined by multiple clients.
 * If the provider is really designed as a data container, consider defining a new provider class that wraps an instance of the data provider and holds the associated behavior. For example, an EmployeeSet might wrap a Set instance and provide a more suitable interface.
 
 [[when-the-legacy-solution-is-the-solution]]
@@ -148,11 +153,6 @@ _Mapping classes_ are classes used to represent mappings between objects and the
 ==== Example
 
 One of the recurring complaints of the customers is that it takes too much time to change the reports generated by the information system. By talking to the maintainers you learn that they find generating the reports quite boring. “Its’s always the same code you have to write,” says Chris, one
-
-image:media/figure9-4.png[image,width=725,height=230]
-
-Figure 9.4: The Payroll and Telephone classes access the internal representation of the class Employee to print a representation.
-
 of the maintainers. “You fetch a record out of the database, print its fields and then proceed to the next record.”
 
 You strongly suspect a case of data-containers and a closer examination of the code confirms your suspicion. Almost all of the classes interfacing with the database contain accessor methods only, and the programs generating reports are forced to use these accessors. One striking example is the case of the Payroll application, which has lots in common with the TelephoneGuide application and you decide to try to move the common functionality to the Employee class.
@@ -160,7 +160,13 @@ You strongly suspect a case of data-containers and a closer examination of the c
 [[before]]
 ===== Before
 
-As shown in Figure 9.4, both the Payroll and TelephoneGuide classes print labels, treating Employee instances as data containers. Thus, Payroll and TelephoneGuide are indirect clients of the attributes of Employee, and define printing code that should have been provided by the Employee class.
+As shown in Figure 9.4, both the Payroll and TelephoneGuide classes print labels, treating Employee instances as data containers.
+
+image:media/figure9-4.png[image,width=725,height=230]
+
+Figure 9.4: The Payroll and Telephone classes access the internal representation of the class Employee to print a representation.
+
+Thus, Payroll and TelephoneGuide are indirect clients of the attributes of Employee, and define printing code that should have been provided by the Employee class.
 
 The following code show how this would look like in Java.
 
@@ -265,12 +271,13 @@ Finally, verify which other methods refer to the name(), address() and telephone
 [[after]]
 ===== After
 
-After applying Move Behavior Close to Data the class Employee now provides a printLabel method which takes one argument to represent the different separators (see Figure 9.5). This is a better situation because now
+After applying <<move-behavior-close-to-data>> the class Employee now provides a printLabel method which takes one argument to represent the different separators (see Figure 9.5).
 
 image:media/figure9-5.png[image,width=731,height=259]
 
 Figure 9.5: The Payroll class uses the public interface of the class Employee to print a representation of Employee; data accessors became private.
 
+This is a better situation because now
 clients do not rely on the internal representation of Employee. Moreover, by moving the behavior near the data it operates, the class represents a conceptual entity with an emphasis on the services it provides instead of structure it implements.
 
 [[rationale-27]]
@@ -284,7 +291,7 @@ Data containers impede evolution because they expose structure and force clients
 [[related-patterns-21]]
 ==== Related Patterns
 
-<<a.2.1-encapsulate-field>> offers heuristics that help determine where methods should be defined during a design phase. The text offers rationale for applying Move Behavior Close to Data.
+<<a.2.1-encapsulate-field>> offers heuristics that help determine where methods should be defined during a design phase. The text offers rationale for applying <<move-behavior-close-to-data>>.
 
 [[eliminate-navigation-code]]
 === 9.2 Eliminate Navigation Code
@@ -310,7 +317,7 @@ _Yet, solving this problem is feasible because:_
 
 Iteratively move behavior defined by an indirect client to the container of the data on which it operates.
 
-Note that actual reengineering steps are basically the same as those of Move Behavior Close to Data, but the manifestation of the problem is rather different, so different detection steps apply.
+Note that the actual reengineering steps are basically the same as those of <<move-behavior-close-to-data>>, but the manifestation of the problem is rather different, so different detection steps apply.
 
 [[detection]]
 ===== Detection
@@ -400,23 +407,24 @@ a.abstraction.identifier.traverse(this)
 More sophisticated matching expressions can reduce the noise produced by the parentheses of casts or other combinations.
 
 _AST Matching._ If you have a way to express tree matching, you can detect navigation code. For example, the Rewrite Rule Editor that comes with the Refactoring Browser <<RBJ97>> can detect navigation code using the pattern
-
-image:media/figure9-6.png[image,width=586,height=471]
-
-Figure 9.6: Chains of data containers can be converted into service providers, thereby eliminating navigation code and reducing coupling between classes.
-
 +’@object ’mess1 ’mess2 ’mess3.+ To narrow the analysis of the results you should only consider messages that belong to the domain objects and eliminate all the method selectors of libraries objects like +(isNil, not, class, ...)+.
 
 [[steps-14]]
 ===== Steps
 
-The recipe for eliminating navigation code is to recursively Move Behavior Close to Data. Figure 9.6 illustrates the transformation.
+The recipe for eliminating navigation code is to recursively <<move-behavior-close-to-data>>.
 
 1.  _Identify_ the navigation code to move.
-2.  _Apply_ Move Behavior Close to Data to remove one level of navigation. (At this point your regression tests should run.)
+2.  _Apply_ <<move-behavior-close-to-data>> to remove one level of navigation. (At this point your regression tests should run.)
 3.  _Repeat_, if necessary.
 
-_Caution._ It is important to note that the refactoring process relies on pushing code _from the clients to the providers_. In the example, from Car to Engine and from Engine to Carburetor. A common mistake is to try to eliminate navigation code by defining accessors at the client class level that access the attributes of the provider attribute values, _e.g._, defining an accessor getCarburetor in the class Car. Instead of reducing coupling between the classes, it just increases the number of public accessors and makes the system more complex.
+Figure 9.6 illustrates the transformation.
+
+image:media/figure9-6.png[image,width=586,height=471]
+
+Figure 9.6: Chains of data containers can be converted into service providers, thereby eliminating navigation code and reducing coupling between classes.
+
+_Caution._ It is important to note that the refactoring process relies on pushing code _from the clients to the providers_. In the example, from Car to Engine and from Engine to Carburetor. A common mistake is to try to <<eliminate-navigation-code>> by defining accessors at the client class level that access the attributes of the provider attribute values, _e.g._, defining an accessor getCarburetor in the class Car. Instead of reducing coupling between the classes, it just increases the number of public accessors and makes the system more complex.
 
 [[tradeoffs-34]]
 ==== Tradeoffs
@@ -430,21 +438,17 @@ _Caution._ It is important to note that the refactoring process relies on pushin
 [[cons-28]]
 ===== Cons
 
-* The systematic application of Eliminate Navigation Code may lead to large interfaces. In particular, if a class defines many instance variables that are collections, then Eliminate Navigation Code would force you to define a large number of additional methods to shield the underlying collections.
+* The systematic application of <<eliminate-navigation-code>> may lead to large interfaces. In particular, if a class defines many instance variables that are collections, then <<eliminate-navigation-code>> would force you to define a large number of additional methods to shield the underlying collections.
 
 [[difficulties-30]]
 ===== Difficulties
 
-* Deciding when to apply Eliminate Navigation Code can be difficult. Defining methods that merely delegate requests to class collaborators may not always be the solution. It may happen that giving away internal information can reduce the interface of a class. For example, if a class implements some well-defined behaviors but also serves as a <<a.3.3-facade>> to other collaborators, it may be simpler to give access to the collaborator directly to reduce the interface of the class.
+* Deciding when to apply <<eliminate-navigation-code>> can be difficult. Defining methods that merely delegate requests to class collaborators may not always be the solution. It may happen that giving away internal information can reduce the interface of a class. For example, if a class implements some well-defined behaviors but also serves as a <<a.3.3-facade>> to other collaborators, it may be simpler to give access to the collaborator directly to reduce the interface of the class.
 
 [[when-the-legacy-solution-is-the-solution-1]]
 ===== When the legacy solution is the solution
 
 Navigation code may be the best solution when objects are graphically presented or mapped to a database. In such cases the goal is to really expose and mimic the structural relationships between classes. Eliminating navigation code will be a futile exercise.
-
-image:media/figure9-7.png[image,width=583,height=523]
-
-Figure 9.7: How to remove the unnecessary dependencies between the Reports class and the File and Employee Classes.
 
 It is sometimes necessary for a client to talk with its indirect providers. This is true when direct providers play the role of an object server that returns certain objects given certain properties (OOID, keys...). In this situation the client calls the object _server_ (a direct provider) that returns objects (indirect providers) to which the client sends messages.
 
@@ -455,7 +459,11 @@ After having modified the Employee, Payroll and TelephoneGuide classes, you noti
 
 You decide to examine this Employee class in further detail and find many unnecessary dependencies. For instance (as shown in Figure 9.7) there is a class Reports, implementing one method countHandledFiles, which counts for each Department the number of files that are handled by all of its employees. Unfortunately, there is no direct relationship between Department and File and consequently the ReportHandledFiles must navigate over a department’s employees to enumerate all the files and access the handled() status.
 
-The Java code below shows the situation before and after applying Eliminate Navigation Code. The bold textual elements highlight problems and the solutions in the before and after situation.
+image:media/figure9-7.png[image,width=583,height=523]
+
+Figure 9.7: How to remove the unnecessary dependencies between the Reports class and the File and Employee Classes.
+
+The Java code below shows the situation before and after applying <<eliminate-navigation-code>>. The bold textual elements highlight problems and the solutions in the before and after situation.
 
 [[before-1]]
 ===== Before
@@ -555,26 +563,28 @@ If all direct accesses to the employees and files variables are removed, these a
 [[rationale-28]]
 ==== Rationale
 
-_A method “M” of an object “O” should invoke only the methods of the following kinds of objects. 
-1.  itself
-2.  its parameters
-3.  any object it creates/instantiates
-4.  its direct component objects
-— Law of Demeter_
+_A method “M” of an object “O” should invoke only the methods of the following kinds of objects._
+--
+1. _itself_
+2. _its parameters_
+3. _any object it creates/instantiates_
+4. _its direct component objects_
+--
+— Law of Demeter
 
 Navigation code is a well-known symptom of misplaced behavior <<LK94>> <<Sha97>> <<Rie96>> that violates the Law of Demeter <<LHR88>>. It leads to unnecessary dependencies between classes and as a consequence changing the representation of a class requires _all_ clients to be adapted.
 
 [[related-patterns-22]]
 ==== Related Patterns
 
-Eliminate Navigation Code and <<compare-code-mechanically>> reinforce each other: Navigation code that is spread across different clients spreads duplicated code over the system. Compare Code Mechanically helps to detect this phenomenon. Eliminate Navigation Code brings the duplicated code together, where it is easier to refactor and eliminate.
+<<eliminate-navigation-code>> and <<compare-code-mechanically>> reinforce each other: Navigation code that is spread across different clients spreads duplicated code over the system. <<compare-code-mechanically>> helps to detect this phenomenon. <<eliminate-navigation-code>> brings the duplicated code together, where it is easier to refactor and eliminate.
 
 [[split-up-god-class]]
 === 9.3 Split Up God Class
 
 _Also Known As:_ The Blob <<BMMM98>>, God Class <<Rie96>>
 
-*Intent* _Split up a class with too many responsibilities into a number of smaller, cohesive classes._A
+*Intent* _Split up a class with too many responsibilities into a number of smaller, cohesive classes._
 
 [[problem-35]]
 ==== Problem
@@ -591,7 +601,7 @@ _This problem is difficult because:_
 _Yet, solving this problem is feasible because:_
 
 * You don’t have to fix the problem in one shot.
-* You can use Semantic Wrapper to wrap it and present interfaces.
+* You can use Semantic Wrapper (<<present-the-right-interface>>) to wrap it and present interfaces.
 
 [[solution-34]]
 ==== Solution
@@ -622,16 +632,16 @@ A god class may be recognized in various ways:
 
 The solution relies on incrementally moving behavior away from the god class. During this process, data containers will become more object-like by acquiring the functionality that the god class was performing on their data. Some new classes will also be extracted from the god class.
 
+The following steps describe how this process ideally works. Note, however, that god classes can vary greatly in terms of their internal structure, so different techniques may be used to implement the transformation steps. Furthermore, it should be clear that a god class cannot be cured in one shot, so a safe way to proceed is to first transform a god class into a lightweight god class, then into a <<a.3.3-facade>> that delegates behavior to its acquaintances. Finally, clients are redirected to the refactored data containers and the other new objects, and the <<a.3.3-facade>> can be removed. The process is illustrated in figure 9.8.
+
 image:media/figure9-8.png[image,width=578,height=594]
 
 Figure 9.8: A god class is refactored in two stages, first by redistributing responsibilities to data containers, or by spawning off new classes, until there is nothing left but a facade, and second by removing the facade.
 
-The following steps describe how this process ideally works. Note, however, that god classes can vary greatly in terms of their internal structure, so different techniques may be used to implement the transformation steps. Furthermore, it should be clear that a god class cannot be cured in one shot, so a safe way to proceed is to first transform a god class into a lightweight god class, then into a <<a.3.3-facade>> that delegates behavior to its acquaintances. Finally, clients are redirected to the refactored data containers and the other new objects, and the Facade can be removed. The process is illustrated in figure 39.
-
 The following steps are applied iteratively. Be sure to apply <<regression-test-after-every-change>>:
 
 1.  Identify cohesive subsets of instance variables of the god class, and convert them to external data containers. Change the initialization methods of the god class to refer to instances of the new data containers.
-2.  Identify all classes used as data containers by the god class (including those created in step 1) and apply Move Behavior Close to Data to promote the data containers into service providers. The original methods of the god class will simply delegate behavior to the moved methods.
+2.  Identify all classes used as data containers by the god class (including those created in step 1) and apply <<move-behavior-close-to-data>> to promote the data containers into service providers. The original methods of the god class will simply delegate behavior to the moved methods.
 3.  After iteratively applying steps 1 and 2, there will be nothing left of the god class except a facade with a big initialization method. Shift the responsibility for initialization to a separate class, so only a pure facade is left. Iteratively redirect clients to the objects for which the former god class is now a facade, and either deprecate the facade (see <<deprecate-obsolete-interfaces>>), or simply remove it.
 
 [[tradeoffs-35]]
