@@ -24,22 +24,22 @@ Although the symptom is readily recognizable, the technical details and the pref
 [[overview-8]]
 === Overview
 
-Transform Conditionals to Polymorphism is a pattern language that describes how to redistribute responsibilities to eliminate these large conditionals, thereby reducing coupling between classes, and improving flexibility in the face of future changes.
+<<transform-conditionals-to-polymorphism>> is a pattern language that describes how to redistribute responsibilities to eliminate these large conditionals, thereby reducing coupling between classes, and improving flexibility in the face of future changes.
 
-This pattern language consists of six patterns which address the most common problems that occur when conditionals are used to simulate polymorphism. Transform Self Type Checks and Transform Client Type Checks address the most typical cases that arise when explicit type checks are performed. Transform Conditionals into Registration occurs less frequently. We also include Factor out State, Factor out Strategy and Introduce Null Object, not in order to copy three established design patterns (<<a.3.9-state>>, <<a.3.11-strategy>> and <<a.3.6-null-object>>) but rather to show how these design patterns may apply in a reengineering context to eliminate type-checking conditionals.
+This pattern language consists of six patterns which address the most common problems that occur when conditionals are used to simulate polymorphism. <<transform-self-type-checks>> and <<transform-client-type-checks>> address the most typical cases that arise when explicit type checks are performed. <<transform-conditionals-into-registration>> occurs less frequently. We also include <<factor-out-state>>, <<factor-out-strategy>> and <<introduce-null-object>>, not in order to copy three established design patterns (<<a.3.9-state>>, <<a.3.11-strategy>> and <<a.3.6-null-object>>) but rather to show how these design patterns may apply in a reengineering context to eliminate type-checking conditionals.
 
 Figure 10.1 summarizes the relationships and the differences between the patterns.
 
 image:media/figure10-1.png[image,width=734,height=345]
 
-Figure 10.1: Relationships between the patterns constituting Transform Conditionals to Polymorphism.
+Figure 10.1: Relationships between the patterns constituting <<transform-conditionals-to-polymorphism>>.
 
-* Transform Self Type Checks eliminates conditionals over type information in a provider class by _introducing subclasses_ for each type case. The conditional code is replaced by a single polymorphic method call to an instance of one of the new subclasses.
-* Transform Client Type Checks transforms conditionals over type information in a client class by _introducing a new method_ to each of the provider classes. The conditional is replaced by a single polymorphic call to the new method.
-* Factor out State handles a special case of Transform Self Type Checks in which the type information that is being tested may change dynamically. _A <<a.3.9-state>> object is introduced_ in the provider class to model the changing state, and the conditional is replaced by a call to a method of the new State object.
-* Factor out Strategy is another special case of Transform Self Type Checks in which the algorithms to handle the various provider cases is factored out by _introducing a new <<a.3.11-strategy>> object_. The key difference with Factor out State is that the algorithm rather than the state may vary dynamically.
-* Introduce Null Object addresses the special case of Transform Client Type Checks in which the test performed checks whether or not the provider is defined. The conditional is eliminated by _introducing a <<a.3.6-null-object>>_ which implements the appropriate default behavior.
-* Transform Conditionals into Registration addresses the situation in which the conditional is responsible for starting up an external tool based on some attribute of an object to be handled. The solution is to _introduce a lookup service_ where tools are registered as plug-ins. The conditional is then replaced by a simple lookup for the registered plug-in. The solution is then fully dynamic because new plug-ins can be added or removed without any changes to the tool users.
+* <<transform-self-type-checks>> eliminates conditionals over type information in a provider class by _introducing subclasses_ for each type case. The conditional code is replaced by a single polymorphic method call to an instance of one of the new subclasses.
+* <<transform-client-type-checks>> transforms conditionals over type information in a client class by _introducing a new method_ to each of the provider classes. The conditional is replaced by a single polymorphic call to the new method.
+* <<factor-out-state>> handles a special case of <<transform-self-type-checks>> in which the type information that is being tested may change dynamically. _A <<a.3.9-state>> object is introduced_ in the provider class to model the changing state, and the conditional is replaced by a call to a method of the new State object.
+* <<factor-out-strategy>> is another special case of <<transform-self-type-checks>> in which the algorithms to handle the various provider cases is factored out by _introducing a new <<a.3.11-strategy>> object_. The key difference with <<factor-out-state>> is that the algorithm rather than the state may vary dynamically.
+* <<introduce-null-object>> Object addresses the special case of <<transform-client-type-checks>> in which the test performed checks whether or not the provider is defined. The conditional is eliminated by _introducing a <<a.3.6-null-object>>_ which implements the appropriate default behavior.
+* <<transform-conditionals-into-registration>> addresses the situation in which the conditional is responsible for starting up an external tool based on some attribute of an object to be handled. The solution is to _introduce a lookup service_ where tools are registered as plug-ins. The conditional is then replaced by a simple lookup for the registered plug-in. The solution is then fully dynamic because new plug-ins can be added or removed without any changes to the tool users.
 
 [[transform-self-type-checks]]
 === 10.1 Transform Self Type Checks
@@ -76,21 +76,19 @@ Most of the time, the type discrimination will jump in your face while you are w
 * Especially look for classes where _multiple_ methods switch on the same attribute. This is another common sign that the attribute is being used to simulate a type.
 * Since methods containing case statements tend to be long, it may help to use a tool that sorts methods by lines of code or visualizes classes and methods according to their size. Alternatively, search for classes or methods with a large number of conditional statements.
 * For languages like C++ or Java where it is common to store the implementation of a class in a separate file, it is straightforward to search for and count the incidence of conditional keywords (if, else, case, _etc._). On a UNIX system, for example,
-
++
+--
 [source,shell]
 ----
 grep 'switch' `find . --name "*.cxx" --print`
 ----
-
+--
++
 enumerates all the files in a directory tree with extension .cxx that contain a switch. Other text processing tools like agrep offer possibilities to pose finer granularity queries. Text processing languages like Perl may be better suited for evaluating some kinds of queries, especially those that span multiple lines.
 
 * _C/C++:_ Legacy C code may simulate classes by means of union types. Typically the union type will have one data member that encodes the actual type. Look for conditional statements that switch on such data members to decide which type to cast a union to and which behavior to employ.
-
++
 In C++ it is fairly common to find classes with data members that are declared as void pointers. Look for conditional statements that cast such pointers to a given type based on the value of some other data member. The type information may be encoded as an enum or (more commonly) as a constant integer value.
-
-image:media/figure10-2.png[image,width=724,height=357]
-
-Figure 10.2: Transformation of explicit type check into self polymorphic method calls.
 
 * _Ada:_ Because Ada 83 did not support polymorphism (or subprogram access types), discriminated record types are often used to simulate
 polymorphism. Typically an enumeration type provides the set of variants and the conversion to polymorphism is straightforward in Ada95.
@@ -100,13 +98,21 @@ polymorphism. Typically an enumeration type provides the set of variants and the
 [[steps-17]]
 ===== Steps
 
-1.  Identify the class to transform and the different conceptual classes that it implements. An enumeration type or set of constants will probably document this well.
-2.  Introduce a new subclass for each behavior that is implemented (see Figure 10.2). Modify clients to instantiate the new subclasses rather than the original class. Run the tests.
-3.  Identify all methods of the original class that implement varying behavior by means of conditional statements. If the conditionals are surrounded by other statements, move them to separate, protected hook methods. When each conditional occupies a method of its own, run the tests.
-4.  Iteratively move the cases of the conditionals down to the corresponding subclasses, periodically running the tests.
-5.  The methods that contain conditional code should now all be empty. Replace these by abstract methods and run the tests.
-6.  Alternatively, if there are suitable default behaviors, implement these at the root of the new hierarchy.
-7.  If the logic required to decide which subclass to instantiate is nontrivial, consider encapsulating this logic as a factory method of the new hierarchy root. Update clients to use the new factory method and run the tests.
+.  Identify the class to transform and the different conceptual classes that it implements. An enumeration type or set of constants will probably document this well.
+.  Introduce a new subclass for each behavior that is implemented (see Figure 10.2).
++
+--
+image:media/figure10-2.png[image,width=724,height=357]
+
+Figure 10.2: Transformation of explicit type check into self polymorphic method calls.
+--
++
+Modify clients to instantiate the new subclasses rather than the original class. Run the tests.
+.  Identify all methods of the original class that implement varying behavior by means of conditional statements. If the conditionals are surrounded by other statements, move them to separate, protected hook methods. When each conditional occupies a method of its own, run the tests.
+.  Iteratively move the cases of the conditionals down to the corresponding subclasses, periodically running the tests.
+.  The methods that contain conditional code should now all be empty. Replace these by abstract methods and run the tests.
+.  Alternatively, if there are suitable default behaviors, implement these at the root of the new hierarchy.
+.  If the logic required to decide which subclass to instantiate is nontrivial, consider encapsulating this logic as a factory method of the new hierarchy root. Update clients to use the new factory method and run the tests.
 
 [[tradeoffs-36]]
 ==== Tradeoffs
@@ -124,13 +130,8 @@ polymorphism. Typically an enumeration type provides the set of variants and the
 * All the behaviors are now dispersed into multiple but related abstractions, so getting an overview of the behavior may be more difficult. However, the concepts are related and share the interface represented by the abstract class reducing then the problem.
 * The larger number of classes makes the design more complex, and potentially harder to understand. If the original conditional statements are simple, it may not be worthwhile to perform this transformation.
 * Explicit type checks are not always a problem and we can sometimes tolerate them. Creating new classes increases the number of abstractions in the applications and can clutter namespaces. Hence, explicit type checks may be an alternative to the creation of new classes when:
-
-image:media/figure10-3.png[image,width=725,height=387]
-
-Figure 10.3: Combining simple delegation and Transform Self Type Checks when the class cannot be subclassed.
-
-* the set over which the method selection is fixed and will not evolve in the future, and
-* the type check is only made in a few places.
+** the set over which the method selection is fixed and will not evolve in the future, and
+** the type check is only made in a few places.
 
 [[difficulties-32]]
 ===== Difficulties
@@ -139,7 +140,13 @@ Figure 10.3: Combining simple delegation and Transform Self Type Checks when the
 * Wherever instances of the transformed class were originally created, now instances of different subclasses must be created. If the instantiation occurred in client code, that code must now be adapted to instantiate the right class. Factory objects or methods may be needed to hide this complexity from clients.
 * If you do not have access to the source code of the clients, it may be difficult or impossible to apply this pattern since you will not be able to change the calls to the constructors.
 * If the case statements test more than one attribute, it may be necessary to support a more complex hierarchy, possibly requiring multiple inheritance. Consider splitting the class into parts, each with its own hierarchy.
-* When the class containing the original conditionals cannot be subclassed, Transform Self Type Checks can be composed with delegation. The idea is to exploit polymorphism on another hierarchy by moving part of the state and behavior of the original class into a separate class to which the method will delegate, as shown in Figure 10.3.
+* When the class containing the original conditionals cannot be subclassed, <<transform-self-type-checks>> can be composed with delegation. The idea is to exploit polymorphism on another hierarchy by moving part of the state and behavior of the original class into a separate class to which the method will delegate, as shown in Figure 10.3.
++
+--
+image:media/figure10-3.png[image,width=725,height=387]
+
+Figure 10.3: Combining simple delegation and <<transform-self-type-checks>> when the class cannot be subclassed.
+--
 
 [[when-the-legacy-solution-is-the-solution-3]]
 ===== When the legacy solution is the solution
@@ -163,11 +170,13 @@ Figure 10.4: Initial design and source code.
 
 *After.*
 
-Since Message conceptually implements two different classes, Text_Message and Action_Message, we introduce these as subclasses of Message, as shown in Figure 10.5. We introduce constructors for the new classes, we modify the clients to construct instances of Text_Message and Action_Message rather than Message, and we remove the set_value() methods. Our regression tests should run at this point.
+Since Message conceptually implements two different classes, Text_Message and Action_Message, we introduce these as subclasses of Message, as shown in Figure 10.5.
 
 image:media/figure10-5.png[image,width=657,height=592]
 
 Figure 10.5: Resulting hierarchy and source code.
+
+We introduce constructors for the new classes, we modify the clients to construct instances of Text_Message and Action_Message rather than Message, and we remove the set_value() methods. Our regression tests should run at this point.
 
 Now we find methods that switch on the type variable. In each case, we move the entire case statement to a separate, protected hook method, unless the switch already occupies the entire method. In the case of send(), this is already the case, so we do not have to introduce a hook method. Again, all our tests should still run.
 
@@ -185,11 +194,11 @@ By transforming such classes to hierarchies that explicitly represent the multip
 [[related-patterns-24]]
 ==== Related Patterns
 
-In Transform Self Type Checks the condition to be transformed tests type information that is represented as an attribute of the class itself.
+In <<transform-self-type-checks>> the condition to be transformed tests type information that is represented as an attribute of the class itself.
 
 If the conditional tests _mutable_ state of the host object, consider instead applying <<factor-out-state>>, or possibly <<factor-out-strategy>>.
 
-If the conditional occurs in a _client_ rather than in the provider class itself, consider applying <<transform-self-type-checks>>.
+If the conditional occurs in a _client_ rather than in the provider class itself, consider applying <<transform-client-type-checks>>.
 
 If the conditional code tests some type attribute of a second object in order to _select some third handler object_, consider instead applying <<transform-conditionals-into-registration>>.
 
@@ -221,38 +230,45 @@ Introduce a new method to the provider hierarchy. Implement the new method in ea
 [[detection-3]]
 ===== Detection
 
-Apply essentially the same techniques described in Transform Self Type Checks to detect case statements, but look for conditions that test the type of a separate service provider which _already_ implements a hierarchy. You should also look for case statements occurring in different clients of the same provider hierarchy.
+Apply essentially the same techniques described in <<transform-self-type-checks>> to detect case statements, but look for conditions that test the type of a separate service provider which _already_ implements a hierarchy. You should also look for case statements occurring in different clients of the same provider hierarchy.
 
 * _{cpp}_: Legacy {cpp} code is not likely to make use of run-time type information (RTTI). Instead, type information will likely be encoded
   in a data member that takes its value from some enumerated type representing the current class. Look for client code switching on such data members.
 * _Ada:_ Detecting type tests falls into two cases. If the hierarchy is implemented as a single discriminated record then you will find case statements over the discriminant. If the hierarchy is implemented with tagged types then you cannot write a case statement over the types (they are not discrete); instead an if-then-else structure will be used.
-* _Smalltalk:_ As in Transform Self Type Checks, look for applications of isMemberOf: and isKindOf:, and tests like self class = anotherClass.
+* _Smalltalk:_ As in <<transform-self-type-checks>>, look for applications of isMemberOf: and isKindOf:, and tests like self class = anotherClass.
 * _Java:_ Look for applications of the operator instanceof, which tests membership of an object in a specific, known class. Although classes in Java are not objects as in Smalltalk, each class that is loaded into the virtual machine is represented by a single instance of java.lang.Class. It is therefore possible to determine if two objects, x and y belong to the same class by performing the test:
-
++
+--
 [source,java]
 ----
 x.getClass() == y.getClass()
 ----
-
+--
++
 Alternatively, class membership may be tested by comparing class names:
-
++
+--
 [source,java]
 ----
 x.getClass().getName().equals(y.getClass().getName())
 ----
+--
 
 [[steps-18]]
 ===== Steps
 
 1.  Identify the clients performing explicit type checks.
 2.  Add a new, empty method to the root of the provider hierarchy representing the action performed in the conditional code (see Figure 10.6).
-3.  Iteratively move a case of the conditional to some provider class, replacing it with a call to that method. After each move, the regression tests should run.
-4.  When all methods have been moved, each case of the conditional consists of a call to the new method, so replace the entire conditional by a single call to the new method.
-5.  Consider making the method abstract in the provider’s root. Alternatively implement suitable default behavior here.
-
++
+--
 image:media/figure10-6.png[image,width=732,height=602]
 
 Figure 10.6: Transformation of explicit type check used to determine which methods of a client should be invoked into polymorphic method calls.
+--
++
+3.  Iteratively move a case of the conditional to some provider class, replacing it with a call to that method. After each move, the regression tests should run.
+4.  When all methods have been moved, each case of the conditional consists of a call to the new method, so replace the entire conditional by a single call to the new method.
+5.  Consider making the method abstract in the provider’s root. Alternatively implement suitable default behavior here.
 
 [[other-steps-to-consider]]
 ===== Other Steps to Consider
@@ -275,7 +291,7 @@ Figure 10.6: Transformation of explicit type check used to determine which metho
 [[cons-31]]
 ===== Cons
 
-* Sometimes it is convenient to see the code handling different cases in a single location. Transform Client Type Checks redistributes the logic to the individual provider classes, with the result that the overview is lost.
+* Sometimes it is convenient to see the code handling different cases in a single location. <<transform-client-type-checks>> redistributes the logic to the individual provider classes, with the result that the overview is lost.
 
 [[difficulties-33]]
 ===== Difficulties
@@ -342,22 +358,23 @@ void initiateCalls(Telephone ** phoneArray, int numOfCalls) {
    for(int i = 0; i<numOfCalls; i++ ) {
       Telephone * p = phoneArray[i];
 
-      switch(p-->phoneType()) {
+      switch(p->phoneType()) {
       case Telephone::POTSPHONE: {
          POTSPhone *potsp = (POTSPhone *) p;
-         potsp-->tourneManivelle();
-         potsp-->call();
+         potsp->tourneManivelle();
+         potsp->call();
          break;
       }
       case Telephone::ISDNPHONE: {
          ISDNPhone *isdnp = (ISDNPhone *) p;
-         isdnp-->initializeLine(); isdnp-->connect();
+         isdnp->initializeLine();
+         isdnp->connect();
          break;
       }
       case Telephone::OPERATORPHONE: {
          OperatorPhone *opp = (OperatorPhone *) p;
-         opp-->operatorMode(true);
-         opp-->call();
+         opp->operatorMode(true);
+         opp->call();
          break;
       }
       default: cerr << "Unrecognized Phonetype" << endl;
@@ -365,10 +382,6 @@ void initiateCalls(Telephone ** phoneArray, int numOfCalls) {
    }
 }
 ----
-
-image:media/figure10-7.png[image,width=729,height=446]
-
-Figure 10.7: Transforming explicit type checks to polymorphic method invocations.
 
 [[after-1]]
 ===== After
@@ -392,8 +405,8 @@ public:
 };
 
 void POTSPhone::makeCall() {
-   this-->tourneManivelle();
-   this-->call();
+   this->tourneManivelle();
+   this->call();
 }
 
 class ISDNPhone: public Telephone {
@@ -405,8 +418,8 @@ public:
 };
 
 void ISDNPhone::makeCall() {
-   this-->initializeLine();
-   this-->connect();
+   this->initializeLine();
+   this->connect();
 }
 
 class OperatorPhone: public Telephone {
@@ -418,16 +431,20 @@ public:
 };
 
 void OperatorPhone::makeCall() {
-   this-->operatorMode(true);
-   this-->call();
+   this->operatorMode(true);
+   this->call();
 }
 
 void initiateCalls(Telephone ** phoneArray, int numOfCalls) {
    for(int i = 0; i<numOfCalls; i++ ) {
-      phoneArray[i]-->makeCall();
+      phoneArray[i]->makeCall();
    }
 }
 ----
+
+image:media/figure10-7.png[image,width=729,height=446]
+
+Figure 10.7: Transforming explicit type checks to polymorphic method invocations.
 
 [[rationale-31]]
 ==== Rationale
@@ -443,9 +460,9 @@ Riel states, “Explicit case analysis on the type of an object is usually an er
 [[related-patterns-25]]
 ==== Related Patterns
 
-InTransform Client Type Checks the conditional is made on the type information of a provider class. The same situation occurs in Introduce Null Object where the conditional tests over null value before invoking the methods. From this point of view, Introduce Null Object is a specialization of Transform Client Type Checks.
+In <<transform-client-type-checks>> the conditional is made on the type information of a provider class. The same situation occurs in <<introduce-null-object>> Object where the conditional tests over null value before invoking the methods. From this point of view, <<introduce-null-object>> Object is a specialization of <<transform-client-type-checks>>.
 
-Transform Conditionals into Registration handles the special case in which the client’s conditional is used to select a third object (typically an external application or tool) to handle the argument.
+<<transform-conditionals-into-registration>> handles the special case in which the client’s conditional is used to select a third object (typically an external application or tool) to handle the argument.
 
 <<a.2.6-replace-conditional-with-polymorphism>> is the core refactoring of this reengineering pattern, so the reader may refer to the steps described in <<FBB99>>.
 
@@ -472,32 +489,31 @@ _Yet, solving this problem is feasible because:_
 [[solution-37]]
 ==== Solution
 
-Apply the <<a.3.9-state>> pattern, _i.e._, encapsulate the state-dependent behavior into separate objects, delegate calls to these objects and keep the state of the object consistent by referring to the right instance of these state objects (see figure 47).
-
-As in Transform Self Type Checks, transform complex conditional code that tests over quantified states into delegated calls to state classes. Apply the <<a.3.9-state>> pattern, delegating each conditional case to a separate State object. We invite the reader to read State and <<a.3.10-state-patterns>> for a deep description of the problem and discussion <<GHJV95>> <<ABW98>> <<DA97>>. Here we only focus on the reengineering aspects of the pattern.
-
-[[steps-19]]
-===== Steps
-
-1.  Identify the interface of a state and the number of states.
+Apply the <<a.3.9-state>> pattern, _i.e._, encapsulate the state-dependent behavior into separate objects, delegate calls to these objects and keep the state of the object consistent by referring to the right instance of these state objects (see figure 10.8).
 
 image:media/figure10-8.png[image,width=586,height=437]
 
 Figure 10.8: Transformation to go from a state pattern simulated using explicit state conditional to a situation where the state pattern has been applied.
 
+As in <<transform-self-type-checks>>, transform complex conditional code that tests over quantified states into delegated calls to state classes. Apply the <<a.3.9-state>> pattern, delegating each conditional case to a separate State object. We invite the reader to read <<a.3.9-state>> and <<a.3.10-state-patterns>> for a deep description of the problem and discussion <<GHJV95>> <<ABW98>> <<DA97>>. Here we only focus on the reengineering aspects of the pattern.
+
+[[steps-19]]
+===== Steps
+
+.  Identify the interface of a state and the number of states.
++
 If you are lucky, each conditional will partition the state space in the same way, and the number of states will equal the number of cases in each conditional. In case the conditionals overlap, a finer partitioning will be required.
-
++
 The interface of a state depends on how the state information is accessed and updated, and may need to be refined in the subsequent steps.
+.  Create a new abstract class, State, representing the interface of the state.
+.  Create a new class subclass of State for each state.
+.  Define methods of the interface identified in Step 1 in each of the state classes by copying the corresponding code of the conditional to the new method. Do not forget to change the state of the instance variable in the Context to refer to the right instance of State class. The State methods have the responsibility to change the Context so that it always refers to the next state instance.
+.  Add a new instance variable in the Context class.
+.  You may have to have a reference from the State to the Context class to invoke the state transitions from the State classes.
+.  Initialize the newly created instance to refer to a default state class instance.
+.  Change the methods of the Context class containing the tests to delegate the call to the instance variable.
 
-1.  Create a new abstract class, State, representing the interface of the state.
-2.  Create a new class subclass of State for each state.
-3.  Define methods of the interface identified in Step 1 in each of the state classes by copying the corresponding code of the conditional to the new method. Do not forget to change the state of the instance variable in the Context to refer to the right instance of State class. The State methods have the responsibility to change the Context so that it always refers to the next state instance.
-4.  Add a new instance variable in the Context class.
-5.  You may have to have a reference from the State to the Context class to invoke the state transitions from the State classes.
-6.  Initialize the newly created instance to refer to a default state class instance.
-7.  Change the methods of the Context class containing the tests to delegate the call to the instance variable.
-
-Step 4 can be performed using the Extract Method operation of the Refactoring Browser. Note that after each step, the regression tests should still run. The critical step is the last one, in which behavior is delegated to the new state objects.
+Step 4 can be performed using the <<a.2.2-extract-method>> operation of the Refactoring Browser. Note that after each step, the regression tests should still run. The critical step is the last one, in which behavior is delegated to the new state objects.
 
 [[tradeoffs-38]]
 ==== Tradeoffs
@@ -526,7 +542,7 @@ This pattern should not be applied lightly.
 [[known-uses-20]]
 ==== Known Uses
 
-The _Design Patterns Smalltalk Companion_ <<ABW98> presents a step-by-step code transformation.
+The _Design Patterns Smalltalk Companion_ <<ABW98>> presents a step-by-step code transformation.
 
 [[factor-out-strategy]]
 === 10.4 Factor out Strategy
@@ -552,27 +568,23 @@ _Yet, solving this problem is feasible because:_
 
 Apply the Strategy pattern, _i.e._, encapsulate the algorithmic dependent behavior into separate objects with polymorphic interfaces and delegate calls to these objects (see Figure 10.9).
 
-[[steps-20]]
-===== Steps
-
-1.  Identify the interface of the strategy class.
-2.  Create a new abstract class, Strategy, representing the interface of the strategies.
-3.  Create a new class subclass of Strategy for each identified algorithms.
-4.  Define methods of the interface identified in Step 1 in each of the strategy classes by copying the corresponding code of the test to the method.
-5.  Add a new instance variable in the Context class to refer to the current strategy.
-
 image:media/figure10-9.png[image,width=731,height=318]
 
 Figure 10.9: Transformation to go from a state pattern simulated using explicit state conditional to a situation where the state pattern has been applied.
 
-1.  You may have to have a reference from the Strategy to the Context class to provide access to the information maintained by the Context
+[[steps-20]]
+===== Steps
 
-(See difficulties).
+.  Identify the interface of the strategy class.
+.  Create a new abstract class, Strategy, representing the interface of the strategies.
+.  Create a new class subclass of Strategy for each identified algorithms.
+.  Define methods of the interface identified in Step 1 in each of the strategy classes by copying the corresponding code of the test to the method.
+.  Add a new instance variable in the Context class to refer to the current strategy.
+.  You may have to have a reference from the Strategy to the Context class to provide access to the information maintained by the Context (See difficulties).
+.  Initialize the newly created instance to refer to a default strategy instance.
+.  Change the methods of the Context class containing the tests by eliminating the tests and delegating the call to the instance variable.
 
-1.  Initialize the newly created instance to refer to a default strategy instance.
-2.  Change the methods of the Context class containing the tests by eliminating the tests and delegating the call to the instance variable.
-
-Step 4 can be performed using the Extract Method operation of the Refactoring Browser. Note that after each step, the regression tests should still run. The critical step is the last one, in which behavior is delegated to the new Strategy objects.
+Step 4 can be performed using the <<a.2.2-extract-method>> operation of the Refactoring Browser. Note that after each step, the regression tests should still run. The critical step is the last one, in which behavior is delegated to the new Strategy objects.
 
 [[tradeoffs-39]]
 ==== Tradeoffs
@@ -603,11 +615,9 @@ The _Design Patterns Smalltalk Companion_ <<ABW98>> presents a step-by-step code
 [[related-patterns-26]]
 ==== Related Patterns
 
-The symptoms and structure of Factor out Strategy bear comparison with
-
-Factor out State. The main difference consists in the fact that the Factor out
-
-State identifies behavior with different possible states of objects whereas Factor out Strategy is concerned with interchangeable algorithms that are independent of object state. Factor out Strategy allows one to add new strategies without impacting the existing strategy objects.
+The symptoms and structure of <<factor-out-strategy>> bear comparison with
+<<factor-out-state>>. The main difference consists in the fact that the <<factor-out-state>>
+identifies behavior with different possible states of objects whereas <<factor-out-strategy>> is concerned with interchangeable algorithms that are independent of object state. <<factor-out-strategy>> allows one to add new strategies without impacting the existing strategy objects.
 
 [[introduce-null-object]]
 === 10.5 Introduce Null Object
@@ -648,12 +658,12 @@ image:media/figure10-10.png[image,width=729,height=369]
 
 Figure 10.10: Transformation from a situation based on explicit test of null value to a situation where a Null Object is introduced.
 
-1.  Identify the interface required for the null behavior. (This will normally be identical to that of the non-null object.)
-2.  Create a new abstract superclass as a superclass of the RealObject class.
-3.  Create a new subclass of the abstract superclass with a name starting with No or Null.
-4.  Define default methods into the Null Object class.
-5.  Initialize the instance variable or structure that was checked to now hold at least an instance of the Null Object class.
-6.  Remove the conditional tests from the client.
+.  Identify the interface required for the null behavior. (This will normally be identical to that of the non-null object.)
+.  Create a new abstract superclass as a superclass of the RealObject class.
+.  Create a new subclass of the abstract superclass with a name starting with No or Null.
+.  Define default methods into the Null Object class.
+.  Initialize the instance variable or structure that was checked to now hold at least an instance of the Null Object class.
+.  Remove the conditional tests from the client.
 
 If you still want to be able to test for null values in a clean way, you may introduce a query method called isNull in RealObject and Null Object classes, as described by Fowler <<FBB99>>.
 
@@ -736,19 +746,18 @@ _Yet, solving this problem is feasible because:_
 
 Introduce a _registration mechanism_ to which each tool is responsible for registering itself, and transform the _tool clients_ to query the registration repository instead of performing conditionals.
 
-[[steps-22]]
-===== Steps
-
-1.  Define a class describing _plug-in objects_, _i.e._, an object encapsulating the information necessary for registering a tool. Although the internal structure of this class depends on the purpose of the registration, a plug-in should provide the necessary information so the tool manager can _identify_ it, _create_ instance of the represented tool and _invoke_ methods. To invoke a tool method, a method or a similar mechanism like a block closure or inner class should be stored in the plug-in object.
-
 image:media/figure10-11.png[image,width=586,height=487]
 
 Figure 10.11: Transforming conditionals in tool users by introducing a registration mechanism.
 
-1.  Define a class representing the _plug-in manager_, _i.e._, that manages the plug-in objects and that will be queried by the tool clients to check the presence of the tools. This class will certainly be a singleton since the plug-ins representing the tools available should not be lost if a new instance of the plug-in manager is created.
-2.  For each case of the conditional, define a plug-in _object_ associated with the given tool. This plug-in object should be created and registered automatically when the tool it represents is loaded, and it should be unregistered if and when the tool becomes unavailable. Sometimes information from the tool client should be passed to the tool. The current tool client can be passed as argument when the tool is invoked.
-3.  Transform the entire conditional expression into a query to the tool manager object. This query should return a tool associated to the query and invoke it to access the wished functionality.
-4.  Remove any tool client actions that directly activate tools. This behavior is now the responsibility of the plug-in manager.
+[[steps-22]]
+===== Steps
+
+.  Define a class describing _plug-in objects_, _i.e._, an object encapsulating the information necessary for registering a tool. Although the internal structure of this class depends on the purpose of the registration, a plug-in should provide the necessary information so the tool manager can _identify_ it, _create_ instance of the represented tool and _invoke_ methods. To invoke a tool method, a method or a similar mechanism like a block closure or inner class should be stored in the plug-in object.
+.  Define a class representing the _plug-in manager_, _i.e._, that manages the plug-in objects and that will be queried by the tool clients to check the presence of the tools. This class will certainly be a singleton since the plug-ins representing the tools available should not be lost if a new instance of the plug-in manager is created.
+.  For each case of the conditional, define a plug-in _object_ associated with the given tool. This plug-in object should be created and registered automatically when the tool it represents is loaded, and it should be unregistered if and when the tool becomes unavailable. Sometimes information from the tool client should be passed to the tool. The current tool client can be passed as argument when the tool is invoked.
+.  Transform the entire conditional expression into a query to the tool manager object. This query should return a tool associated to the query and invoke it to access the wished functionality.
+.  Remove any tool client actions that directly activate tools. This behavior is now the responsibility of the plug-in manager.
 
 The client or the plug-in object may have the responsibility to invoke a tool. It is better to let the plug-in object having this responsibility because it already holds the responsibility of representing how to represent the tools and let the clients just says that they need a tool action.
 
@@ -924,7 +933,7 @@ FileList>>itemsForFileEnding: suffix
 [[pros-40]]
 ===== Pros
 
-* By applying Transform Conditionals into Registration you obtain a system which is both dynamic and flexible. New tools can be added without impacting tool clients.
+* By applying <<transform-conditionals-into-registration>> you obtain a system which is both dynamic and flexible. New tools can be added without impacting tool clients.
 * Tool clients no longer have to check whether a given tool is available. The registration mechanism ensures you that the action can be performed.
 * The interaction protocol between tools and tool clients is now normalized.
 
@@ -947,7 +956,7 @@ FileList>>itemsForFileEnding: suffix
 [[related-patterns-27]]
 ==== Related Patterns
 
-Both Transform Conditionals into Registration and Transform Client Type Checks eliminate conditional expressions that decide which method should be invoked on which object. The key difference between the two patterns is that Transform Client Type Checks moves behavior from the client to the service provider, whereas Transform Conditionals into Registration deals with behavior that cannot be moved because it is implemented by an external tool.
+Both <<transform-conditionals-into-registration>> and <<transform-client-type-checks>> eliminate conditional expressions that decide which method should be invoked on which object. The key difference between the two patterns is that <<transform-client-type-checks>> moves behavior from the client to the service provider, whereas <<transform-conditionals-into-registration>> deals with behavior that cannot be moved because it is implemented by an external tool.
 
 [[script-identifying-simulated-switches-in-c]]
 ==== Script: Identifying simulated switches in C++
